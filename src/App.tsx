@@ -1,18 +1,22 @@
-import React from 'react'
-import './App.css'
-// import HomePage from './pages/app/HomePage'
-import useApplyTheme from './hooks/useApplyTheme'
-// import ThemeToggle from './components/app/ThemeToggle'
-import AppRouter from './router/Router'
+import React from 'react';
+import './App.css';
+import useApplyTheme from './hooks/useApplyTheme';
+import ThemeToggle from './components/app/ThemeToggle';
+import AppRouter from './router/Router';
+import { PrimeReactProvider } from 'primereact/api';
+import useThemeStore from './store/themeStore';
 
 const App: React.FC = () => {
-  useApplyTheme()
+  useApplyTheme();
+  const isDarkMode = useThemeStore((state) => state.isDarkMode);
 
   return (
-    <>
-      <AppRouter />
-    </>
-  )
-}
+    <PrimeReactProvider>
+      <div className={isDarkMode ? 'dark' : ''}>
+        <AppRouter />
+      </div>
+    </PrimeReactProvider>
+  );
+};
 
-export default App
+export default App;

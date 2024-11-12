@@ -8,6 +8,8 @@ import {
   HiOutlineFolderPlus as HiOutlineFolderPlusIcon,
 } from "react-icons/hi2";
 import { NavLink, useNavigate } from "react-router-dom";
+import useThemeStore from "../../../store/themeStore";
+import { themes } from "../../../themeConfig";
 
 const routes = [
   { path: "/", element: <HiOutlineSquares2X2 size={24} />, name: "Home" },
@@ -46,9 +48,11 @@ const projects = [
 const SideNav: React.FC = () => {
   const navigate = useNavigate();
   const [isNavOpen, setIsNavOpen] = useState(true);
+  const { themeName } = useThemeStore();
+  const currentTheme = themes[themeName];
 
   return (
-    <div className="w-full p-4 bg-white dark:bg-zinc-900 relative min-h-screen max-h-screen flex flex-col transition-all border-r border-r-zinc-300 dark:border-r-zinc-700 gap-y-4">
+    <div className={`w-full p-4 ${currentTheme.bg} relative min-h-screen max-h-screen flex flex-col transition-all border-r ${currentTheme.border} gap-y-4`}>
       <div className="w-full">
         {/* Sidebar content */}
         <div className="w-full">
@@ -62,7 +66,7 @@ const SideNav: React.FC = () => {
                     ? `bg-[#40e4a031] dark:bg-[#35aa7931] p-2 mb-2 transition flex items-center gap-x-2 rounded-lg ${
                         isNavOpen ? "" : "justify-center"
                       }`
-                    : `hover:bg-[#40e4a031] dark:hover:bg-[#35aa7931] p-2 mb-2 transition flex items-center gap-x-2 rounded-lg ${
+                    : `${currentTheme.textHover} p-2 mb-2 transition flex items-center gap-x-2 rounded-lg ${
                         isNavOpen ? "" : "justify-center"
                       }`
                 }

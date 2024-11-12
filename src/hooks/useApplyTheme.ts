@@ -1,16 +1,19 @@
-import { useEffect } from "react";
-import useThemeStore from "../store/themeStore";
-
+// useApplyTheme.ts
+import { useEffect } from 'react';
+import useThemeStore from '../store/themeStore';
 
 const useApplyTheme = () => {
-  const theme = useThemeStore((state) => state.theme);
+  const { isDarkMode } = useThemeStore();
 
   useEffect(() => {
-    const root = document.documentElement;
+    const theme = isDarkMode ? 'vela-blue' : 'saga-blue';
+    const themeLink = document.getElementById('theme-stylesheet') as HTMLLinkElement;
 
-    if (theme === 'dark') root.classList.add('dark');
-    else root.classList.remove('dark');
-  }, [theme]);
-}
+    if (themeLink) {
+      themeLink.href = `primereact/resources/themes/${theme}/theme.css`;
+      console.log("Theme applied:", themeLink.href); // Check if this outputs correctly
+    }
+  }, [isDarkMode]);
+};
 
 export default useApplyTheme;
