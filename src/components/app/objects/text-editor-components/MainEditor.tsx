@@ -72,9 +72,7 @@ const MainEditor: React.FC = () => {
             <LuHeading size={20} />
             <span className="text-sm">Headers</span>
             </button>
-            </Popover>
-          {/* Dropdown Menu */}
-          
+            </Popover>          
         </div> */}
       </div>
 
