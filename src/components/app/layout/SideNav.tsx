@@ -32,14 +32,17 @@ const routes = [
 
 const projects = [
   {
+    id: 1,
     name: "Project 1",
     color: "#a84e32",
   },
   {
+    id: 2,
     name: "Project 2",
     color: "#3244a8",
   },
   {
+    id: 3,
     name: "Project 3",
     color: "#d95a00",
   },
@@ -52,7 +55,7 @@ const SideNav: React.FC = () => {
   const currentTheme = themes[themeName];
 
   return (
-    <div className={`w-full p-4 ${currentTheme.bg} relative min-h-screen max-h-screen flex flex-col transition-all border-r ${currentTheme.border} gap-y-4`}>
+    <div className={`w-full p-4 relative min-h-screen max-h-screen flex flex-col transition-all gap-y-4`}>
       <div className="w-full">
         {/* Sidebar content */}
         <div className="w-full">
@@ -63,7 +66,7 @@ const SideNav: React.FC = () => {
                 end={route.path === "/app"}
                 className={({ isActive }) =>
                   isActive
-                    ? `bg-[#40e4a031] dark:bg-[#35aa7931] p-2 mb-2 transition flex items-center gap-x-2 rounded-lg ${
+                    ? `${currentTheme.textBg} p-2 mb-2 transition flex items-center gap-x-2 rounded-lg ${
                         isNavOpen ? "" : "justify-center"
                       }`
                     : `${currentTheme.textHover} p-2 mb-2 transition flex items-center gap-x-2 rounded-lg ${
@@ -104,7 +107,7 @@ const SideNav: React.FC = () => {
                   onMouseLeave={(e) =>
                     (e.currentTarget.style.backgroundColor = "transparent")
                   } // Reset color on leave
-                  onClick={() => navigate(project.name)} // Use navigate on list item
+                  onClick={() => navigate(`project/${project.id}`)} // Use navigate on list item
                 >
                   {/* Project icon and name */}
                   <div className="flex items-center gap-x-2">

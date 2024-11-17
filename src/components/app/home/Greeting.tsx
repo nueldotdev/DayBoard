@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatFullDate, formatTime } from "../../../utils/timeFormat";
-import { HiOutlinePlusCircle,  HiOutlineDocumentText,
-  HiOutlineCheckCircle } from "react-icons/hi2";
+import { HiOutlineDocumentText,
+  HiOutlineCheckCircle, HiOutlineBell } from "react-icons/hi2";
 import Popover from "../objects/Popover";
 import useThemeStore from "../../../store/themeStore";
 import { themes } from "../../../themeConfig";
@@ -51,7 +51,7 @@ const Greeting: React.FC<GreetingProps> = ({ userName, onComplete }) => {
 
   const PopContent: React.FC = () => {
     return (
-      <div className={`w-full break-normal p-1 rounded-md border flex flex-col space-y-2 ${currentTheme.border} ${currentTheme.bg}`}>
+      <div className={`w-full break-normal p-1 border rounded-md flex flex-col space-y-2 ${currentTheme.border} ${currentTheme.bg}`}>
         <button className={`flex w-full items-center gap-x-2 text-base ${currentTheme.btnHover} p-2 px-4 rounded-md`}>
           <HiOutlineDocumentText />
           New Note
@@ -96,8 +96,8 @@ const Greeting: React.FC<GreetingProps> = ({ userName, onComplete }) => {
 
       <div>
         <Popover content={<PopContent />}>
-          <button className={`p-2 rounded-md ${currentTheme.btnHover} ${currentTheme.text}   cursor-pointer transition-colors`}>
-            <HiOutlinePlusCircle size={24} />
+          <button className={`p-2 rounded-md ${currentTheme.btnHover} ${currentTheme.text} cursor-pointer transition-colors`}>
+            <HiOutlineBell size={24} />
           </button>
         </Popover>
       </div>

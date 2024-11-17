@@ -5,6 +5,7 @@ import HomePage from '../pages/app/HomePage'
 import NotesPage from '../pages/app/NotesPage'
 import TasksPage from '../pages/app/TasksPage'
 import SettingsPage from '../pages/app/SettingsPage'
+import NoteDetail from '../pages/app/detail/NoteDetail'
 
 
 const AppRouter: React.FC = () => {
@@ -16,10 +17,11 @@ const AppRouter: React.FC = () => {
           <Route path='/notes' element={<NotesPage />} />
           <Route path='/tasks' element={<TasksPage />} />
           <Route path='/settings' element={<SettingsPage />} />
+          {/* <Route path='/project/:projectId' element={<NoteDetail />} /> */}
         </Route>
       </Routes>
     </Router>
-  )
+  );
 }
 
-export default AppRouter
+export default AppRouter;

@@ -10,14 +10,17 @@ const PopContent: React.FC = () => {
   const currentTheme = themes[themeName];
 
   return (
-    <ul className={`p-1 ${currentTheme.bg} border ${currentTheme.border} rounded-md`}>
+    <ul className={`p-1 ${currentTheme.bg} border ${currentTheme.border} rounded-md w-48`}>
       {Object.keys(themes).map((theme) => (
         <li
           key={theme}
-          className={`px-4 py-2 cursor-pointer ${currentTheme.btnHover} rounded-md ${
-            themeName === theme ? 'font-semibold' : ''
+          className={`px-4 py-2 w-full cursor-pointer ${currentTheme.btnHover} rounded-md ${
+            themeName === theme ? `font-semibold ${currentTheme.textBg}` : ''
           }`}
-          onClick={() => setTheme(theme as keyof typeof themes)}
+          onClick={() => {
+            setTheme(theme as keyof typeof themes);
+            localStorage.setItem('theme', theme);
+          }}
         >
           {theme.charAt(0).toUpperCase() + theme.slice(1)}
         </li>
