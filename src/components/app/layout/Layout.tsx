@@ -5,6 +5,7 @@ import { Outlet } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import useThemeStore from '../../../store/themeStore';
 import { themes } from '../../../themeConfig';
+import MiniPomo from '../home/time/MiniPomo';
 
 const Layout: React.FC = () => {
   const { themeName } = useThemeStore();
@@ -23,7 +24,8 @@ const Layout: React.FC = () => {
           <SideNav />
         </div>
         <div className='w-full overflow-auto'>
-          <Outlet />    
+          <Outlet />   
+          <MiniPomo />
         </div>
       </div>
     </div>

@@ -52,4 +52,8 @@
   .timer-cards {
     @apply p-4 border rounded shadow transition-colors
   }
+
+  .mini-timer-btn {
+    @apply p-1 rounded-full transition-all border-transparent border flex justify-center items-center hover:scale-150
+  }
 }

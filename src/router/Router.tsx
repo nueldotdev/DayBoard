@@ -6,6 +6,7 @@ import NotesPage from '../pages/app/NotesPage'
 import TasksPage from '../pages/app/TasksPage'
 import SettingsPage from '../pages/app/SettingsPage'
 import NoteDetail from '../pages/app/detail/NoteDetail'
+import PomodoroTimer from '../components/app/home/time/Pomodoro'
 
 
 const AppRouter: React.FC = () => {
@@ -17,6 +18,7 @@ const AppRouter: React.FC = () => {
           <Route path='/notes' element={<NotesPage />} />
           <Route path='/tasks' element={<TasksPage />} />
           <Route path='/settings' element={<SettingsPage />} />
+          <Route path='/test-pomo' element={<PomodoroTimer />} />
           {/* <Route path='/project/:projectId' element={<NoteDetail />} /> */}
         </Route>
       </Routes>

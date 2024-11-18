@@ -3,7 +3,7 @@ export const themes = {
     bg: "bg-white",
     text: "text-black",
     textSecondary: "text-black/30",
-    primary: "text-green-500",
+    primary: "green-500",
     border: "border-zinc-300",
     secondary: "text-gray-500",
 
@@ -23,7 +23,7 @@ export const themes = {
     bg: "bg-zinc-900",
     text: "text-white",
     textSecondary: "text-white/30",
-    primary: "text-green-400",
+    primary: "green-400",
     border: "border-zinc-700",
     secondary: "text-gray-400",
 

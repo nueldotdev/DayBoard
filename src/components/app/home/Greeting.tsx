@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatFullDate, formatTime } from "../../../utils/timeFormat";
 import { HiOutlineDocumentText,
-  HiOutlineCheckCircle, HiOutlineBell } from "react-icons/hi2";
+  HiOutlineCheckCircle
+} from "react-icons/hi2";
+import { FaRegUserCircle } from "react-icons/fa";
 import Popover from "../objects/Popover";
 import useThemeStore from "../../../store/themeStore";
 import { themes } from "../../../themeConfig";
@@ -97,7 +99,7 @@ const Greeting: React.FC<GreetingProps> = ({ userName, onComplete }) => {
       <div>
         <Popover content={<PopContent />}>
           <button className={`p-2 rounded-md ${currentTheme.btnHover} ${currentTheme.text} cursor-pointer transition-colors`}>
-            <HiOutlineBell size={24} />
+            <FaRegUserCircle size={24} />
           </button>
         </Popover>
       </div>
