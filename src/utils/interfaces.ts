@@ -1,3 +1,8 @@
+import { themes } from "../themeConfig";
+
+
+type Themes = keyof typeof themes;
+type mainTheme = typeof themes[Themes];
 
 interface Task {
   id: string;
@@ -14,4 +19,9 @@ interface TaskListProps {
   onToggleTask: (id: string) => void;
 }
 
-export type { Task, TaskListProps };
+interface TimeComponentsProps {
+  // themeName?: Themes; // Commented but my use later on in development
+  theme: mainTheme; // Use the mainTheme type here
+}
+
+export type { Task, TaskListProps, TimeComponentsProps };

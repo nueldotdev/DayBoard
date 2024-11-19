@@ -10,8 +10,8 @@ const Header: React.FC = () => {
   const currentTheme = themes[themeName];
 
   return (
-    <div className={`${currentTheme.bg} ${currentTheme.text}`}>
-      <header className={`p-4 flex items-center justify-between border-b ${currentTheme.border} `}>
+    <div className={`${currentTheme.sidenav.bg} ${currentTheme.text}`}>
+      <header className={`p-4 flex items-center justify-between `}>
         <div className='flex gap-x-2'>
           <img src="/logo-svg.svg"  alt='Dayboard Logo' />
           <h1 className="text-2xl font-bold">DayBoard</h1>

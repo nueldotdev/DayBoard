@@ -55,7 +55,7 @@ const SideNav: React.FC = () => {
   const currentTheme = themes[themeName];
 
   return (
-    <div className={`w-full p-4 relative min-h-screen max-h-screen flex flex-col transition-all gap-y-4`}>
+    <div className={`w-full p-4 relative min-h-screen max-h-screen flex flex-col transition-all gap-y-4 ${currentTheme.primary}`}>
       <div className="w-full">
         {/* Sidebar content */}
         <div className="w-full">

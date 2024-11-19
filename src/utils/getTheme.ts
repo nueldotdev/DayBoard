@@ -6,5 +6,5 @@ export const getTheme = () => {
   const { themeName } = useThemeStore();
   const currentTheme = themes[themeName];
 
-  return currentTheme;
+  return { currentTheme };
 };

@@ -19,7 +19,7 @@ const MiniPomo: React.FC = () => {
   } = useTimerStore();
 
   // Ensure hooks remain consistent
-  const theme = getTheme();
+  const {currentTheme} = getTheme();
 
   useEffect(() => {
     initializeTimer(); // Restore state on component mount
@@ -36,15 +36,15 @@ const MiniPomo: React.FC = () => {
       </div>
       <div className="flex justify-center gap-x-2 w-full">
         {!isActive ? (
-          <button className={`mini-timer-btn ${theme.btnHover} ${theme.border}`} onClick={startTimer}>
+          <button className={`mini-timer-btn ${currentTheme.btnHover} ${currentTheme.border}`} onClick={startTimer}>
             <HiOutlinePlay />
           </button>
         ) : (
-          <button className={`mini-timer-btn ${theme.btnHover} ${theme.border}`} onClick={pauseTimer}>
+          <button className={`mini-timer-btn ${currentTheme.btnHover} ${currentTheme.border}`} onClick={pauseTimer}>
             <HiOutlinePause />
           </button>
         )}
-        <button className={`mini-timer-btn ${theme.btnHover} ${theme.border}`} onClick={resetTimer}>
+        <button className={`mini-timer-btn ${currentTheme.btnHover} ${currentTheme.border}`} onClick={resetTimer}>
           <HiArrowPath />
         </button>
       </div>

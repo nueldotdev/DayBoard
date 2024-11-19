@@ -18,22 +18,28 @@ interface TimerState {
 export const useTimerStore = create<TimerState>((set, get) => {
   let interval: number;
 
+  /**
+   * Saves the current state of the timer to `localStorage`.
+   * Only saves non-computed properties: `minutes`, `seconds`, `isActive`, and `isWorkSession`.
+   * @function
+   * @private
+   */
   const saveStateToLocalStorage = () => {
-    const { minutes, seconds, isActive, isWorkSession } = get();
-    const timerState = { minutes, seconds, isActive, isWorkSession };
+    const { minutes, seconds, isActive, isWorkSession, hasPreviousSession } = get();
+    const timerState = { minutes, seconds, isActive, isWorkSession, hasPreviousSession };
     localStorage.setItem('timerState', JSON.stringify(timerState));
   };
 
   const initializeTimer = () => {
     const savedState = localStorage.getItem('timerState');
     if (savedState) {
-      const { minutes, seconds, isActive, isWorkSession } = JSON.parse(savedState);
+      const { minutes, seconds, isActive, isWorkSession, hasPreviousSession } = JSON.parse(savedState);
       set({ 
         minutes, 
         seconds, 
-        isActive: false, // Ensure the timer is not running on load
+        isActive, // Ensure the timer is not running on load
         isWorkSession, 
-        hasPreviousSession: isActive // Show "Continue" only if the timer was active
+        hasPreviousSession // Show "Continue" only if the timer was active
       });
     }
   };
@@ -83,7 +89,7 @@ export const useTimerStore = create<TimerState>((set, get) => {
     getNotif()
 
     clearInterval(interval);
-    set({ isActive: false });
+    set({ isActive: false, hasPreviousSession: true });
     saveStateToLocalStorage();
   };
 
@@ -100,7 +106,7 @@ export const useTimerStore = create<TimerState>((set, get) => {
     clearInterval(interval);
     set((state) => ({
       isWorkSession: !state.isWorkSession,
-      minutes: state.isWorkSession ? 5 : 1,
+      minutes: state.isWorkSession ? 1 : 1,
       seconds: 0,
       isActive: false,
       hasPreviousSession: false,

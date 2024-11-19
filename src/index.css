@@ -56,4 +56,8 @@
   .mini-timer-btn {
     @apply p-1 rounded-full transition-all border-transparent border flex justify-center items-center hover:scale-150
   }
+
+  .fill-all {
+    @apply w-full h-full
+  }
 }
