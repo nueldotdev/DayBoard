@@ -1,12 +1,13 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import PomodoroTimer from '../components/app/home/time/Pomodoro'
 import Layout from '../components/app/layout/Layout'
 import HomePage from '../pages/app/HomePage'
 import NotesPage from '../pages/app/NotesPage'
-import TasksPage from '../pages/app/TasksPage'
 import SettingsPage from '../pages/app/SettingsPage'
-import NoteDetail from '../pages/app/detail/NoteDetail'
-import PomodoroTimer from '../components/app/home/time/Pomodoro'
+import TasksPage from '../pages/app/TasksPage'
+import ProjectDetail from '../pages/app/project/ProjectDetail'
+import KanbanContainer from '../components/app/objects/project-components/KanbanContainer'
 
 
 const AppRouter: React.FC = () => {
@@ -19,7 +20,9 @@ const AppRouter: React.FC = () => {
           <Route path='/tasks' element={<TasksPage />} />
           <Route path='/settings' element={<SettingsPage />} />
           <Route path='/test-pomo' element={<PomodoroTimer />} />
-          {/* <Route path='/project/:projectId' element={<NoteDetail />} /> */}
+          <Route path='/test-kanban' element={<KanbanContainer />} />
+          <Route path='/project/:projectId' element={<ProjectDetail />} />
+          <Route path='/project/:projectId/:sectionId' element={<ProjectDetail />} />
         </Route>
       </Routes>
     </Router>

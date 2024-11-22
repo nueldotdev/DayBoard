@@ -25,6 +25,12 @@ export const themes = {
       hover: "hover:bg-gray-200",
       border: "border-gray-300",
     },
+
+    kanban: {
+      bg: "bg-zinc-200",
+      text: "text-black",
+      hover: "hover:bg-zinc-300",
+    }
   },
 
   dark: {
@@ -53,6 +59,12 @@ export const themes = {
       hover: "hover:bg-zinc-700",
       border: "border-zinc-700",
     },
+
+    kanban: {
+      bg: "bg-zinc-800",
+      text: "text-white",
+      hover: "hover:bg-zinc-700",
+    }
   },
 
   solarized: {
@@ -81,6 +93,12 @@ export const themes = {
       hover: "hover:bg-[#fdf6e3]",
       border: "border-[#93a1a1]",
     },
+
+    kanban: {
+      bg: "bg-[#eee8d5]",
+      text: "text-[#657b83]",
+      hover: "hover:bg-[#657b8321]",
+    }
   },
 
   dracula: {
@@ -109,6 +127,12 @@ export const themes = {
       hover: "hover:bg-[#282a36]",
       border: "border-[#bd93f9]",
     },
+
+    kanban: {
+      bg: "bg-[#282a36]",
+      text: "text-[#f8f8f2]",
+      hover: "hover:bg-[#44475a]",
+    }
   },
 
   monokai: {
@@ -137,6 +161,12 @@ export const themes = {
       hover: "hover:bg-[#3e3d32]",
       border: "border-[#a59f85]",
     },
+
+    kanban: {
+      bg: "bg-[#272822]",
+      text: "text-[#f8f8f2]",
+      hover: "hover:bg-[#3e3d32]",
+    }
   },
 
   pastel: {
@@ -165,6 +195,12 @@ export const themes = {
       hover: "hover:bg-[#fef3e3]",
       border: "border-[#ffd1dc]",
     },
+
+    kanban: {
+      bg: "bg-[#fff0e1]",
+      text: "text-[#4b4b4b]",
+      hover: "hover:bg-[#ffcad4]",
+    }
   },
 
   blackWhite: {
@@ -193,5 +229,11 @@ export const themes = {
       hover: "hover:bg-gray-200",
       border: "border-black",
     },
+
+    kanban: {
+      bg: "bg-white",
+      text: "text-black",
+      hover: "hover:bg-gray-200", 
+    }
   },
 };

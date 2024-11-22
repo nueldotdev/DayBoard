@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Greeting from "../../components/app/home/Greeting";
-import Overview from "../../components/app/home/Overview";
 import TimeComponents from "../../components/app/home/TimeComponents";
 
 const HomePage: React.FC = () => {

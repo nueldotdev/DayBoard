@@ -44,7 +44,7 @@ const sectionList = [
 ];
 
 const SectionBox: React.FC = () => {
-  const currentTheme = getTheme();
+  const { currentTheme } = getTheme();
   const [searchQuery, setSearchQuery] = useState('');
   const [visible, setVisible] = useState(false);
 
@@ -55,7 +55,7 @@ const SectionBox: React.FC = () => {
 
   return (
     <>
-    <div className="p-4">
+    <div>
       <div className={`mb-6`}>
         <div className={`flex px-2 py-1 items-center rounded-lg w-fit border ${currentTheme.border}`}>
           <HiMagnifyingGlass size={24} />
@@ -71,7 +71,7 @@ const SectionBox: React.FC = () => {
       </div>
 
       {/* Section boxes (side by side) */}
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap gap-2">
         {filteredSections.map(section => (
           <div
             key={section.id}
@@ -97,7 +97,7 @@ const SectionBox: React.FC = () => {
           {/* Section name and entries */}
           <div className="flex justify-center items-center gap-x-2">{/* Folder Icon with color */}
             <HiOutlinePlus size={20}/>
-            <h2 className="text-lg">New Folder</h2>
+            <h2 className="text-lg">New Section</h2>
           </div>
         </button>
       </div>

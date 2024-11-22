@@ -60,4 +60,12 @@
   .fill-all {
     @apply w-full h-full
   }
+
+  .tc-cards {
+    @apply p-4 border rounded shadow flex flex-col items-start justify-between fill-all
+  }
+
+  .tc-btns {
+    @apply mt-4 p-2 px-4 rounded
+  }
 }

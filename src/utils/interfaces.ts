@@ -5,18 +5,18 @@ type Themes = keyof typeof themes;
 type mainTheme = typeof themes[Themes];
 
 interface Task {
-  id: string;
+  id: number | string;
   title: string;
   description: string;
-  completed: boolean;
+  completed?: boolean;
   dueDate?: Date;
-  priority: "low" | "medium" | "high";
+  priority?: "low" | "medium" | "high";
   estimatedTime?: number;
 }
 
 interface TaskListProps {
   tasks: Task[];
-  onToggleTask: (id: string) => void;
+  onToggleTask: (id: number) => void;
 }
 
 interface TimeComponentsProps {
@@ -24,4 +24,4 @@ interface TimeComponentsProps {
   theme: mainTheme; // Use the mainTheme type here
 }
 
-export type { Task, TaskListProps, TimeComponentsProps };
+export type { Task, TaskListProps, TimeComponentsProps, Themes, mainTheme };
