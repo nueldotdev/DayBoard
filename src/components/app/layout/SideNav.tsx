@@ -6,13 +6,20 @@ import {
   HiOutlineCog6Tooth,
   HiEllipsisHorizontal,
   HiOutlineFolderPlus as HiOutlineFolderPlusIcon,
+  HiOutlineHome,
 } from "react-icons/hi2";
 import { NavLink, useNavigate } from "react-router-dom";
 import useThemeStore from "../../../store/themeStore";
 import { themes } from "../../../themeConfig";
+import Tooltip from "../objects/Tooltip";
 
 const routes = [
-  { path: "/", element: <HiOutlineSquares2X2 size={24} />, name: "Home" },
+  { path: "/", element: <HiOutlineHome size={24} />, name: "Home" },
+  {
+    path: "/projects",
+    element: <HiOutlineSquares2X2 size={24} />,
+    name: "Projects",
+  },
   {
     path: "/notes",
     element: <HiOutlineDocumentText size={24} />,
@@ -55,10 +62,12 @@ const SideNav: React.FC = () => {
   const currentTheme = themes[themeName];
 
   return (
-    <div className={`w-full p-4 relative min-h-screen max-h-screen flex flex-col transition-all gap-y-4 ${currentTheme.primary}`}>
+    <div
+      className={`w-full p-4 relative min-h-screen max-h-screen flex items-center transition-all gap-y-4 ${currentTheme.sidenav.bg}`}
+    >
       <div className="w-full">
         {/* Sidebar content */}
-        <div className="w-full">
+        <div className="w-full -translate-y-1/4">
           {routes.map((route) => (
             <li key={route.path} className="text-dark list-none">
               <NavLink
@@ -66,30 +75,38 @@ const SideNav: React.FC = () => {
                 end={route.path === "/app"}
                 className={({ isActive }) =>
                   isActive
-                    ? `${currentTheme.textBg} p-2 mb-2 transition flex items-center gap-x-2 rounded-lg ${
+                    ? `${
+                        currentTheme.hoverEffects.textBg
+                      } p-2 mb-2 transition flex flex-col items-center gap-x-2 rounded-lg ${
                         isNavOpen ? "" : "justify-center"
                       }`
-                    : `${currentTheme.textHover} p-2 mb-2 transition flex items-center gap-x-2 rounded-lg ${
+                    : `${
+                        currentTheme.hoverEffects.textHover
+                      } p-2 mb-2 transition flex flex-col items-center gap-x-2 rounded-lg ${
                         isNavOpen ? "" : "justify-center"
                       }`
                 }
               >
-                <span className="icon">{route.element}</span>
-                <span className={`text ${isNavOpen ? "" : "hidden"}`}>
-                  {route.name}
-                </span>
+                <Tooltip text={route.name} position="right" theme={currentTheme}>
+                  <span className="icon">{route.element}</span>
+                </Tooltip>
               </NavLink>
             </li>
           ))}
         </div>
       </div>
-      <hr className="w-full border border-[#acacac31] dark:border-[#acacac31]" />
-      <div className="w-full">
+      <hr className="w-full border border-[#acacac31] dark:border-[#acacac31] no-display" />
+      <div className="w-full no-display">
         {/* Footer content */}
         <div className="w-full">
           <div className="mb-2 flex justify-between items-center">
-            <h2 className="text-base text-neutral-500 dark:text-neutral-500">My Projects</h2>
-            <HiOutlineFolderPlusIcon size={18} className="text-neutral-500 cursor-pointer dark:text-neutral-500" />
+            <h2 className="text-base text-neutral-500 dark:text-neutral-500">
+              My Projects
+            </h2>
+            <HiOutlineFolderPlusIcon
+              size={18}
+              className="text-neutral-500 cursor-pointer dark:text-neutral-500"
+            />
           </div>
           <div className="w-full">
             {projects.map((project) => {

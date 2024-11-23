@@ -13,7 +13,6 @@ import { themes } from "../../../themeConfig";
 
 interface GreetingProps {
   userName: string;
-  onComplete: () => void;  // Callback to trigger once animation completes
 }
 
 const getGreeting = () => {
@@ -29,7 +28,7 @@ const getSubText = () => {
   return "How was your day?";
 };
 
-const Greeting: React.FC<GreetingProps> = ({ userName, onComplete }) => {
+const Greeting: React.FC<GreetingProps> = ({ userName }) => {
   const [isVisible, setIsVisible] = useState(true);
   const [time, setTime] = useState(formatTime(new Date()));
   const [fullDate, setFullDate] = useState(formatFullDate(new Date()));
@@ -53,12 +52,12 @@ const Greeting: React.FC<GreetingProps> = ({ userName, onComplete }) => {
 
   const PopContent: React.FC = () => {
     return (
-      <div className={`w-full break-normal p-1 border rounded-md flex flex-col space-y-2 ${currentTheme.border} ${currentTheme.bg}`}>
-        <button className={`flex w-full items-center gap-x-2 text-base ${currentTheme.btnHover} p-2 px-4 rounded-md`}>
+      <div className={`w-full break-normal p-1 border rounded-md flex flex-col space-y-2 ${currentTheme.global.border} ${currentTheme.global.bg}`}>
+        <button className={`flex w-full items-center gap-x-2 text-base ${currentTheme.hoverEffects.btnHover} p-2 px-4 rounded-md`}>
           <HiOutlineDocumentText />
           New Note
         </button>
-        <button className={`flex w-full items-center gap-x-2 text-base ${currentTheme.btnHover} p-2 px-4 rounded-md`}>
+        <button className={`flex w-full items-center gap-x-2 text-base ${currentTheme.hoverEffects.btnHover} p-2 px-4 rounded-md`}>
           <HiOutlineCheckCircle />
           New Task
         </button>
@@ -69,7 +68,7 @@ const Greeting: React.FC<GreetingProps> = ({ userName, onComplete }) => {
 
   return (
     <div className="greeting-message">
-      <AnimatePresence onExitComplete={onComplete}>
+      <AnimatePresence>
         {isVisible ? (
           <motion.div
             key="greeting"
@@ -98,7 +97,7 @@ const Greeting: React.FC<GreetingProps> = ({ userName, onComplete }) => {
 
       <div>
         <Popover content={<PopContent />}>
-          <button className={`p-2 rounded-md ${currentTheme.btnHover} ${currentTheme.text} cursor-pointer transition-colors`}>
+          <button className={`p-2 rounded-md ${currentTheme.hoverEffects.btnHover} ${currentTheme.global.text} cursor-pointer transition-colors`}>
             <FaRegUserCircle size={24} />
           </button>
         </Popover>

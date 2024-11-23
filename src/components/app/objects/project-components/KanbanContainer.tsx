@@ -49,7 +49,7 @@ const KanbanContainer: React.FC = () => {
   };
 
   return (
-    <div className='fill-all p-4'>
+    <div className='fill-all'>
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className="flex space-x-1 w-full min-h-full">
           {Object.entries(boards).map(([boardTitle, tasks]) => (

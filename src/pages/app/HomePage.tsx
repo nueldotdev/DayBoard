@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import Greeting from "../../components/app/home/Greeting";
 import TimeComponents from "../../components/app/home/TimeComponents";
 
 const HomePage: React.FC = () => {
-  const [showGreeting, setShowGreeting] = useState(true);
 
   return (
     <div className="flex flex-col min-h-full max-h-full h-full">
       <div className=''>
-      <Greeting userName="Nuel" onComplete={() => setShowGreeting(true)} />
+      <Greeting userName="Nuel" />
       </div>
       <div className="">
         <TimeComponents />

@@ -12,7 +12,7 @@ const FocusStreaks: React.FC<TimeComponentsProps> = ({theme}) => {
 
 
   return (
-    <div className={`tc-cards ${theme.textBg} ${theme.sidenav.border}`}>
+    <div className={`tc-cards ${theme.hoverEffects.textBg} ${theme.sidenav.border}`}>
       <HiOutlineFire className="text-2xl mb-2 text-red-500" />
       <h2 className="text-lg font-bold">Focus Streaks</h2>
       <p className="mt-2 text-sm">

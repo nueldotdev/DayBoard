@@ -18,7 +18,7 @@ export function TaskCard({ task, onToggle }: TaskCardProps) {
 
   return (
     <div className={`
-      group w-full p-4 ${currentTheme.bg} ${currentTheme.btnHover} ${currentTheme.border} transition-colors
+      group w-full p-4 ${currentTheme.global.bg} ${currentTheme.hoverEffects.btnHover} ${currentTheme.global.border} transition-colors
       border rounded-lg shadow-sm
       flex flex-col gap-2
       ${task?.completed ? "opacity-60" : ''}

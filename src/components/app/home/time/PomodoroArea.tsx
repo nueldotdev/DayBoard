@@ -8,7 +8,7 @@ export const PomodoroArea:  React.FC<TimeComponentsProps> = ({theme}) => {
   console.log({isActive, hasPreviousSession});
 
   return (
-    <div className={`tc-cards ${theme.bg} ${theme.border}`}>
+    <div className={`tc-cards ${theme.global.bg} ${theme.global.border}`}>
       <HiOutlineClock className="text-2xl mb-2" />
       {isActive || hasPreviousSession ? (
         <PomodoroTimer />
@@ -18,7 +18,7 @@ export const PomodoroArea:  React.FC<TimeComponentsProps> = ({theme}) => {
             <h2 className="text-lg font-bold mt-1">Pomodoro Timer</h2>
             <p>Work for 25 minutes, then take a break!</p>
           </div>
-          <button onClick={startTimer} className={`tc-btns ${theme.textBg}`}>
+          <button onClick={startTimer} className={`tc-btns ${theme.hoverEffects.textBg}`}>
             Start Timer
           </button>
         </div>

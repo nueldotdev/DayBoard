@@ -57,7 +57,7 @@ const SectionBox: React.FC = () => {
     <>
     <div>
       <div className={`mb-6`}>
-        <div className={`flex px-2 py-1 items-center rounded-lg w-fit border ${currentTheme.border}`}>
+        <div className={`flex px-2 py-1 items-center rounded-lg w-fit border ${currentTheme.global.border}`}>
           <HiMagnifyingGlass size={24} />
           {/* Search bar */}
           <input
@@ -65,7 +65,7 @@ const SectionBox: React.FC = () => {
             placeholder="Search sections..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={`p-2 ${currentTheme.bg} ${currentTheme.text} placeholder:${currentTheme.textSecondary} focus:outline-none rounded-lg`}
+            className={`p-2 ${currentTheme.global.bg} ${currentTheme.global.text} placeholder:${currentTheme.global.textSecondary} focus:outline-none rounded-lg`}
           />
         </div>
       </div>
@@ -88,12 +88,12 @@ const SectionBox: React.FC = () => {
 
             {/* Chevron icon for opening (placeholder) */}
             <div className='flex'>
-              <span className={`text-sm ${currentTheme.textSecondary}`}>{section.entries}</span>
+              <span className={`text-sm ${currentTheme.global.textSecondary}`}>{section.entries}</span>
               <span className="text-xl"><HiChevronRight /></span>
             </div>
           </div>
         ))}
-        <button className={`flex items-center justify-center p-4 rounded-lg shadow-md w-64 border-dashed border-2 ${currentTheme.border}`} onClick={() => setVisible(true)} >
+        <button className={`flex items-center justify-center p-4 rounded-lg shadow-md w-64 border-dashed border-2 ${currentTheme.global.border}`} onClick={() => setVisible(true)} >
           {/* Section name and entries */}
           <div className="flex justify-center items-center gap-x-2">{/* Folder Icon with color */}
             <HiOutlinePlus size={20}/>

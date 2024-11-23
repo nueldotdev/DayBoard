@@ -10,11 +10,11 @@ const Header: React.FC = () => {
   const currentTheme = themes[themeName];
 
   return (
-    <div className={`${currentTheme.sidenav.bg} ${currentTheme.text}`}>
-      <header className={`p-4 flex items-center justify-between `}>
-        <div className='flex gap-x-2'>
-          <img src="/logo-svg.svg"  alt='Dayboard Logo' />
-          <h1 className="text-2xl font-bold">DayBoard</h1>
+    <div className={`${currentTheme.sidenav.bg} ${currentTheme.global.text} flex items-center justify-center`}>
+      <header className={`flex items-center justify-center`}>
+        <div className='p-4 flex items-center justify-center'>
+          <img src="/logo-svg.svg"  alt='Dayboard Logo' className="w-8 h-8" />
+          {/* <h1 className="text-2xl font-bold">DayBoard</h1> */}
         </div>
         <ThemeToggle />
       </header>

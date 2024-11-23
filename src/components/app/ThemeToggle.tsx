@@ -10,12 +10,12 @@ const PopContent: React.FC = () => {
   const currentTheme = themes[themeName];
 
   return (
-    <ul className={`p-1 ${currentTheme.bg} border ${currentTheme.border} rounded-md w-48`}>
+    <ul className={`p-1 ${currentTheme.global.bg} border ${currentTheme.global.border} rounded-md w-48`}>
       {Object.keys(themes).map((theme) => (
         <li
           key={theme}
-          className={`px-4 py-2 w-full cursor-pointer ${currentTheme.btnHover} rounded-md ${
-            themeName === theme ? `font-semibold ${currentTheme.textBg}` : ''
+          className={`px-4 py-2 w-full cursor-pointer ${currentTheme.hoverEffects.btnHover} rounded-md ${
+            themeName === theme ? `font-semibold ${currentTheme.hoverEffects.textBg}` : ''
           }`}
           onClick={() => {
             setTheme(theme as keyof typeof themes);
@@ -36,7 +36,7 @@ const ThemeToggle: React.FC = () => {
   return (
     <Popover content={<PopContent />}>
       <button
-        className={`p-2 rounded-md ${currentTheme.btnHover} ${currentTheme.text} cursor-pointer transition-colors`}
+        className={`p-2 rounded-md ${currentTheme.hoverEffects.btnHover} ${currentTheme.global.text} cursor-pointer transition-colors`}
       >
         {/* {themeName === 'light' && <HiOutlineSun size={18} />}
         {themeName === 'dark' && <HiMoon size={18} />}

@@ -6,12 +6,12 @@ import { mainTheme, Task } from '../../../../utils/interfaces';
 interface KanbanBoardProps {
   title: string;
   theme: mainTheme;
-  bgColor: string;
+  bgColor?: string;
   tasks: Task[];
   className: string;
 }
 
-const KanbanBoard: React.FC<KanbanBoardProps> = ({ title, theme, bgColor, tasks, className }) => {
+const KanbanBoard: React.FC<KanbanBoardProps> = ({ title, theme, tasks, className }) => {
   return (
     <div className={`px-1 rounded ${className}`}>
       <h2 className={`text-base font-bold mb-4 ${theme.sidenav.bg} border-b-2 ${theme.sidenav.border} p-2 rounded-t-md`}>{title}</h2>

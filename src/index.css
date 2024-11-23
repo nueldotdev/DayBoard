@@ -68,4 +68,8 @@
   .tc-btns {
     @apply mt-4 p-2 px-4 rounded
   }
+
+  .no-display{ 
+    display: none;
+  }
 }

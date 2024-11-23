@@ -9,8 +9,8 @@ const NotesPage: React.FC = () => {
   return (
     <>
       <div className="w-full h-full flex gap-2 p-4 ">
-        <div className={`w-[45%] h-full ${currentTheme.border} border`}></div>
-        <div className={`w-full h-full ${currentTheme.border} border`}>
+        <div className={`w-[45%] h-full ${currentTheme.global.border} border`}></div>
+        <div className={`w-full h-full ${currentTheme.global.border} border`}>
           <MainEditor />
         </div>
       </div>
