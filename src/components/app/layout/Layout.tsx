@@ -16,10 +16,6 @@ const Layout: React.FC = () => {
       {/* <Header /> */}
       <div className={`flex ${currentTheme.global.bg} max-h-full min-h-full h-full`}>
         <div className={`h-full border-r ${currentTheme.global.border} ${currentTheme.sidenav.bg}`}>
-          {/* <div className='flex gap-x-2 p-4'>
-            <img src="/logo-svg.svg"  alt='Dayboard Logo' />
-            <h1 className="text-2xl font-bold">DayBoard</h1>
-          </div> */}
           <Header />
           <SideNav />
         </div>

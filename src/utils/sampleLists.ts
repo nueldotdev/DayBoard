@@ -1,9 +1,4 @@
-import React from "react";
-import ProjectList from "../../../components/app/projects/main/ProjectList";
-import { getTheme } from "../../../utils/getTheme";
-import usePageTitle from "../../../hooks/usePageTitle";
-
-const projects = [
+export const projects = [
   {
     id: 1,
     title: "Digital Ocean",
@@ -28,20 +23,41 @@ const projects = [
   // Add more project objects as needed...
 ];
 
-
-const ProjectsPage: React.FC = () => {
-  const { currentTheme } = getTheme();
-
-  // Set page title
-  usePageTitle("Projects");
-
-  return (
-    <>
-      <div className="w-full h-full flex">
-        <ProjectList theme={currentTheme} />
-      </div>
-    </>
-  );
-};
-
-export default ProjectsPage;
+export const sectionList = [
+  {
+    id: 1,
+    name: "Myvie",
+    entries: 12,
+    color: "#ff0000",
+  },
+  {
+    id: 2,
+    name: "MagniVerse",
+    entries: 3,
+    color: "#00ff00",
+  },
+  {
+    id: 3,
+    name: "Clink",
+    entries: 0,
+    color: "#0000ff",
+  },
+  {
+    id: 4,
+    name: "Re-Call",
+    entries: 3,
+    color: "#fff371",
+  },
+  {
+    id: 5,
+    name: "Notem",
+    entries: 3,
+    color: "#72ff43",
+  },
+  {
+    id: 6,
+    name: "PixelPals",
+    entries: 7,
+    color: "#77ffef",
+  },
+];

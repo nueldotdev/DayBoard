@@ -49,9 +49,9 @@ const KanbanContainer: React.FC = () => {
   };
 
   return (
-    <div className='fill-all'>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <div className="flex space-x-1 w-full min-h-full">
+    <div className='fill-all p-4'>
+      <DragDropContext onDragEnd={handleDragEnd} >
+        <div className="flex space-x-4 w-full h-full overflow-auto">
           {Object.entries(boards).map(([boardTitle, tasks]) => (
             <KanbanBoard
               key={boardTitle}
@@ -59,7 +59,7 @@ const KanbanContainer: React.FC = () => {
               theme={currentTheme}
               bgColor="#f3f4f6"
               tasks={tasks}
-              className='w-full'
+              className={`w-full ${currentTheme.sidenav.bg} rounded-md pb-2 h-min max-h-full`}
             />
           ))}
         </div>

@@ -9,6 +9,7 @@ import SettingsPage from '../pages/app/SettingsPage'
 import TasksPage from '../pages/app/TasksPage'
 import ProjectDetail from '../pages/app/project/ProjectDetail'
 import ProjectsPage from '../pages/app/project/ProjectsPage'
+import ProjectSection from '../pages/app/project/ProjectSection'
 
 
 const AppRouter: React.FC = () => {
@@ -24,6 +25,7 @@ const AppRouter: React.FC = () => {
           <Route path='/test-kanban' element={<KanbanContainer />} />
           <Route path='/projects' element={<ProjectsPage />} />
           <Route path='/projects/:projectId' element={<ProjectDetail />} />
+          <Route path='/projects/:projectId/:sectionId' element={<ProjectSection />} />
         </Route>
       </Routes>
     </Router>

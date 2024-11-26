@@ -1,31 +1,7 @@
 import React from "react";
 import { mainTheme } from "../../../../utils/interfaces";
 import { Link } from "react-router-dom";
-
-const projects = [
-  {
-    id: 1,
-    title: "Digital Ocean",
-    subtitle: "Social Media Strategy · Social Media Branding",
-    daysLeft: "2 days left",
-    progress: 56,
-    avatars: [
-      "https://ui-avatars.com/api/?name=Alice+Brown&background=random",
-      "https://ui-avatars.com/api/?name=Bob+Johnson&background=random",
-    ],
-  },
-  {
-    id: 2,
-    title: "IBM",
-    subtitle: "Branding IBM Lab Company · Social Media Strategy · Website Concept",
-    progress: 82,
-    avatars: [
-      "https://ui-avatars.com/api/?name=Alice+Brown&background=random",
-      "https://ui-avatars.com/api/?name=Bob+Johnson&background=random",
-    ],
-  },
-  // Add more project objects as needed...
-];
+import { projects } from "../../../../utils/sampleLists";
 
 interface ComponentProps {
   theme: mainTheme;
@@ -40,7 +16,9 @@ const ProjectList: React.FC<ComponentProps> = ({theme}) => {
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Projects</h1>
-        <button className={`${currentTheme.global.textPrimary} px-4 py-2 rounded-lg`}>
+        <button 
+          className={`${currentTheme.global.textPrimary} ${currentTheme.hoverEffects.btnHover} border ${currentTheme.global.border} transition-colors px-4 py-2 rounded-lg`}
+        >
           Add New Project
         </button>
       </div>

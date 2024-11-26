@@ -1,50 +1,100 @@
-import React from 'react';
-import { Droppable, Draggable } from '@hello-pangea/dnd';
-import { TaskCard } from '../TaskCard';
-import { mainTheme, Task } from '../../../../utils/interfaces';
+import React from "react";
+import { Droppable, Draggable } from "@hello-pangea/dnd";
+import { TaskCard } from "../TaskCard";
+import { mainTheme, Task } from "../../../../utils/interfaces";
 
 interface KanbanBoardProps {
   title: string;
   theme: mainTheme;
   bgColor?: string;
   tasks: Task[];
-  className: string;
+  className?: string;
+  drag?: any;
+  style?: any;
+  ref?: any;
+  dragHandleProps?: any;
 }
 
-const KanbanBoard: React.FC<KanbanBoardProps> = ({ title, theme, tasks, className }) => {
+const KanbanBoard: React.FC<KanbanBoardProps> = ({
+  title,
+  theme,
+  tasks,
+  className,
+  drag
+}) => {
   return (
-    <div className={`px-1 rounded ${className}`}>
-      <h2 className={`text-base font-bold mb-4 ${theme.sidenav.bg} border-b-2 ${theme.sidenav.border} p-2 rounded-t-md`}>{title}</h2>
+    <div 
+      className={`px-1 rounded ${className}`} 
+      {...drag}
+    >
+      <h2
+        className={`text-base font-bold mb-4 ${theme.sidenav.bg} border-b-2 ${theme.sidenav.border} p-2 rounded-t-md`}
+      >
+        {title}
+      </h2>
       <Droppable droppableId={title}>
         {(provided) => (
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className="space-y-2 min-h-[200px]" // Ensure there's space for droppable even if no tasks
+            className="space-y-2 min-h-[40px]" // Ensure there's space for droppable even if no tasks
           >
             {tasks.map((task, index) => (
-              <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
-                {(provided) => (
+              <Draggable
+                key={task.id}
+                draggableId={task.id.toString()}
+                index={index}
+              >
+                {(provided, snapshot) => (
                   <div
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
+                    style={{
+                      ...provided.draggableProps.style,
+                      transform: snapshot.isDragging
+                        ? `${provided.draggableProps.style?.transform} rotate(5deg)`
+                        : provided.draggableProps.style?.transform,
+                      transition: snapshot.isDragging
+                        ? ""
+                        : "none",
+                    }}
+                    className={`rounded-md shadow ${dndStyle(snapshot)}`}
                   >
                     <TaskCard
                       key={task.id}
                       task={task}
-                      onToggle={() => { /* implement toggle function */ }}
+                      onToggle={() => {
+                        /* implement toggle function */
+                      }}
                     />
                   </div>
                 )}
               </Draggable>
             ))}
             {provided.placeholder}
+            <button
+              className={`${theme.global.textPrimary} ${theme.hoverEffects.btnHover} border border-dashed opacity-50 hover:opacity-100 ${theme.global.border}  px-4 py-2 rounded-lg w-full transition-all`}
+            >
+              {/* Section name and entries */}
+              <div className="flex justify-center items-center gap-x-2">
+                {/* Folder Icon with color */}
+                {/* <HiOutlinePlus size={20} /> */}
+                <h2 className="text-base">New Card</h2>
+              </div>
+            </button>
           </div>
         )}
       </Droppable>
     </div>
   );
+};
+
+const dndStyle = (snapshot?: any) => {
+  if (snapshot.isDragging) {
+    return "opacity-75 scale-105"; // Slight scale effect and faded look
+  }
+  return "";
 };
 
 export default KanbanBoard;

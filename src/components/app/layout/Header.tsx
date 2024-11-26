@@ -16,7 +16,7 @@ const Header: React.FC = () => {
           <img src="/logo-svg.svg"  alt='Dayboard Logo' className="w-8 h-8" />
           {/* <h1 className="text-2xl font-bold">DayBoard</h1> */}
         </div>
-        <ThemeToggle />
+        {/* <ThemeToggle /> */}
       </header>
       {/* Other components go here */}
     </div>

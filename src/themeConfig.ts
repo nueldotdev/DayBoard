@@ -31,6 +31,11 @@ export const themes = {
       text: "text-black",
       hover: "hover:bg-zinc-300",
     },
+
+    kbHead: {
+      bg: "bg-zinc-200/20",
+      text: "text-black",
+    },
   },
 
   dark: {
@@ -64,6 +69,11 @@ export const themes = {
       bg: "bg-zinc-800",
       text: "text-white",
       hover: "hover:bg-zinc-700",
+    },
+
+    kbHead: {
+      bg: "bg-zinc-800/20",
+      text: "text-white",
     },
   },
 
@@ -99,6 +109,11 @@ export const themes = {
       text: "text-[#657b83]",
       hover: "hover:bg-[#657b8321]",
     },
+
+    kbHead: {
+      bg: "bg-[#eee8d521]",
+      text: "text-[#657b83]",
+    },
   },
 
   dracula: {
@@ -132,6 +147,11 @@ export const themes = {
       bg: "bg-[#282a36]",
       text: "text-[#f8f8f2]",
       hover: "hover:bg-[#44475a]",
+    },
+
+    kbHead: {
+      bg: "bg-[#282a3621]",
+      text: "text-[#f8f8f2]",
     },
   },
 
@@ -167,6 +187,11 @@ export const themes = {
       text: "text-[#d8dee9]",
       hover: "hover:bg-[#4c566a]",
     },
+
+    kbHead: {
+      bg: "bg-[#4c566a21]",
+      text: "text-[#d8dee9]",
+    },
   },
 
   gruvbox: {
@@ -201,5 +226,10 @@ export const themes = {
       text: "text-[#ebdbb2]",
       hover: "hover:bg-[#504945]",
     },
+
+    kbHead: {
+      bg: "bg-[#50494521]",
+      text: "text-[#ebdbb2]",
+    }
   },
 };

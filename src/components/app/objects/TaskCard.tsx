@@ -4,6 +4,7 @@ import { HiCalendar, HiClock } from "react-icons/hi2";
 import useThemeStore from "../../../store/themeStore";
 import { themes } from "../../../themeConfig";
 import { Task } from "../../../utils/interfaces";
+import { DraggingStyle } from "@hello-pangea/dnd";
 
 
 interface TaskCardProps {
@@ -18,13 +19,13 @@ export function TaskCard({ task, onToggle }: TaskCardProps) {
 
   return (
     <div className={`
-      group w-full p-4 ${currentTheme.global.bg} ${currentTheme.hoverEffects.btnHover} ${currentTheme.global.border} transition-colors
+      group w-full p-4 ${currentTheme.global.bg} ${currentTheme.global.border} transition-colors
       border rounded-lg shadow-sm
       flex flex-col gap-2
       ${task?.completed ? "opacity-60" : ''}
     `}>
       <div className="flex items-center gap-2">
-        <Checkbox
+        {/* <Checkbox
           checked={task?.completed ?? false}
           onChange={() => onToggle(Number(task.id))}
           // className={`rounded ${currentTheme.btnHover} border ${currentTheme.border} cursor-pointer`}
@@ -35,7 +36,7 @@ export function TaskCard({ task, onToggle }: TaskCardProps) {
             padding: 0, // Ensures no additional padding around the checkbox content
           }}
           color={'red'}
-        />
+        /> */}
         <h3 className={`
           font-medium truncate
           ${task.completed ? "line-through text-muted-foreground" : ''}
@@ -44,9 +45,9 @@ export function TaskCard({ task, onToggle }: TaskCardProps) {
         </h3>
       </div>
       
-      <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
+      {/* <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
         {task.description}
-      </p>
+      </p> */}
       
       <div className="flex items-center gap-4 text-xs text-muted-foreground">
         {task.dueDate && (

@@ -63,11 +63,11 @@ const SideNav: React.FC = () => {
 
   return (
     <div
-      className={`w-full p-4 relative min-h-screen max-h-screen flex items-center transition-all gap-y-4 ${currentTheme.sidenav.bg}`}
+      className={`w-full p-2 relative min-h-screen max-h-screen flex items-start transition-all gap-y-4 ${currentTheme.sidenav.bg}`}
     >
       <div className="w-full">
         {/* Sidebar content */}
-        <div className="w-full -translate-y-1/4">
+        <div className="w-full">
           {routes.map((route) => (
             <li key={route.path} className="text-dark list-none">
               <NavLink
