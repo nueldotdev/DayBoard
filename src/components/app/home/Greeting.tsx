@@ -5,7 +5,7 @@ import { HiOutlineDocumentText,
   HiOutlineCheckCircle
 } from "react-icons/hi2";
 import { FaRegUserCircle } from "react-icons/fa";
-import Popover from "../objects/Popover";
+import Popover from "../objects/ui/Popover";
 import useThemeStore from "../../../store/themeStore";
 import { themes } from "../../../themeConfig";
 

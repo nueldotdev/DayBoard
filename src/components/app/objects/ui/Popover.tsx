@@ -5,9 +5,20 @@ import React, { useState, useRef, useEffect, ReactNode } from 'react';
 interface PopoverProps {
   children: ReactNode;
   content: ReactNode;
+  position?: "top" | "bottom" | "left" | "right" | "bottomRight" | "bottomLeft";
 }
 
-const Popover: React.FC<PopoverProps> = ({ children, content }) => {
+const Popover: React.FC<PopoverProps> = ({ children, content, position = "bottomLeft" }) => {
+
+  const positionClasses = {
+    top: "bottom-full left-1/2 -translate-x-1/2 mb-2",
+    bottom: "top-full left-1/2 -translate-x-1/2 mt-2",
+    left: "right-full top-1/2 -translate-y-1/2 mr-3",
+    right: "left-full top-1/2 -translate-y-1/2 ml-3",
+    bottomRight: "left-full top-1/2 translate-y-4 ml-3",
+    bottomLeft: "right-full top-1/2 translate-y-4 mr-3",
+  };
+
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const popoverRef = useRef<HTMLDivElement | null>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
@@ -50,7 +61,7 @@ const Popover: React.FC<PopoverProps> = ({ children, content }) => {
       {isVisible && (
         <div
           ref={popoverRef}
-          className="popover-content"
+          className={`absolute ${positionClasses[position]} rounded z-10 w-fit`}
         >
           {content}
         </div>

@@ -3,7 +3,7 @@ import { LiaUnderlineSolid } from "react-icons/lia";
 import { FaBold } from "react-icons/fa";
 import { PiTextItalicBold } from "react-icons/pi";
 import { LuHeading } from "react-icons/lu";
-import Popover from "../Popover";
+import Popover from "../ui/Popover";
 
 const MainEditor: React.FC = () => {
   const editorRef = useRef<HTMLDivElement>(null);

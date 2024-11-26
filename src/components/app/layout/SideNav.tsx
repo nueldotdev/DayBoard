@@ -11,7 +11,7 @@ import {
 import { NavLink, useNavigate } from "react-router-dom";
 import useThemeStore from "../../../store/themeStore";
 import { themes } from "../../../themeConfig";
-import Tooltip from "../objects/Tooltip";
+import Tooltip from "../objects/ui/Tooltip";
 
 const routes = [
   { path: "/", element: <HiOutlineHome size={24} />, name: "Home" },

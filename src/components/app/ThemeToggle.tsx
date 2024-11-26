@@ -2,7 +2,7 @@ import React from 'react';
 import useThemeStore from '../../store/themeStore';
 import { themes } from '../../themeConfig';
 import { HiBars2, HiChevronDown, HiMoon, HiOutlineSun } from 'react-icons/hi2';
-import Popover from './objects/Popover';
+import Popover from './objects/ui/Popover';
 
 
 const PopContent: React.FC = () => {

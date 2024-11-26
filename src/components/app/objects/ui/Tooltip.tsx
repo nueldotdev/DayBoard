@@ -1,5 +1,5 @@
 import React from "react";
-import { mainTheme } from "../../../utils/interfaces";
+import { mainTheme } from "../../../../utils/interfaces";
 
 interface TooltipProps {
   text: string; // Text to display in the tooltip
