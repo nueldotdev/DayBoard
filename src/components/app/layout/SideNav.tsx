@@ -7,6 +7,7 @@ import {
   HiEllipsisHorizontal,
   HiOutlineFolderPlus as HiOutlineFolderPlusIcon,
   HiOutlineHome,
+  HiCalendarDays 
 } from "react-icons/hi2";
 import { NavLink, useNavigate } from "react-router-dom";
 import useThemeStore from "../../../store/themeStore";
@@ -14,27 +15,36 @@ import { themes } from "../../../themeConfig";
 import Tooltip from "../objects/ui/Tooltip";
 
 const routes = [
-  { path: "/", element: <HiOutlineHome size={24} />, name: "Home" },
+  { 
+    path: "/", 
+    element: <HiOutlineHome size={24} />, 
+    name: "Home" },
   {
     path: "/projects",
     element: <HiOutlineSquares2X2 size={24} />,
     name: "Projects",
   },
   {
+    path: "/schedule",
+    element: <HiCalendarDays size={24} />,
+    name: "Schedule",
+  },
+  {
     path: "/notes",
     element: <HiOutlineDocumentText size={24} />,
     name: "Notes",
   },
-  {
-    path: "/tasks",
-    element: <HiOutlineCheckCircle size={24} />,
-    name: "Tasks",
-  },
+  // {
+  //   path: "/tasks",
+  //   element: <HiOutlineCheckCircle size={24} />,
+  //   name: "Tasks",
+  // },
   {
     path: "/settings",
     element: <HiOutlineCog6Tooth size={24} />,
     name: "Settings",
   },
+  
 ];
 
 const projects = [

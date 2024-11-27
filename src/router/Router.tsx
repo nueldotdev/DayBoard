@@ -10,6 +10,7 @@ import TasksPage from '../pages/app/TasksPage'
 import ProjectDetail from '../pages/app/project/ProjectDetail'
 import ProjectsPage from '../pages/app/project/ProjectsPage'
 import ProjectSection from '../pages/app/project/ProjectSection'
+import { SchedulePage } from '../pages/app/SchedulePage'
 
 
 const AppRouter: React.FC = () => {
@@ -21,6 +22,7 @@ const AppRouter: React.FC = () => {
           <Route path='/notes' element={<NotesPage />} />
           <Route path='/tasks' element={<TasksPage />} />
           <Route path='/settings' element={<SettingsPage />} />
+          <Route path='/schedule' element={<SchedulePage />} />
           <Route path='/test-pomo' element={<PomodoroTimer />} />
           <Route path='/test-kanban' element={<KanbanContainer />} />
           <Route path='/projects' element={<ProjectsPage />} />

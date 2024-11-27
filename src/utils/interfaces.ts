@@ -1,8 +1,27 @@
+import React from "react";
 import { themes } from "../themeConfig";
 
 
 type Themes = keyof typeof themes;
 type mainTheme = typeof themes[Themes];
+
+
+// Common props we may pass to components
+interface GeneralProps {
+  theme: mainTheme;
+  className?: string;
+  content?: React.ReactNode;
+  children?: React.ReactNode;
+}
+
+
+interface Projects {
+  id: number;
+  name: string;
+  subtitle: string;
+  dueDate?: Date;
+  priority?: "low" | "medium" | "high";
+}
 
 interface Task {
   id: number | string;
@@ -24,4 +43,4 @@ interface TimeComponentsProps {
   theme: mainTheme; // Use the mainTheme type here
 }
 
-export type { Task, TaskListProps, TimeComponentsProps, Themes, mainTheme };
+export type { Task, TaskListProps, TimeComponentsProps, Themes, mainTheme, Projects, GeneralProps };

@@ -17,7 +17,7 @@ const ProjectDetail: React.FC = () => {
   );
 
   // Set page title
-  usePageTitle("Project - " + project?.title);
+  usePageTitle("Project - " + project?.name);
 
   return (
     <div className={`flex flex-col fill-all ${backgroundGradient}`}>  
@@ -25,7 +25,7 @@ const ProjectDetail: React.FC = () => {
         <div className={``}>
           <div className={`${currentTheme.global.textSecondary} flex gap-x-2 items-baseline text-2xl`}>
             <Link to="/projects">Projects</Link> / 
-            <h1 className={`font-bold ${currentTheme.global.textPrimary}`}>{project?.title}</h1>
+            <h1 className={`font-bold ${currentTheme.global.textPrimary}`}>{project?.name}</h1>
           </div>
           <p className={`${currentTheme.global.textSecondary}`}>{project?.subtitle}</p>
         </div>
@@ -41,7 +41,7 @@ const ProjectDetail: React.FC = () => {
         </Popover>
       </div>
       
-      <div className="h-full">
+      <div className="h-full w-full overflow-auto">
         <KanbanContainer />
       </div>
     </div>

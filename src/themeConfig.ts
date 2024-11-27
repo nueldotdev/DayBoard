@@ -3,7 +3,7 @@ export const themes = {
     global: {
       bg: "bg-white",
       text: "text-black",
-      textSecondary: "text-black/30",
+      textSecondary: "text-black/60",
       textPrimary: "text-black",
       brand: "#4CAF50",
       border: "border-zinc-300",
@@ -21,7 +21,7 @@ export const themes = {
       completed: "bg-green-200/60 text-green-800",
     },
     sidenav: {
-      bg: "bg-gray-100",
+      bg: "bg-gray-200",
       text: "text-gray-800",
       hover: "hover:bg-gray-200",
       border: "border-gray-300",

@@ -1,7 +1,7 @@
 import React from 'react';
 import useThemeStore from '../../store/themeStore';
 import { themes } from '../../themeConfig';
-import { HiBars2, HiChevronDown, HiMoon, HiOutlineSun } from 'react-icons/hi2';
+import { HiBars2 } from 'react-icons/hi2';
 import Popover from './objects/ui/Popover';
 
 
@@ -34,14 +34,11 @@ const ThemeToggle: React.FC = () => {
   const currentTheme = themes[themeName];
 
   return (
-    <Popover content={<PopContent />}>
+    <Popover content={<PopContent />} position="bottomRight">
       <button
         className={`p-2 rounded-md ${currentTheme.hoverEffects.btnHover} ${currentTheme.global.text} cursor-pointer transition-colors`}
       >
-        {/* {themeName === 'light' && <HiOutlineSun size={18} />}
-        {themeName === 'dark' && <HiMoon size={18} />}
-        {themeName === 'solarized' && <HiChevronDown size={18} />} */}
-        <HiBars2 size={18} />
+        <p>{themeName.charAt(0).toUpperCase() + themeName.slice(1)}</p>
       </button>
     </Popover>
   );

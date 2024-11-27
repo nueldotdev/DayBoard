@@ -11,6 +11,10 @@
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
+    "@fullcalendar/core": "^6.1.15",
+    "@fullcalendar/daygrid": "^6.1.15",
+    "@fullcalendar/interaction": "^6.1.15",
+    "@fullcalendar/react": "^6.1.15",
     "@hello-pangea/dnd": "^17.0.0",
     "@heroicons/react": "^2.1.5",
     "date-fns": "^4.1.0",
