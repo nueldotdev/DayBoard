@@ -1,15 +1,12 @@
-import React from 'react'
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import { getTheme } from '../../../utils/getTheme';
+import MiniPomo from '../home/time/MiniPomo';
 import Header from './Header';
 import SideNav from './SideNav';
-import { Outlet } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
-import useThemeStore from '../../../store/themeStore';
-import { themes } from '../../../themeConfig';
-import MiniPomo from '../home/time/MiniPomo';
 
 const Layout: React.FC = () => {
-  const { themeName } = useThemeStore();
-  const currentTheme = themes[themeName];
+  const { currentTheme } = getTheme();
 
   return (
     <div className={`fixed max-h-screen min-h-screen h-screen w-full ${currentTheme.global.text} ${currentTheme.global.bg}`}>

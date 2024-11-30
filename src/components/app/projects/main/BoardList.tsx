@@ -55,12 +55,12 @@ const BoardList: React.FC<ComponentProps> = ({ theme, boards }) => {
       <div className="p-4 min-h-screen">
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Projects</h1>
+          <h1 className="text-2xl font-bold">Boards</h1>
           <button
             className={`${currentTheme.global.textPrimary} ${currentTheme.hoverEffects.btnHover} border ${currentTheme.global.border} transition-colors px-4 py-2 rounded-lg`}
             onClick={() => {setModal(!modal)}}
           >
-            Add New Project
+            Add Board
           </button>
         </div>
 
@@ -68,7 +68,7 @@ const BoardList: React.FC<ComponentProps> = ({ theme, boards }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {allBoards.map((board) => (
             <Link
-              to={`/b/${board.id}`}
+              to={`/app/b/${board.id}`}
               key={board.id}
               className={`flex flex-col justify-between rounded-lg shadow hover:shadow-xl transition p-4 ${currentTheme.global.textPrimary} border ${currentTheme.global.border}`}
             >
@@ -99,11 +99,11 @@ const BoardList: React.FC<ComponentProps> = ({ theme, boards }) => {
         theme={currentTheme}
       >
         <div className="p-4">
-          <h2 className="text-xl font-semibold mb-4">Add New Project</h2>
+          <h2 className="text-xl font-semibold mb-4">Add New Board</h2>
           <form>
             <div className="mb-4">
               <label className={`block ${theme.global.textSecondary} text-sm mb-2`}>
-                Project Name
+                Board Name
               </label>
               <input
                 type="text"
@@ -117,7 +117,7 @@ const BoardList: React.FC<ComponentProps> = ({ theme, boards }) => {
             </div>
             <div className="mb-4">
               <label className={`block ${theme.global.textSecondary} text-sm mb-2`}>
-                Project Description
+                Board Description
               </label>
               <textarea
                 className={`${theme.sidenav.bg} input-field resize-none h-[150px]`}
@@ -131,7 +131,7 @@ const BoardList: React.FC<ComponentProps> = ({ theme, boards }) => {
                 type="button"
                 onClick={() => addBoards()}
               >
-                Add Project
+                Add Board
               </button>
             </div>
           </form>

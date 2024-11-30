@@ -11,7 +11,6 @@ const MiniPomo: React.FC = () => {
     seconds,
     isActive,
     isWorkSession,
-    hasPreviousSession,
     initializeTimer,
     startTimer,
     pauseTimer,

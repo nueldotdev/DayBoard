@@ -1,6 +1,5 @@
 import React from "react"
 import useApplyTheme from "../../../hooks/useApplyTheme";
-import ThemeToggle from "../ThemeToggle"
 import useThemeStore from "../../../store/themeStore";
 import { themes } from "../../../themeConfig";
 

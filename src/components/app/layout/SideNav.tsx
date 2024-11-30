@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { } from "react";
 import {
   HiOutlineSquares2X2,
   HiOutlineDocumentText,
-  HiOutlineCheckCircle,
   HiOutlineCog6Tooth,
   HiEllipsisHorizontal,
   HiOutlineFolderPlus as HiOutlineFolderPlusIcon,
@@ -20,17 +19,17 @@ const routes = [
     element: <HiOutlineHome size={24} />, 
     name: "Home" },
   {
-    path: "/p",
+    path: "/app/b",
     element: <HiOutlineSquares2X2 size={24} />,
-    name: "Projects",
+    name: "Boards",
   },
   {
-    path: "/schedule",
+    path: "/app/schedule",
     element: <HiCalendarDays size={24} />,
     name: "Schedule",
   },
   {
-    path: "/notes",
+    path: "/app/notes",
     element: <HiOutlineDocumentText size={24} />,
     name: "Notes",
   },
@@ -40,7 +39,7 @@ const routes = [
   //   name: "Tasks",
   // },
   {
-    path: "/settings",
+    path: "/app/settings",
     element: <HiOutlineCog6Tooth size={24} />,
     name: "Settings",
   },
@@ -67,7 +66,6 @@ const projects = [
 
 const SideNav: React.FC = () => {
   const navigate = useNavigate();
-  const [isNavOpen, setIsNavOpen] = useState(true);
   const { themeName } = useThemeStore();
   const currentTheme = themes[themeName];
 
@@ -87,14 +85,10 @@ const SideNav: React.FC = () => {
                   isActive
                     ? `${
                         currentTheme.hoverEffects.textBg
-                      } p-2 mb-2 transition flex flex-col items-center gap-x-2 rounded-lg ${
-                        isNavOpen ? "" : "justify-center"
-                      }`
+                      } p-2 mb-2 transition flex flex-col items-center gap-x-2 rounded-lg`
                     : `${
                         currentTheme.hoverEffects.textHover
-                      } p-2 mb-2 transition flex flex-col items-center gap-x-2 rounded-lg ${
-                        isNavOpen ? "" : "justify-center"
-                      }`
+                      } p-2 mb-2 transition flex flex-col items-center gap-x-2 rounded-lg`
                 }
               >
                 <Tooltip text={route.name} position="right" theme={currentTheme}>
@@ -126,8 +120,7 @@ const SideNav: React.FC = () => {
               return (
                 <li
                   key={project.name}
-                  className={`flex items-center justify-between list-none w-full p-2 mb-2 transition gap-x-2 rounded-lg cursor-pointer
-              ${isNavOpen ? "" : "justify-center"}`}
+                  className={`flex items-center justify-between list-none w-full p-2 mb-2 transition gap-x-2 rounded-lg cursor-pointer`}
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.backgroundColor = `${project.color}3b`)
                   } // Hover color

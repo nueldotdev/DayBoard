@@ -24,7 +24,7 @@ const ProjectDetail: React.FC = () => {
       <div className={`flex justify-between items-center p-2 hover:shadow-lg ${currentTheme.kbHead.bg} ${currentTheme.hoverEffects.btnHover} transition-all`}>
         <div className={``}>
           <div className={`${currentTheme.global.textSecondary} flex gap-x-2 items-baseline text-2xl`}>
-            <Link to="/projects">Projects</Link> / 
+            <Link to="/app/b">Boards</Link> / 
             <h1 className={`font-bold ${currentTheme.global.textPrimary}`}>{board?.name}</h1>
           </div>
           <p className={`${currentTheme.global.textSecondary}`}>{board?.description}</p>

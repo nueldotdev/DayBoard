@@ -11,7 +11,6 @@ const KanbanContainer: React.FC = () => {
   const { boards, moveTask, addTask, addList } = useKanbanBoardStore(); // Zustand store
   const { currentTheme } = getTheme();
 
-  const [boardEmpty, setBoardEmpty] = useState<boolean>(false);
   const [listModal, setListModal] = useState<boolean>(false);
   const [newListTitle, setNewListTitle] = useState<string>('');
 
@@ -61,7 +60,7 @@ const KanbanContainer: React.FC = () => {
   }
 
   return (
-    <div className="fill-all p-4">
+    <div className="fill-all p-4 kanban-container">
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className="flex space-x-4 w-fit pb-20 pr-4">
           {Object.entries(currentBoard.columns).map(([columnId, tasks]) => (
@@ -82,7 +81,7 @@ const KanbanContainer: React.FC = () => {
               }}
             />       
           ))}
-          <button className={`min-w-[300px] max-w-[300px] flex items-center justify-center rounded-lg p-4 h-min max-h-fit opacity-20 hover:opacity-70 transition ${currentTheme.hoverEffects.btnHover} border ${currentTheme.global.border}`} onClick={() => setListModal(true)}>
+          <button className={`min-w-[300px] max-w-[300px] flex items-center justify-center rounded-lg p-4 h-min max-h-fit opacity-60 hover:opacity-70 transition ${currentTheme.hoverEffects.btnHover} border ${currentTheme.global.border}`} onClick={() => setListModal(true)}>
               New List
           </button>
         </div>

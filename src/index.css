@@ -76,4 +76,45 @@
   .input-field {
     @apply rounded w-full py-2 px-3 leading-tight focus:outline-none
   }
+
+  /* Gradient Shifting Animation */
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* Class for the Animated Header Gradient */
+  .bg-animated-gradient {
+    background: linear-gradient(90deg, #38921d, #1ca82f, #02a010, #2c8112, #318618);
+    background-size: 300% 300%;
+    animation: gradient-shift 6s ease infinite;
+  }
+
+
+
+  /* kanban container scrolling */
+  .kanban-container {
+    overflow-y: auto; /* Enables vertical scrolling */
+  }
+  
+  .kanban-container::-webkit-scrollbar {
+    width: 8px; /* Adjust scrollbar width */
+  }
+  
+  .kanban-container::-webkit-scrollbar-thumb {
+    background-color: #2725254f; /* Emerald green thumb */
+    border-radius: 4px; /* Rounded corners for the thumb */
+  }
+  
+  .kanban-container::-webkit-scrollbar-track {
+    background: transparent; /* No background color for the track */
+  }
+  
 }
