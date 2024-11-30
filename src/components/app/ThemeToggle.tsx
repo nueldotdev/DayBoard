@@ -1,7 +1,7 @@
 import React from 'react';
 import useThemeStore from '../../store/themeStore';
 import { themes } from '../../themeConfig';
-import { HiBars2 } from 'react-icons/hi2';
+// import { HiBars2 } from 'react-icons/hi2';
 import Popover from './objects/ui/Popover';
 
 

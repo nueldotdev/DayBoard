@@ -1,14 +1,14 @@
 import React from 'react'
 import usePageTitle from '../../../hooks/usePageTitle';
 import { useParams } from 'react-router-dom';
-import { getTheme } from '../../../utils/getTheme';
+// import { getTheme } from '../../../utils/getTheme';
 import { boards, sectionList } from '../../../utils/sampleLists';
 import KanbanContainer from '../../../components/app/objects/project-components/KanbanContainer';
 import { getObject } from '../../../hooks/getObj';
 
 
 const ProjectSection: React.FC = () => {
-  const {currentTheme} = getTheme();
+  // const {currentTheme} = getTheme();
 
   // get project and section from params
   const { boardId } = useParams<{ boardId: string }>();
