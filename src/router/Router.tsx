@@ -25,9 +25,9 @@ const AppRouter: React.FC = () => {
           <Route path='/schedule' element={<SchedulePage />} />
           <Route path='/test-pomo' element={<PomodoroTimer />} />
           <Route path='/test-kanban' element={<KanbanContainer />} />
-          <Route path='/projects' element={<ProjectsPage />} />
-          <Route path='/projects/:projectId' element={<ProjectDetail />} />
-          <Route path='/projects/:projectId/:sectionId' element={<ProjectSection />} />
+          <Route path='/p' element={<ProjectsPage />} />
+          <Route path='/b/:boardId' element={<ProjectDetail />} />
+          <Route path='/p/:projectId/s/:sectionId' element={<ProjectSection />} />
         </Route>
       </Routes>
     </Router>

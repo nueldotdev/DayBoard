@@ -1,15 +1,15 @@
-export const projects = [
+export const boards = [
   {
     id: 1,
     name: "Digital Ocean",
-    subtitle: "Social Media Strategy, Social Media Branding",
+    description: "Social Media Strategy, Social Media Branding",
     daysLeft: "2 days left",
     // progress: 56,
   },
   {
     id: 2,
     name: "IBM",
-    subtitle: "Branding IBM Lab Company, Social Media Strategy, Website Concept",
+    description: "Branding IBM Lab Company, Social Media Strategy, Website Concept",
     // progress: 82,
   },
   // Add more project objects as needed...

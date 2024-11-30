@@ -20,7 +20,7 @@ const routes = [
     element: <HiOutlineHome size={24} />, 
     name: "Home" },
   {
-    path: "/projects",
+    path: "/p",
     element: <HiOutlineSquares2X2 size={24} />,
     name: "Projects",
   },

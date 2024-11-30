@@ -1,72 +1,104 @@
 import React, { useState } from 'react';
 import KanbanBoard from './KanbanBoard';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
-import { Task } from '../../../../utils/interfaces';
+import { useParams } from 'react-router-dom';
+import useKanbanBoardStore from '../../../../store/useKanbanBoardStore';
 import { getTheme } from '../../../../utils/getTheme';
+import { Modal } from '../ui/Modal';
 
 const KanbanContainer: React.FC = () => {
-  const [boards, setBoards] = useState<Record<string, Task[]>>({
-    'To Do': [
-      { id: 1, title: 'Task 1', description: 'Description 1' },
-      { id: 2, title: 'Task 2', description: 'Description 2' },
-    ],
-    'In Progress': [
-      { id: 3, title: 'Task 3', description: 'Description 3' },
-    ],
-    'Done': [
-      { id: 4, title: 'Task 4', description: 'Description 4' },
-    ],
-    'Ideas': [
-      { id: 5, title: 'Task 5', description: 'Description 5' },
-      { id: 6, title: 'Task 6', description: 'Description 6' },
-      { id: 7, title: 'Task 7', description: 'Description 7' },
-      { id: 8, title: 'Task 8', description: 'Description 8' },
-    ],
-  });
-
+  const { boardId } = useParams<{ boardId: string }>(); // Get the current board ID from the route
+  const { boards, moveTask, addTask, addList } = useKanbanBoardStore(); // Zustand store
   const { currentTheme } = getTheme();
 
+  const [boardEmpty, setBoardEmpty] = useState<boolean>(false);
+  const [listModal, setListModal] = useState<boolean>(false);
+  const [newListTitle, setNewListTitle] = useState<string>('');
+
+  // Find the current board using its ID
+  const currentBoard = boards.find((board) => board.id === Number(boardId));
+
   const handleDragEnd = (result: DropResult) => {
-    const { source, destination } = result;
-
-    // If dropped outside a droppable area
+    const { source, destination, draggableId } = result;
+  
+    // Exit if there's no destination
     if (!destination) return;
-
-    const sourceBoard = source.droppableId;
-    const destinationBoard = destination.droppableId;
-
-    // If the task was dropped in the same board at the same position
-    if (sourceBoard === destinationBoard && source.index === destination.index) return;
-
-    // Copy of the boards state
-    const updatedBoards = { ...boards };
-
-    // Remove the task from the source board
-    const [movedTask] = updatedBoards[sourceBoard].splice(source.index, 1);
-
-    // Add the task to the destination board
-    updatedBoards[destinationBoard].splice(destination.index, 0, movedTask);
-
-    // Update state
-    setBoards(updatedBoards);
+  
+    const sourceColumn = source.droppableId;
+    const targetColumn = destination.droppableId;
+  
+    // Exit if the task wasn't moved
+    if (sourceColumn === targetColumn && source.index === destination.index) {
+      return;
+    }
+  
+    moveTask(
+      Number(boardId)!, // The ID of the current board from the URL
+      sourceColumn, // The column the task is moved from
+      targetColumn, // The column the task is moved to
+      Number(draggableId) // The ID of the task being moved
+    );
   };
+  
+
+
+
+  const handleNewList = () => {
+    addList(Number(boardId), newListTitle);
+    setListModal(false);
+  }
+
+
+
+
+  // Handle case where the board isn't found
+  if (!currentBoard) {
+    return (
+      <div className="fill-all p-4 flex items-center justify-center">
+        <p className="text-2xl">Board not found</p>
+      </div>
+    );
+  }
 
   return (
-    <div className='fill-all p-4'>
-      <DragDropContext onDragEnd={handleDragEnd} >
-        <div className="flex space-x-4 w-full pb-20">
-          {Object.entries(boards).map(([boardTitle, tasks]) => (
+    <div className="fill-all p-4">
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <div className="flex space-x-4 w-fit pb-20 pr-4">
+          {Object.entries(currentBoard.columns).map(([columnId, tasks]) => (
             <KanbanBoard
-              key={boardTitle}
-              title={boardTitle}
-              theme={currentTheme}
-              bgColor="#f3f4f6"
+              key={columnId}
+              title={columnId}
               tasks={tasks}
-              className={`w-full ${currentTheme.sidenav.bg} rounded-md pb-2 h-min max-h-fit`}
-            />
+              className="min-w-[300px] max-w-[300px] rounded-lg pb-2 h-min max-h-fit"
+              theme={currentTheme}
+              onAddTask={(columnTitle, taskTitle) => {
+                const newTask = {
+                  id: Date.now(), // Use timestamp as a unique ID for simplicity
+                  title: taskTitle,
+                  description: "", // Optional: Add description handling later
+                };
+            
+                addTask(Number(boardId), columnTitle, newTask); // Call Zustand's addTask method
+              }}
+            />       
           ))}
+          <button className={`min-w-[300px] max-w-[300px] flex items-center justify-center rounded-lg p-4 h-min max-h-fit opacity-20 hover:opacity-70 transition ${currentTheme.hoverEffects.btnHover} border ${currentTheme.global.border}`} onClick={() => setListModal(true)}>
+              New List
+          </button>
         </div>
-    </DragDropContext>
+      </DragDropContext>
+
+
+      <Modal theme={currentTheme} open={listModal} onClose={() => setListModal(false)}>
+        <div className="flex flex-col gap-4">
+          <h1 className="text-2xl font-bold">Create a new list</h1>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="listName">List Name</label>
+            <input type="text" value={newListTitle} onChange={(e) => setNewListTitle(e.target.value)} id="listName" className='border-none rounded-md p-2 focus:outline-none' />
+          </div>
+          <button className={`${currentTheme.hoverEffects.btnHover} ${currentTheme.global.textPrimary} ${currentTheme.global.border} transition border py-2 px-4 rounded-md focus:outline-none focus:shadow-outline`} onClick={handleNewList}>Create List</button>
+        </div>
+      </Modal>
     </div>
   );
 };

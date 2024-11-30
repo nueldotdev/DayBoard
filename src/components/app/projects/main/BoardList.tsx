@@ -1,23 +1,54 @@
 import React, { useEffect, useState } from "react";
-import { mainTheme, Projects } from "../../../../utils/interfaces";
+import { mainTheme, Boards } from "../../../../utils/interfaces";
 import { Link } from "react-router-dom";
 import { Modal } from "../../objects/ui/Modal";
 
 interface ComponentProps {
   theme: mainTheme;
-  projects: Projects[];
+  boards: Boards[];
 }
 
-const ProjectList: React.FC<ComponentProps> = ({ theme, projects }) => {
+const BoardList: React.FC<ComponentProps> = ({ theme, boards }) => {
   const currentTheme = theme;
-  const [projectList, setProjectList] = useState<Projects[]>([]);
+  const [allBoards, setAllBoards] = useState<Boards[]>([]);
+
+  const createId = () => {
+    let currentLength = allBoards.length;
+
+    console.log("New ID: ", currentLength)
+
+    return currentLength;
+  }
+
+  const [newBoards, setNewBoards] = useState<Boards>({
+    id: createId(),
+    name: "",
+    description: "",
+  })
   const [modal, setModal] = useState(false);
 
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+
+    // Update the state with the new value.
+    setNewBoards((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+
+    console.log(newBoards)
+  };
+
+  const addBoards = () => {
+    setAllBoards([...allBoards, newBoards]);
+    setModal(false);
+  }
+
   useEffect(() => {
-    setProjectList(projects);
+    setAllBoards(boards);
   }, []);
 
-  console.log(projectList);
+  console.log(allBoards);
 
   return (
     <>
@@ -35,25 +66,25 @@ const ProjectList: React.FC<ComponentProps> = ({ theme, projects }) => {
 
         {/* Project Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projectList.map((project) => (
+          {allBoards.map((board) => (
             <Link
-              to={`/projects/${project.id}`}
-              key={project.id}
+              to={`/b/${board.id}`}
+              key={board.id}
               className={`flex flex-col justify-between rounded-lg shadow hover:shadow-xl transition p-4 ${currentTheme.global.textPrimary} border ${currentTheme.global.border}`}
             >
               <div>
                 <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-lg font-semibold">{project.name}</h2>
-                  {/* {project.daysLeft && (
+                  <h2 className="text-lg font-semibold">{board.name}</h2>
+                  {/* {board.daysLeft && (
                   <span className="text-sm px-2 py-1 rounded-lg">
-                    {project.daysLeft}
+                    {board.daysLeft}
                   </span>
                 )} */}
                 </div>
                 <p
                   className={`w-full text-left text-sm mb-4 ${currentTheme.global.textSecondary}`}
                 >
-                  {project.subtitle}
+                  {board.description}
                 </p>
               </div>
             </Link>
@@ -76,7 +107,12 @@ const ProjectList: React.FC<ComponentProps> = ({ theme, projects }) => {
               </label>
               <input
                 type="text"
-                className={`${theme.sidenav.bg} rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline`}
+                className={`${theme.sidenav.bg} input-field`}
+                // use this for newProjectName
+                onChange={(e) => handleInputChange(e)}
+                name="name"
+                value={newBoards.name}
+
               />
             </div>
             <div className="mb-4">
@@ -84,13 +120,16 @@ const ProjectList: React.FC<ComponentProps> = ({ theme, projects }) => {
                 Project Description
               </label>
               <textarea
-                className={`${theme.sidenav.bg} rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline resize-none h-[150px]`}
+                className={`${theme.sidenav.bg} input-field resize-none h-[150px]`}
+                onChange={(e) => handleInputChange(e)}
+                name="description"
               />
             </div>
             <div className="flex items-center justify-between">
               <button
                 className={`${theme.hoverEffects.btnHover} ${theme.global.textPrimary} ${theme.global.border} transition border py-2 px-4 rounded-md focus:outline-none focus:shadow-outline`}
                 type="button"
+                onClick={() => addBoards()}
               >
                 Add Project
               </button>
@@ -102,4 +141,4 @@ const ProjectList: React.FC<ComponentProps> = ({ theme, projects }) => {
   );
 };
 
-export default ProjectList;
+export default BoardList;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Droppable, Draggable } from "@hello-pangea/dnd";
 import { TaskCard } from "../TaskCard";
 import { mainTheme, Task } from "../../../../utils/interfaces";
@@ -6,13 +6,9 @@ import { mainTheme, Task } from "../../../../utils/interfaces";
 interface KanbanBoardProps {
   title: string;
   theme: mainTheme;
-  bgColor?: string;
   tasks: Task[];
   className?: string;
-  drag?: any;
-  style?: any;
-  ref?: any;
-  dragHandleProps?: any;
+  onAddTask?: (boardTitle: string, taskTitle: string) => void; // Callback for adding a task
 }
 
 const KanbanBoard: React.FC<KanbanBoardProps> = ({
@@ -20,25 +16,35 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({
   theme,
   tasks,
   className,
-  drag
+  onAddTask,
 }) => {
+  const [newTaskTitle, setNewTaskTitle] = useState<string>("");
+
+  // Function to handle adding a new task
+  const handleAddTask = () => {
+    const trimmedTitle = newTaskTitle.trim();
+    if (trimmedTitle === "") return; // Prevent adding empty or whitespace-only tasks
+    if (onAddTask) onAddTask(title, trimmedTitle); // Pass the task to the parent handler
+    setNewTaskTitle(""); // Reset the input field
+  };
+
   return (
-    <div 
-      className={`px-1 rounded ${className}`} 
-      {...drag}
-    >
+    <div className={`px-1 ${className}`}>
+      {/* Board Title */}
       <h2
-        className={`text-base font-bold mb-4 ${theme.sidenav.bg} border-b-2 ${theme.sidenav.border} p-2 rounded-t-md`}
+        className={`text-base font-bold ${theme.sidenav.bg} border-b-2 ${theme.sidenav.border} p-2 rounded-t-md`}
       >
         {title}
       </h2>
+
       <Droppable droppableId={title}>
         {(provided) => (
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className="space-y-2 min-h-[40px]" // Ensure there's space for droppable even if no tasks
+            className={`space-y-2 min-h-[40px] p-2 ${theme.sidenav.bg} rounded-b-md`} // Ensure there's space for droppable even if no tasks
           >
+            {/* Render Tasks */}
             {tasks.map((task, index) => (
               <Draggable
                 key={task.id}
@@ -56,10 +62,10 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({
                         ? `${provided.draggableProps.style?.transform} rotate(5deg)`
                         : provided.draggableProps.style?.transform,
                       transition: snapshot.isDragging
-                        ? ""
+                        ? "transform 0.2s cubic-bezier(0.2, 1, 0.2, 1)"
                         : "none",
                     }}
-                    className={`rounded-md shadow ${dndStyle(snapshot)}`}
+                    className={`rounded-2xl shadow ${dndStyle(snapshot)}`}
                   >
                     <TaskCard
                       key={task.id}
@@ -73,16 +79,26 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({
               </Draggable>
             ))}
             {provided.placeholder}
-            <button
-              className={`${theme.global.textPrimary} ${theme.hoverEffects.btnHover} border border-dashed opacity-50 hover:opacity-100 ${theme.global.border}  px-4 py-2 rounded-lg w-full transition-all`}
-            >
-              {/* Section name and entries */}
-              <div className="flex justify-center items-center gap-x-2">
-                {/* Folder Icon with color */}
-                {/* <HiOutlinePlus size={20} /> */}
-                <h2 className="text-base">New Card</h2>
-              </div>
-            </button>
+
+            {/* Add New Task Section */}
+            <div className="flex flex-col gap-2 mt-4">
+              {/* Input Field */}
+              <input
+                type="text"
+                value={newTaskTitle}
+                onChange={(e) => setNewTaskTitle(e.target.value)}
+                placeholder="Enter new task title"
+                className={`border rounded-lg p-2 text-sm ${theme.global.border} bg-transparent ${theme.global.text} placeholder:${theme.global.textSecondary} focus:outline-none`}
+              />
+
+              {/* Add Task Button */}
+              <button
+                onClick={handleAddTask}
+                className={`text-sm ${theme.global.textPrimary} ${theme.hoverEffects.btnHover} border border-dashed opacity-50 hover:opacity-100 ${theme.global.border} px-4 py-2 rounded-lg transition-all`}
+              >
+                Add New Task
+              </button>
+            </div>
           </div>
         )}
       </Droppable>
@@ -90,6 +106,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({
   );
 };
 
+/* Helper Function for Dynamic Dragging Style */
 const dndStyle = (snapshot?: any) => {
   if (snapshot.isDragging) {
     return "opacity-75 scale-105"; // Slight scale effect and faded look

@@ -72,4 +72,8 @@
   .no-display{ 
     display: none;
   }
+
+  .input-field {
+    @apply rounded w-full py-2 px-3 leading-tight focus:outline-none
+  }
 }

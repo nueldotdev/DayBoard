@@ -7,7 +7,7 @@ import {
 } from "react-icons/hi2";
 import { getTheme } from "../../../utils/getTheme";
 import { Dialog } from "primereact/dialog";
-import { projects, sectionList } from "../../../utils/sampleLists";
+import { boards, sectionList } from "../../../utils/sampleLists";
 import { Link, useParams } from "react-router-dom";
 import { getObject } from "../../../hooks/getObj";
 
@@ -16,9 +16,9 @@ const SectionBox: React.FC = () => {
   const { currentTheme } = getTheme();
   const [searchQuery, setSearchQuery] = useState("");
   const [visible, setVisible] = useState(false);
-  const { projectId } = useParams<{ projectId: string }>();
+  const { boardId } = useParams<{ boardId: string }>();
 
-  const project = getObject(Number(projectId), projects);
+  const board = getObject(Number(boardId), boards);
 
   // Filter sections based on search query
   const filteredSections = sectionList.filter((section) =>
@@ -59,7 +59,7 @@ const SectionBox: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
           {filteredSections.map((section) => (
             <Link 
-              to={`/projects/${project.id}/${section.id}`}
+              to={`/b/${board.id}/${section.id}`}
               key={section.id}
               className={`flex items-center p-4 rounded-lg shadow-md w-full ${currentTheme.sidenav.bg} border ${currentTheme.global.border}`}
             >

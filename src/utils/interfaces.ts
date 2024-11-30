@@ -15,10 +15,10 @@ interface GeneralProps {
 }
 
 
-interface Projects {
+interface Boards {
   id: number;
   name: string;
-  subtitle: string;
+  description: string;
   dueDate?: Date;
   priority?: "low" | "medium" | "high";
 }
@@ -26,7 +26,7 @@ interface Projects {
 interface Task {
   id: number | string;
   title: string;
-  description: string;
+  description?: string;
   completed?: boolean;
   dueDate?: Date;
   priority?: "low" | "medium" | "high";
@@ -43,4 +43,4 @@ interface TimeComponentsProps {
   theme: mainTheme; // Use the mainTheme type here
 }
 
-export type { Task, TaskListProps, TimeComponentsProps, Themes, mainTheme, Projects, GeneralProps };
+export type { Task, TaskListProps, TimeComponentsProps, Themes, mainTheme, Boards, GeneralProps };

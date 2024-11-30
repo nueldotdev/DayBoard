@@ -1,8 +1,8 @@
 import React from "react";
-import ProjectList from "../../../components/app/projects/main/ProjectList";
+import ProjectList from "../../../components/app/projects/main/BoardList";
 import { getTheme } from "../../../utils/getTheme";
 import usePageTitle from "../../../hooks/usePageTitle";
-import { projects } from "../../../utils/sampleLists";
+import { boards } from "../../../utils/sampleLists";
 
 const ProjectsPage: React.FC = () => {
   const { currentTheme } = getTheme();
@@ -13,7 +13,7 @@ const ProjectsPage: React.FC = () => {
   return (
     <>
       <div className="w-full h-full flex">
-        <ProjectList theme={currentTheme} projects={projects} />
+        <ProjectList theme={currentTheme} boards={boards} />
       </div>
     </>
   );

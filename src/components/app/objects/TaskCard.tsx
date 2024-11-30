@@ -20,23 +20,11 @@ export function TaskCard({ task, onToggle }: TaskCardProps) {
   return (
     <div className={`
       group w-full p-4 ${currentTheme.global.bg} ${currentTheme.global.border} transition-colors
-      border rounded-lg shadow-sm
+      border rounded-xl shadow-sm
       flex flex-col gap-2
       ${task?.completed ? "opacity-60" : ''}
     `}>
       <div className="flex items-center gap-2">
-        {/* <Checkbox
-          checked={task?.completed ?? false}
-          onChange={() => onToggle(Number(task.id))}
-          // className={`rounded ${currentTheme.btnHover} border ${currentTheme.border} cursor-pointer`}
-          variant="filled"
-          style={{
-            width: '1.25rem', // Adjust to control width
-            height: '1.25rem', // Adjust to control height
-            padding: 0, // Ensures no additional padding around the checkbox content
-          }}
-          color={'red'}
-        /> */}
         <h3 className={`
           font-medium truncate
           ${task.completed ? "line-through text-muted-foreground" : ''}
