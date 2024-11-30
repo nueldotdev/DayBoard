@@ -1,10 +1,10 @@
 import { format } from "date-fns";
-import { Checkbox } from "primereact/checkbox";
+// import { Checkbox } from "primereact/checkbox";
 import { HiCalendar, HiClock } from "react-icons/hi2";
 import useThemeStore from "../../../store/themeStore";
 import { themes } from "../../../themeConfig";
 import { Task } from "../../../utils/interfaces";
-import { DraggingStyle } from "@hello-pangea/dnd";
+// import { DraggingStyle } from "@hello-pangea/dnd";
 
 
 interface TaskCardProps {
@@ -13,7 +13,7 @@ interface TaskCardProps {
 }
 
 
-export function TaskCard({ task, onToggle }: TaskCardProps) {
+export function TaskCard({ task }: TaskCardProps) {
   const { themeName } = useThemeStore();
   const currentTheme = themes[themeName];
 

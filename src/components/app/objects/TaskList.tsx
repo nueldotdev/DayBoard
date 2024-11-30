@@ -10,7 +10,11 @@ export function TaskList({ tasks, onToggleTask }: TaskListProps) {
     }
     // Then by priority
     const priorityOrder = { high: 0, medium: 1, low: 2 };
-    return priorityOrder[a.priority] - priorityOrder[b.priority];
+    if (a.priority && b.priority) {
+      return priorityOrder[a.priority] - priorityOrder[b.priority];
+    }
+    
+    return 0;
   });
 
   return (

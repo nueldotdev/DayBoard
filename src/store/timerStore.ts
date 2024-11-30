@@ -45,7 +45,7 @@ export const useTimerStore = create<TimerState>((set, get) => {
   };
 
   const playSound = () => {
-    const audio = new Audio('/sounds/a_bell.wav');
+    // const audio = new Audio('/sounds/a_bell.wav');
     // audio.play();
     // audio.
   }
