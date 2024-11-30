@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './App.css';
 import useApplyTheme from './hooks/useApplyTheme';
-import ThemeToggle from './components/app/ThemeToggle';
+// import ThemeToggle from './components/app/ThemeToggle';
 import AppRouter from './router/Router';
 import { PrimeReactProvider } from 'primereact/api';
 import useThemeStore from './store/themeStore';

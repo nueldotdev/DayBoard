@@ -1,15 +1,13 @@
+import { Dialog } from "primereact/dialog";
 import React, { useState } from "react";
 import {
-  HiChevronRight,
   HiFolder,
-  HiMagnifyingGlass,
-  HiOutlinePlus,
+  HiMagnifyingGlass
 } from "react-icons/hi2";
-import { getTheme } from "../../../utils/getTheme";
-import { Dialog } from "primereact/dialog";
-import { boards, sectionList } from "../../../utils/sampleLists";
 import { Link, useParams } from "react-router-dom";
 import { getObject } from "../../../hooks/getObj";
+import { getTheme } from "../../../utils/getTheme";
+import { boards, sectionList } from "../../../utils/sampleLists";
 
 
 const SectionBox: React.FC = () => {
