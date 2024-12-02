@@ -2,14 +2,16 @@ import { Link, useParams } from 'react-router-dom';
 import KanbanContainer from '../../../components/app/objects/project-components/KanbanContainer';
 import usePageTitle from '../../../hooks/usePageTitle';
 import { getTheme } from '../../../utils/getTheme';
-import { boards } from '../../../utils/sampleLists';
 import { useState } from 'react';
 import GradientSelect from '../../../components/app/objects/ui/GradientSelect';
 import Popover from '../../../components/app/objects/ui/Popover';
 import { VscPaintcan } from "react-icons/vsc";
+import useBoardStore from '../../../store/boardStore';
 
 const ProjectDetail: React.FC = () => {
   const { currentTheme } = getTheme();
+  const { boards } = useBoardStore();
+
   const { boardId } = useParams<{ boardId: string }>();
   const board = boards.find((p) => p.id === Number(boardId));
   const [backgroundGradient, setBackgroundGradient] = useState<string>(

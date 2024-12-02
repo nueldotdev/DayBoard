@@ -19,7 +19,7 @@ export function TaskCard({ task }: TaskCardProps) {
 
   return (
     <div className={`
-      group w-full p-4 ${currentTheme.global.bg} ${currentTheme.global.border} transition-colors
+      group w-full p-4 ${currentTheme.sidenav.bg} ${currentTheme.global.border} transition-colors
       border rounded-xl shadow-sm
       flex flex-col gap-2
       ${task?.completed ? "opacity-60" : ''}

@@ -32,7 +32,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({
     <div className={`px-1 ${className}`}>
       {/* Board Title */}
       <h2
-        className={`text-base font-bold ${theme.sidenav.bg} border-b-2 ${theme.sidenav.border} p-2 rounded-t-md`}
+        className={`text-base font-bold ${theme.global.bg} border-b-2 ${theme.sidenav.border} p-2 rounded-t-md`}
       >
         {title}
       </h2>
@@ -42,7 +42,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className={`space-y-2 min-h-[40px] p-2 ${theme.sidenav.bg} rounded-b-md`} // Ensure there's space for droppable even if no tasks
+            className={`space-y-2 min-h-[40px] p-2 ${theme.global.bg} rounded-b-md`} // Ensure there's space for droppable even if no tasks
           >
             {/* Render Tasks */}
             {tasks.map((task, index) => (

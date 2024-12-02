@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import KanbanBoard from './KanbanBoard';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import useKanbanBoardStore from '../../../../store/useKanbanBoardStore';
+import useBoardStore from '../../../../store/boardStore';
 import { getTheme } from '../../../../utils/getTheme';
 import { Modal } from '../ui/Modal';
+import KanbanBoard from './KanbanBoard';
 
 const KanbanContainer: React.FC = () => {
   const { boardId } = useParams<{ boardId: string }>(); // Get the current board ID from the route
-  const { boards, moveTask, addTask, addList } = useKanbanBoardStore(); // Zustand store
+  const { boards, moveTask, addTask, addList } = useBoardStore(); // Zustand store
   const { currentTheme } = getTheme();
 
   const [listModal, setListModal] = useState<boolean>(false);
@@ -43,7 +43,9 @@ const KanbanContainer: React.FC = () => {
 
 
   const handleNewList = () => {
+    console.log(`handleNewList: ${boardId}: boardId, ${newListTitle}: newListTitle`);
     addList(Number(boardId), newListTitle);
+
     setListModal(false);
   }
 
@@ -51,19 +53,21 @@ const KanbanContainer: React.FC = () => {
 
 
   // Handle case where the board isn't found
-  if (!currentBoard) {
-    return (
-      <div className="fill-all p-4 flex items-center justify-center">
-        <p className="text-2xl">Board not found</p>
-      </div>
-    );
-  }
+  const content = () => {
+    if (!currentBoard) {
+      return (
+        <div className="flex space-x-4 w-fit pb-20 pr-4">
+          <button className={`min-w-[300px] max-w-[300px] flex items-center justify-center rounded-lg p-4 h-min max-h-fit opacity-60 hover:opacity-70 transition ${currentTheme.hoverEffects.btnHover} border ${currentTheme.global.border}`} onClick={() => setListModal(true)}>
+            New List
+          </button>
+        </div>
+      );
+    }
 
-  return (
-    <div className="fill-all p-4 kanban-container">
+    return (
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className="flex space-x-4 w-fit pb-20 pr-4">
-          {Object.entries(currentBoard.columns).map(([columnId, tasks]) => (
+          {Object.entries(currentBoard.columns ?? {}).map(([columnId, tasks]) => (
             <KanbanBoard
               key={columnId}
               title={columnId}
@@ -86,6 +90,12 @@ const KanbanContainer: React.FC = () => {
           </button>
         </div>
       </DragDropContext>
+    )
+  }
+
+  return (
+    <div className="fill-all p-4 kanban-container">
+      {content()}
 
 
       <Modal theme={currentTheme} open={listModal} onClose={() => setListModal(false)}>

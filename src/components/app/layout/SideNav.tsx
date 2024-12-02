@@ -15,7 +15,7 @@ import Tooltip from "../objects/ui/Tooltip";
 
 const routes = [
   { 
-    path: "/", 
+    path: "/app", 
     element: <HiOutlineHome size={24} />, 
     name: "Home" },
   {

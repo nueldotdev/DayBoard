@@ -1,10 +1,9 @@
 import React from "react";
-import ProjectList from "../../../components/app/projects/main/BoardList";
-import { getTheme } from "../../../utils/getTheme";
+import BoardList from "../../../components/app/projects/main/BoardList";
 import usePageTitle from "../../../hooks/usePageTitle";
-import { boards } from "../../../utils/sampleLists";
+import { getTheme } from "../../../utils/getTheme";
 
-const ProjectsPage: React.FC = () => {
+const BoardsPage: React.FC = () => {
   const { currentTheme } = getTheme();
 
   // Set page title
@@ -13,10 +12,10 @@ const ProjectsPage: React.FC = () => {
   return (
     <>
       <div className="w-full h-full flex">
-        <ProjectList theme={currentTheme} boards={boards} />
+        <BoardList theme={currentTheme} />
       </div>
     </>
   );
 };
 
-export default ProjectsPage;
+export default BoardsPage;
