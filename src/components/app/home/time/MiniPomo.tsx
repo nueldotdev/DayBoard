@@ -26,7 +26,7 @@ const MiniPomo: React.FC = () => {
   }, [initializeTimer]);
 
   // Avoid rendering on the homepage
-  if (pathname === '/') return null;
+  if (pathname === '/app') return null;
   if (!visible) return null;
 
   return (

@@ -1,7 +1,11 @@
 import { HiOutlineBell } from "react-icons/hi2";
 import { TimeComponentsProps } from "../../../../utils/interfaces";
+import { useState } from "react";
+import { Modal } from "../../objects/ui/Modal";
+import { ComingSoon } from "../../objects/ui/ComingSoon";
 
 export const Reminder: React.FC<TimeComponentsProps> = ({theme}) => {
+  const [forModal, setForModal] = useState(false);
 
 
   return (
@@ -11,7 +15,11 @@ export const Reminder: React.FC<TimeComponentsProps> = ({theme}) => {
         <h2 className="text-lg font-bold">Reminders</h2>
         <p>Upcoming tasks and notifications.</p>
       </div>
-      <button className={`tc-btns ${theme.hoverEffects.textBg}`}>Add Reminder</button>
+      <button className={`tc-btns ${theme.hoverEffects.textBg}`} onClick={() => setForModal(true)}>Add Reminder</button>
+
+      <Modal open={forModal} onClose={() => setForModal(false)} theme={theme}>
+        <ComingSoon />
+      </Modal>
     </div>
   );
 };

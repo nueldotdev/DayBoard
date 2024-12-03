@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { HiOutlineClock, HiOutlineSparkles, HiOutlineUserGroup } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
+import { Modal } from "../../components/app/objects/ui/Modal";
+import { getTheme } from "../../utils/getTheme";
 
 const LandingPage: React.FC = () => {
+  const {currentTheme} = getTheme();
+  const navigate = useNavigate();
+  const [forModal, setForModal] = useState(false);
+  const [name, setName] = useState("");
+
+  const handleOpen = () => {
+    localStorage.setItem("name", name);
+    setForModal(false);
+    navigate("/app");
+  }
+
   return (
     <div className="bg-gradient-to-br from-green-400 to-blue-500 text-white">
       {/* Hero Section */}
@@ -10,12 +24,16 @@ const LandingPage: React.FC = () => {
         <p className="text-lg font-light max-w-2xl">
           We're building <i>DayBoard</i> to help you manage your time and stay productive—but we're not there yet!
         </p>
+        <p>Right now you can play around with the app itself, just click the button below</p>
         <div className="mt-6 flex gap-4">
-          <button className="px-6 py-3 bg-white text-green-600 font-medium rounded-md shadow hover:scale-105 transition-transform">
+          {/* <button className="px-6 py-3 bg-white text-green-600 font-medium rounded-md shadow hover:scale-105 transition-transform">
             Join the Waitlist
           </button>
           <button className="px-6 py-3 bg-transparent border border-white rounded-md shadow hover:bg-white hover:text-green-600 transition-all">
             Learn More
+          </button> */}
+          <button className="px-6 py-3 bg-transparent border border-white rounded-md shadow hover:bg-white hover:text-green-600 transition-all" onClick={() => { setForModal(true) }}>
+            Explore The App
           </button>
         </div>
       </header>
@@ -72,6 +90,27 @@ const LandingPage: React.FC = () => {
           © {new Date().getFullYear()} DayBoard. Built with ❤️ and caffeine.
         </p>
       </footer>
+
+      <Modal open={forModal} onClose={() => setForModal(false)} theme={currentTheme}>
+        <div className="p-4">
+          <h2 className="text-lg font-semibold mb-2">Insert a name!</h2>
+          <p className="mb-4">
+            This is just for display purposes, nothing else...
+          </p>
+          <input
+            type="text"
+            className={`w-full p-2 border rounded-md ${currentTheme.global.border} ${currentTheme.global.bg} ${currentTheme.global.text}`}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <button
+            className="mt-4 px-4 py-2 bg-green-600 text-white rounded-md"
+            onClick={handleOpen}
+          >
+            Done
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 };

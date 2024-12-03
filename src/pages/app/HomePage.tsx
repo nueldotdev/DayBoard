@@ -7,11 +7,12 @@ const HomePage: React.FC = () => {
 
   // Set page title
   usePageTitle("Home");
+  const name = localStorage.getItem("name") || "User";
 
   return (
     <div className="flex flex-col min-h-full max-h-full h-full">
       <div className=''>
-      <Greeting userName="Nuel" />
+      <Greeting userName={name} />
       </div>
       <div className="">
         <TimeComponents />
