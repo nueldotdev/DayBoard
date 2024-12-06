@@ -25,12 +25,12 @@ const AppRouter: React.FC = () => {
           <Route path='tasks' element={<TasksPage />} />
           <Route path='settings' element={<SettingsPage />} />
           <Route path='schedule' element={<SchedulePage />} />
-          <Route path='test-pomo' element={<PomodoroTimer />} />
           <Route path='test-kanban' element={<KanbanContainer />} />
           <Route path='b' element={<ProjectsPage />} />
           <Route path='b/:boardId' element={<ProjectDetail />} />
           {/* <Route path='p/:projectId/s/:sectionId' element={<ProjectSection />} /> */}
         </Route>
+        <Route path='/pomodoro' element={<PomodoroTimer />} />
       </Routes>
     </Router>
   );

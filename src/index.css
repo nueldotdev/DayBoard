@@ -117,4 +117,20 @@
     background: transparent; /* No background color for the track */
   }
   
+
+  .custom-dashed-border {
+    border-width: 2px;
+    border-style: dashed;
+    border-image: repeating-linear-gradient(90deg, transparent 10px, black 20px) 1;
+  }
+  
+    /* glassmorphism.css */
+  .glassmorphism {
+    /* backdrop-filter: blur(10px) saturate(150%); */
+   /*  background-color: rgba(255, 255, 255, 0.2); This can be adjusted or overridden by themes */
+    border-radius: 1rem;
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem; */
+  }
+
 }

@@ -14,7 +14,7 @@ const HomePage: React.FC = () => {
       <div className=''>
       <Greeting userName={name} />
       </div>
-      <div className="">
+      <div className="h-full">
         <TimeComponents />
       </div>
     </div>
