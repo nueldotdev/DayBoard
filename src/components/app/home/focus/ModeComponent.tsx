@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { TimeComponentsProps } from "../../../../utils/interfaces";
-import { PiBinoculars } from "react-icons/pi";
 import { ComingSoon } from "../../objects/ui/ComingSoon";
 import { Modal } from "../../objects/ui/Modal";
 import SegmentedControl from "../../objects/ui/SegmentedControl";
@@ -13,7 +12,6 @@ type Mode = "focus" | "pomodoro";
 export const ModeComponent: React.FC<TimeComponentsProps> = ({ theme }) => {
   const [mode, setMode] = useState<Mode>("focus");
   const [forModal, setForModal] = useState(false);
-  const [focusReady, setFocusReady] = useState(false);
 
   return (
     <>

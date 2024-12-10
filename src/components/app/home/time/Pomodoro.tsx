@@ -8,7 +8,6 @@ const PomodoroTimer: React.FC<GeneralProps> = ({theme}) => {
     minutes,
     seconds,
     isActive,
-    hasPreviousSession,
     startTimer,
     pauseTimer,
     resetTimer,
