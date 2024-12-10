@@ -28,7 +28,7 @@ export function TaskCard({ card, onCardOpen, onCardClose }: TaskCardProps) {
     <>
       <div 
         className={`
-          group w-full p-4 ${theme.sidenav.bg} ${theme.global.border} transition-colors
+          group w-full p-4 ${theme.global.bg} ${theme.global.border} transition-colors
           border rounded-xl shadow-sm
           flex flex-col gap-2
         `} 

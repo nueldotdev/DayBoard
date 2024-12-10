@@ -1,21 +1,27 @@
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import useBoardStore from '../../../../store/boardStore';
+import useBoardStore, { Board } from '../../../../store/boardStore';
 import { getTheme } from '../../../../utils/getTheme';
 import { Modal } from '../ui/Modal';
 import KanbanBoard from './KanbanBoard';
+import { mainTheme } from '../../../../utils/interfaces';
 
-const KanbanContainer: React.FC = () => {
-  const { boardId } = useParams<{ boardId: string }>();
-  const { boards, moveTask, addTask, addList, updateColumnOrder } = useBoardStore();
-  const { currentTheme } = getTheme();
+interface ContainerProps {
+  board: Board;
+  theme: mainTheme;
+
+}
+
+
+const KanbanContainer: React.FC<ContainerProps> = ({theme, board}) => {
+  const { moveTask, addTask, addList, updateColumnOrder } = useBoardStore();
 
   const [listModal, setListModal] = useState<boolean>(false);
   const [newListTitle, setNewListTitle] = useState<string>('');
   const [isDraggingDisabled, setIsDraggingDisabled] = useState<boolean>(false);
 
-  const currentBoard = boards.find((board) => board.id === Number(boardId));
+  const currentBoard: Board = board;
 
   const handleDragEnd = (result: DropResult) => {
     // Only proceed if dragging is not disabled
@@ -35,7 +41,7 @@ const KanbanContainer: React.FC = () => {
       const [reorderedColumn] = columnIds.splice(source.index, 1);
       columnIds.splice(destination.index, 0, reorderedColumn);
 
-      updateColumnOrder(Number(boardId), columnIds);
+      updateColumnOrder(currentBoard.id, columnIds);
       return;
     }
 
@@ -50,7 +56,7 @@ const KanbanContainer: React.FC = () => {
     }
 
     moveTask(
-      Number(boardId)!, 
+      currentBoard.id, 
       sourceColumn, 
       targetColumn, 
       Number(result.draggableId)
@@ -58,7 +64,7 @@ const KanbanContainer: React.FC = () => {
   };
 
   const handleNewList = () => {
-    addList(Number(boardId), newListTitle);
+    addList(currentBoard.id, newListTitle);
     setListModal(false);
     setNewListTitle('');
   };
@@ -72,7 +78,7 @@ const KanbanContainer: React.FC = () => {
       return (
         <div className="flex space-x-4 w-fit pb-20 pr-4">
           <button 
-            className={`min-w-[300px] max-w-[300px] flex items-center justify-center rounded-lg p-4 h-min max-h-fit opacity-60 hover:opacity-70 transition ${currentTheme.hoverEffects.btnHover} border ${currentTheme.global.border}`} 
+            className={`min-w-[300px] max-w-[300px] flex items-center justify-center rounded-lg p-4 h-min max-h-fit opacity-60 hover:opacity-70 transition ${theme.hoverEffects.btnHover} border ${theme.global.border}`} 
             onClick={() => setListModal(true)}
           >
             New List
@@ -115,7 +121,7 @@ const KanbanContainer: React.FC = () => {
                         title={columnId}
                         cards={currentBoard.columns?.[columnId] || []}
                         className="min-w-[300px] max-w-[300px] rounded-lg pb-2 h-min max-h-fit"
-                        theme={currentTheme}
+                        theme={theme}
                         onAddCard={(columnTitle, cardTitle) => {
                           const newTask = {
                             id: Date.now(),
@@ -123,7 +129,7 @@ const KanbanContainer: React.FC = () => {
                             description: "",
                           };
                       
-                          addTask(Number(boardId), columnTitle, newTask);
+                          addTask(currentBoard.id, columnTitle, newTask);
                         }}
                         onCardOpenChange={handleCardOpenChange}
                       />
@@ -134,7 +140,7 @@ const KanbanContainer: React.FC = () => {
               {provided.placeholder}
 
               <button 
-                className={`min-w-[300px] max-w-[300px] flex items-center justify-center rounded-lg p-4 h-min max-h-fit opacity-60 hover:opacity-70 transition ${currentTheme.hoverEffects.btnHover} border ${currentTheme.global.border}`} 
+                className={`min-w-[300px] max-w-[300px] flex items-center justify-center rounded-lg p-4 h-min max-h-fit opacity-60 hover:opacity-70 transition ${theme.hoverEffects.btnHover} border ${theme.global.border}`} 
                 onClick={() => setListModal(true)}
               >
                 New List
@@ -150,7 +156,7 @@ const KanbanContainer: React.FC = () => {
     <div className="fill-all p-4 kanban-container">
       {content()}
 
-      <Modal theme={currentTheme} open={listModal} onClose={() => setListModal(false)}>
+      <Modal theme={theme} open={listModal} onClose={() => setListModal(false)}>
         <div className="flex flex-col gap-4">
           <h1 className="text-2xl font-bold">Create a new list</h1>
           <div className="flex flex-col gap-2">
@@ -164,7 +170,7 @@ const KanbanContainer: React.FC = () => {
             />
           </div>
           <button 
-            className={`${currentTheme.hoverEffects.btnHover} ${currentTheme.global.textPrimary} ${currentTheme.global.border} transition border py-2 px-4 rounded-md focus:outline-none focus:shadow-outline`} 
+            className={`${theme.hoverEffects.btnHover} ${theme.global.textPrimary} ${theme.global.border} transition border py-2 px-4 rounded-md focus:outline-none focus:shadow-outline`} 
             onClick={handleNewList}
           >
             Create List

@@ -15,7 +15,7 @@ const ProjectDetail: React.FC = () => {
   const { boardId } = useParams<{ boardId: string }>();
   const board = boards.find((p) => p.id === Number(boardId));
   const [backgroundGradient, setBackgroundGradient] = useState<string>(
-    "bg-gradient-to-br from-green-500 to-blue-600"
+    currentTheme.global.bg
   );
 
   // Set page title
@@ -44,7 +44,7 @@ const ProjectDetail: React.FC = () => {
       </div>
       
       <div className="h-full w-full overflow-auto">
-        <KanbanContainer />
+        <KanbanContainer theme={currentTheme} board={board!} />
       </div>
     </div>
   );

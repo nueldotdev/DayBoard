@@ -83,7 +83,7 @@ const FocusTimer: React.FC<{ theme: any }> = ({ theme }) => {
           <label className={`${theme.global.textSecondary} text-sm`}>Hours</label>
           <input
             type="number"
-            className={`mini-input w-16 p-1 rounded-md ${theme.global.border} ${theme.global.textPrimary}`}
+            className={`mini-input w-16 p-1 rounded-md ${theme.global.border} ${theme.sidenav.bg} ${theme.global.textPrimary}`}
             value={hours}
             onChange={(e) => handleDurationChange("h", parseInt(e.target.value) || 0)}
           />
@@ -92,7 +92,7 @@ const FocusTimer: React.FC<{ theme: any }> = ({ theme }) => {
           <label className={`${theme.global.textSecondary} text-sm`}>Minutes</label>
           <input
             type="number"
-            className={`mini-input w-16 p-1 rounded-md ${theme.global.border} ${theme.global.textPrimary}`}
+            className={`mini-input w-16 p-1 rounded-md ${theme.global.border} ${theme.sidenav.bg} ${theme.global.textPrimary}`}
             value={minutes}
             onChange={(e) => handleDurationChange("m", parseInt(e.target.value) || 0)}
           />
@@ -118,7 +118,7 @@ const FocusTimer: React.FC<{ theme: any }> = ({ theme }) => {
       {/* Notes Section */}
       <div className="w-full flex flex-col items-center mt-6">
         <input
-          className={`mini-input w-[60%] p-2 rounded-md text-center ${theme.global.border} ${theme.global.textPrimary}`}
+          className={`mini-input w-[60%] p-2 rounded-md text-center ${theme.sidenav.bg} ${theme.global.border} ${theme.global.textPrimary}`}
           placeholder="Write something to keep yourself focused..."
           value={note}
           onChange={(e) => setNote(e.target.value)}
