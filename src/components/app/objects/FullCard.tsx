@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Cards, GeneralProps, positionClasses } from "../../../utils/interfaces";
-import { ModalProps } from "./ui/Modal";
 import { HiMiniBars3BottomLeft, HiMiniPencilSquare } from "react-icons/hi2";
-import { useParams } from "react-router-dom";
+import { Cards, positionClasses } from "../../../utils/interfaces";
+import { ModalProps } from "./ui/Modal";
 
 interface FullCardProps extends ModalProps {
   card: Cards;
@@ -19,7 +18,7 @@ export const FullCard: React.FC<FullCardProps> = ({
   // Here we retrieve the board id from the url.
 
   // Will use this boardId to update eah card/task within the board from Zutland
-  const { boardId } = useParams<{ boardId: string }>();
+  // const { boardId } = useParams<{ boardId: string }>();
   const [editTitle, setEditTitle] = useState(false);
   const [editDesc, setEditDesc] = useState(true)
   const [updatedCard, setUpdatedCard] = useState<Cards>(card);

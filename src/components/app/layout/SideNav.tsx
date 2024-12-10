@@ -1,13 +1,11 @@
-import React, { } from "react";
+import React from "react";
 import {
-  HiOutlineSquares2X2,
-  HiOutlineDocumentText,
-  HiOutlineCog6Tooth,
   HiEllipsisHorizontal,
+  HiOutlineCog6Tooth,
   HiOutlineFolderPlus as HiOutlineFolderPlusIcon,
   HiOutlineHome,
-  HiCalendarDays, 
-  HiOutlineRectangleStack
+  HiOutlineRectangleStack,
+  HiOutlineSquares2X2
 } from "react-icons/hi2";
 import { NavLink, useNavigate } from "react-router-dom";
 import useThemeStore from "../../../store/themeStore";
