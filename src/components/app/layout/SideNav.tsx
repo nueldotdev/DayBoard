@@ -6,7 +6,8 @@ import {
   HiEllipsisHorizontal,
   HiOutlineFolderPlus as HiOutlineFolderPlusIcon,
   HiOutlineHome,
-  HiCalendarDays 
+  HiCalendarDays, 
+  HiOutlineRectangleStack
 } from "react-icons/hi2";
 import { NavLink, useNavigate } from "react-router-dom";
 import useThemeStore from "../../../store/themeStore";
@@ -23,21 +24,21 @@ const routes = [
     element: <HiOutlineSquares2X2 size={24} />,
     name: "Boards",
   },
-  {
-    path: "/app/schedule",
-    element: <HiCalendarDays size={24} />,
-    name: "Schedule",
-  },
-  {
-    path: "/app/notes",
-    element: <HiOutlineDocumentText size={24} />,
-    name: "Notes",
-  },
   // {
-  //   path: "/tasks",
-  //   element: <HiOutlineCheckCircle size={24} />,
-  //   name: "Tasks",
+  //   path: "/app/schedule",
+  //   element: <HiCalendarDays size={24} />,
+  //   name: "Schedule",
   // },
+  // {
+  //   path: "/app/notes",
+  //   element: <HiOutlineDocumentText size={24} />,
+  //   name: "Notes",
+  // },
+  {
+    path: "/",
+    element: <HiOutlineRectangleStack  size={24} />,
+    name: "Blocks",
+  },
   {
     path: "/app/settings",
     element: <HiOutlineCog6Tooth size={24} />,

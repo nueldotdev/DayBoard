@@ -1,13 +1,8 @@
 import React, { useEffect } from "react";
-import { GeneralProps } from "../../../../utils/interfaces";
+import { GeneralProps, positionClasses } from "../../../../utils/interfaces";
+import { HiX } from "react-icons/hi";
 
-const positionClasses = {
-  center: "flex items-center justify-center",
-  right: "flex items-center justify-end",
-  left: "flex items-center justify-start",
-};
-
-interface ModalProps extends GeneralProps {
+export interface ModalProps extends GeneralProps {
   position?: keyof typeof positionClasses;
   open: boolean;
   onClose: () => void;
@@ -43,7 +38,7 @@ export const Modal: React.FC<ModalProps> = ({
 
   return (
     <div
-      className={`fixed inset-0 bg-zinc-950/50 z-50 ${
+      className={`fixed inset-0 bg-zinc-950/50 z-[10000] ${
         positionClasses[position]
       }`}
       aria-hidden={!open}
@@ -66,7 +61,7 @@ export const Modal: React.FC<ModalProps> = ({
           aria-label="Close Modal"
           className={`absolute top-3 right-3 p-1 rounded-full transition-all ${theme.global.textSecondary} ${theme.hoverEffects.btnHover}`}
         >
-          ✕
+          <HiX className="w-4 h-4"/>
         </button>
 
         {/* Modal Content */}

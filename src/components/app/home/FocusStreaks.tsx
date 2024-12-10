@@ -19,12 +19,12 @@ const FocusStreaks: React.FC<TimeComponentsProps> = ({theme}) => {
       </div>
       <div className="fill-all flex justify-between items-center">
         <div className="flex flex-col justify-center w-full items-center">
-          <p className="font-bold text-2xl">{streaks.currentStreak}</p>
+          <p className="font-bold text-4xl">{streaks.currentStreak}</p>
           <p className="text-xs">{streaks.currentStreak > 1 ? "Days" : "Day"}</p>
         </div>
         <div className={`w-[7px] h-[80%] rounded-lg border ${theme.glass.border}`} />
         <div className="flex flex-col justify-center w-full items-center">
-          <p className="font-bold text-xl opacity-55">{streaks.longestStreak}</p>
+          <p className="font-bold text-4xl opacity-55">{streaks.longestStreak}</p>
           <p className="text-xs">{streaks.longestStreak > 1 ? "Days" : "Day"}</p>
         </div>
       </div>

@@ -147,7 +147,7 @@ const BoardList: React.FC<ComponentProps> = ({ theme }) => {
                 className={`${currentTheme.sidenav.bg} input-field resize-none h-[150px]`}
                 onChange={(e) => handleInputChange(e)}
                 name="description"
-              />
+              >{newBoards.name}</textarea>
             </div>
             <div className="flex items-center justify-between">
               <button

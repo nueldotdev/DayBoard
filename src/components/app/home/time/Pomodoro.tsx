@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { useTimerStore } from "../../../../store/timerStore";
+import { GeneralProps } from "../../../../utils/interfaces";
+import { HiOutlinePlay, HiOutlinePause, HiArrowPath } from "react-icons/hi2";
 
-const PomodoroTimer: React.FC = () => {
+const PomodoroTimer: React.FC<GeneralProps> = ({theme}) => {
   const {
     minutes,
     seconds,
@@ -18,40 +20,22 @@ const PomodoroTimer: React.FC = () => {
   }, [initializeTimer]);
 
   return (
-    <div className="">
-      <h1 className="text-2xl font-bold">Pomodoro Timer</h1>
-      <div className="text-xl">{`${String(minutes).padStart(2, "0")}:${String(
+    <div className="space-y-4 h-full flex flex-col items-center justify-center">
+      <div className="text-9xl mb-10">{`${String(minutes).padStart(2, "0")}:${String(
         seconds
       ).padStart(2, "0")}`}</div>
-      <div className="flex gap-4 mt-4">
-        {hasPreviousSession && !isActive ? (
-          <button
-            onClick={startTimer}
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-          >
-            Continue
+      <div className="flex justify-center gap-x-2 w-full">
+        {!isActive ? (
+          <button className={`mini-timer-btn p-2 ${theme.hoverEffects.btnHover} ${theme.global.border}`} onClick={startTimer}>
+            <HiOutlinePlay />
           </button>
-        ) : 
-          !hasPreviousSession && isActive ? (
-              <button
-                onClick={pauseTimer}
-                className="bg-yellow-500 text-white px-4 py-2 rounded"
-              >
-                Pause
-              </button>
-            ) : (
-              <button
-                onClick={startTimer}
-                className="bg-green-500 text-white px-4 py-2 rounded"
-              >
-                Start
-              </button>
-          )}
-        <button
-          onClick={resetTimer}
-          className="bg-red-500 text-white px-4 py-2 rounded"
-        >
-          Reset
+        ) : (
+          <button className={`mini-timer-btn p-2 ${theme.hoverEffects.btnHover} ${theme.global.border}`} onClick={pauseTimer}>
+            <HiOutlinePause />
+          </button>
+        )}
+        <button className={`mini-timer-btn p-2 ${theme.hoverEffects.btnHover} ${theme.global.border}`} onClick={resetTimer}>
+          <HiArrowPath />
         </button>
       </div>
     </div>

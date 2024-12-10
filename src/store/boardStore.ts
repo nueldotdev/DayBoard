@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Task } from "../utils/interfaces";
+import { Cards } from "../utils/interfaces";
 
 // Define the Board interface
 export interface Board {
@@ -9,26 +9,46 @@ export interface Board {
   dueDate?: Date;
   priority?: "low" | "medium" | "high";
   columns?: {
-    [column: string]: Task[];
+    [column: string]: Cards[];
   };
 }
 
 // Zustand store definition
 const useBoardStore = create<{
   boards: Board[];
-  createBoard: (id: number, name: string, description: string, tasks?: Task[], dueDate?: Date, priority?: "low" | "medium" | "high") => void;
+  createBoard: (
+    id: number,
+    name: string,
+    description: string,
+    tasks?: Cards[],
+    dueDate?: Date,
+    priority?: "low" | "medium" | "high"
+  ) => void;
+  updateColumnOrder: (boardId: number, columnOrder: string[]) => void;
   updateBoard: (id: number, updatedBoard: Partial<Board>) => void;
   deleteBoard: (id: number) => void;
 
   // Kanban-specific actions
-  addTask: (boardId: number, column: string, newTask: Task) => void;
-  moveTask: (boardId: number, sourceColumn: string, targetColumn: string, taskId: number) => void;
+  addTask: (boardId: number, column: string, newTask: Cards) => void;
+  moveTask: (
+    boardId: number,
+    sourceColumn: string,
+    targetColumn: string,
+    taskId: number
+  ) => void;
+  editTask: (
+    boardId: number,
+    column: string,
+    taskId: number,
+    updatedTask: Cards
+  ) => void;
+
   addList: (boardId: number, listName: string) => void;
 }>((set) => ({
   boards: [],
 
   // Core board actions
-  createBoard: (id, name, description, tasks = [], dueDate, priority) =>
+  createBoard: (id, name, description, tasks = [], dueDate, priority) => {
     set((state) => ({
       boards: [
         ...state.boards,
@@ -42,20 +62,45 @@ const useBoardStore = create<{
           columns: {}, // Initialize columns
         },
       ],
-    })),
-  updateBoard: (id, updatedBoard) =>
+    }));
+  },
+  updateColumnOrder: (boardId, columnOrder) => {
+    set((state) => {
+      const boardIndex = state.boards.findIndex(
+        (board) => board.id === boardId
+      );
+      if (boardIndex === -1) return state;
+
+      const updatedBoards = [...state.boards];
+      const currentBoard = { ...updatedBoards[boardIndex] };
+
+      // Reorder columns based on the new column order
+      const reorderedColumns: Record<string, Cards[]> = {};
+      columnOrder.forEach((columnId) => {
+        reorderedColumns[columnId] = currentBoard.columns?.[columnId] || [];
+      });
+
+      currentBoard.columns = reorderedColumns;
+      updatedBoards[boardIndex] = currentBoard;
+
+      return { boards: updatedBoards };
+    });
+  },
+  updateBoard: (id, updatedBoard) => {
     set((state) => ({
       boards: state.boards.map((board) =>
         board.id === id ? { ...board, ...updatedBoard } : board
       ),
-    })),
-  deleteBoard: (id) =>
+    }));
+  },
+  deleteBoard: (id) => {
     set((state) => ({
       boards: state.boards.filter((board) => board.id !== id),
-    })),
+    }));
+  },
 
   // Kanban actions
-  addTask: (boardId, column, newTask) =>
+  addTask: (boardId, column, newTask) => {
     set((state) => ({
       boards: state.boards.map((board) => {
         if (board.id !== boardId) return board;
@@ -69,9 +114,10 @@ const useBoardStore = create<{
           },
         };
       }),
-    })),
+    }));
+  },
 
-  moveTask: (boardId, sourceColumn, targetColumn, taskId) =>
+  moveTask: (boardId, sourceColumn, targetColumn, taskId) => {
     set((state) => ({
       boards: state.boards.map((board) => {
         if (board.id !== boardId) return board;
@@ -94,11 +140,35 @@ const useBoardStore = create<{
           },
         };
       }),
-    })),
+    }));
+  },
 
-  addList: (boardId, listName) => set((state) => (
-    console.log(`addList called for board ${boardId}, list ${listName}`), 
-    {
+  editTask: (boardId, column, taskId, updatedTask) => {
+    set((state) => ({
+      boards: state.boards.map((board) => {
+        if (board.id !== boardId) return board;
+
+        const columnTasks = board.columns?.[column] || [];
+
+        const taskIndex = columnTasks.findIndex((task) => task.id === taskId);
+        if (taskIndex === -1) return board; // Task not found
+
+        const updatedColumnTasks = [...columnTasks];
+        updatedColumnTasks[taskIndex] = updatedTask;
+
+        return {
+          ...board,
+          columns: {
+            ...board.columns,
+            [column]: updatedColumnTasks,
+          },
+        };
+      }),
+    }));
+  },
+
+  addList: (boardId, listName) => {
+    set((state) => ({
       boards: state.boards.map((board) => {
         if (board.id !== boardId) return board;
 
@@ -110,7 +180,7 @@ const useBoardStore = create<{
           },
         };
       }),
-    }
-  )),
+    }));
+  },
 }));
 export default useBoardStore;

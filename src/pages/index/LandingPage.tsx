@@ -22,7 +22,7 @@ const LandingPage: React.FC = () => {
       <header className="h-screen flex flex-col items-center justify-center text-center py-16 px-6 bg-animated-gradient">
         <h1 className="max-md:text-xl md:text-3xl lg:text-5xl font-bold mb-4">DayBoard is Under Construction 🚧</h1>
         <p className="text-lg font-light max-w-2xl">
-          We're building <i>DayBoard</i> to help you manage your time and stay productive—but we're not there yet!
+          We're building <i>DayBoard</i> to help you manage your time—but we're not there yet!
         </p>
         <p>Right now you can play around with the app itself, just click the button below</p>
         <div className="mt-6 flex gap-4">

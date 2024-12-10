@@ -1,5 +1,5 @@
 import React from "react";
-import { GeneralProps } from "../../utils/interfaces";
+import { GeneralProps } from "../../../../utils/interfaces";
 
 type Mode = "focus" | "pomodoro";
 
@@ -19,7 +19,7 @@ const SegmentedControl: React.FC<SegmentedControlProps> = ({
     <div className={`relative w-full max-w-xs mx-auto ${theme.sidenav.bg} rounded-lg p-1 flex items-center`}>
       {/* Background Indicator */}
       <div
-        className={`absolute left-1 h-[90%] w-1/2 ${theme.glass.border} border rounded-lg transition-transform duration-300`}
+        className={`absolute left-1 h-[90%] w-1/2 ${theme.glass.bg} ${theme.glass.border} border rounded-lg transition-transform duration-300`}
         style={{
           transform: `translateX(${activeMode === "pomodoro" ? "95%" : "0"})`,
         }}
