@@ -1,11 +1,9 @@
-import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
+import { DragDropContext, Draggable, Droppable, DropResult } from '@hello-pangea/dnd';
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import useBoardStore, { Board } from '../../../../store/boardStore';
-import { getTheme } from '../../../../utils/getTheme';
+import { mainTheme } from '../../../../utils/interfaces';
 import { Modal } from '../ui/Modal';
 import KanbanBoard from './KanbanBoard';
-import { mainTheme } from '../../../../utils/interfaces';
 
 interface ContainerProps {
   board: Board;

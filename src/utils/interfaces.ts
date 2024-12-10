@@ -8,7 +8,7 @@ type mainTheme = typeof themes[Themes];
 
 // Common props we may pass to components
 interface GeneralProps {
-  theme: mainTheme;
+  theme?: mainTheme;
   className?: string;
   content?: React.ReactNode;
   children?: React.ReactNode;
