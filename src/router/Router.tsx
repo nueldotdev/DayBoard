@@ -12,9 +12,12 @@ import ProjectsPage from '../pages/app/project/ProjectsPage'
 // import ProjectSection from '../pages/app/project/ProjectSection'
 import { SchedulePage } from '../pages/app/SchedulePage'
 import LandingPage from '../pages/index/LandingPage'
+import { getTheme } from '../utils/getTheme'
 
 
 const AppRouter: React.FC = () => {
+  const {currentTheme} = getTheme();
+
   return (
     <Router>
       <Routes>
@@ -25,12 +28,11 @@ const AppRouter: React.FC = () => {
           <Route path='tasks' element={<TasksPage />} />
           <Route path='settings' element={<SettingsPage />} />
           <Route path='schedule' element={<SchedulePage />} />
-          <Route path='test-kanban' element={<KanbanContainer />} />
           <Route path='b' element={<ProjectsPage />} />
           <Route path='b/:boardId' element={<ProjectDetail />} />
           {/* <Route path='p/:projectId/s/:sectionId' element={<ProjectSection />} /> */}
         </Route>
-        <Route path='/pomodoro' element={<PomodoroTimer />} />
+        <Route path='/pomodoro' element={<PomodoroTimer theme={currentTheme} />} />
       </Routes>
     </Router>
   );

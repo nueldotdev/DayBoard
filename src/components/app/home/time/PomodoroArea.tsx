@@ -11,7 +11,7 @@ export const PomodoroArea:  React.FC<TimeComponentsProps> = ({theme}) => {
     <div className={`tc-cards ${theme.global.bg} ${theme.global.border}`}>
       <HiOutlineClock className="text-2xl mb-2" />
       {isActive || hasPreviousSession ? (
-        <PomodoroTimer />
+        <PomodoroTimer theme={theme} />
       ) : (
         <div className="tc-cards shadow-none border-0 p-0 m-0">
           <div className="space-y-2">
