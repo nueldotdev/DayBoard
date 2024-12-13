@@ -2,12 +2,18 @@ import { Link, useParams } from 'react-router-dom';
 import KanbanContainer from '../../../components/app/objects/project-components/KanbanContainer';
 import usePageTitle from '../../../hooks/usePageTitle';
 import { getTheme } from '../../../utils/getTheme';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import GradientSelect from '../../../components/app/objects/ui/GradientSelect';
 import Popover from '../../../components/app/objects/ui/Popover';
 import { VscPaintcan } from "react-icons/vsc";
 import useBoardStore from '../../../store/boardStore';
 
+// // set up env
+// import dotenv from 'dotenv';
+// dotenv.config();
+
+
+  // 
 const ProjectDetail: React.FC = () => {
   const { currentTheme } = getTheme();
   const { boards } = useBoardStore();
@@ -18,11 +24,30 @@ const ProjectDetail: React.FC = () => {
     currentTheme.global.bg
   );
 
+  // const API_KEY = ""
+  
+  // console.log(API_KEY)
+
+  // const [imageUrl, setImageUrl] = useState('');
+
+  useEffect(() => {
+    // const fetchImage = async () => {
+    //   const response = await fetch(`https://api.unsplash.com/search/photos?page=1&query=productivity&client_id=${API_KEY}`);
+    //   const data = await response.json();
+    //   console.log(data)
+    //   setImageUrl(data.results[board!.id].urls.regular);// Use 'regular' or another size depending on your needs
+    // };
+
+    // fetchImage();
+  }, [])
+
   // Set page title
   usePageTitle("Boards - " + board?.name);
 
   return (
-    <div className={`flex flex-col fill-all ${backgroundGradient}`}>  
+    <div className={`flex flex-col fill-all graph-paper-bg ${backgroundGradient} bg-boards`}
+    // style={{ backgroundImage: `url(${imageUrl})` }}
+    >  
       <div className={`flex justify-between items-center p-2 hover:shadow-lg ${currentTheme.kbHead.bg} ${currentTheme.hoverEffects.btnHover} transition-all`}>
         <div className={``}>
           <div className={`${currentTheme.global.textSecondary} flex gap-x-2 items-baseline text-2xl`}>

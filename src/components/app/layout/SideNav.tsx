@@ -33,7 +33,7 @@ const routes = [
   //   name: "Notes",
   // },
   {
-    path: "/",
+    path: "/app/blocks",
     element: <HiOutlineRectangleStack  size={24} />,
     name: "Blocks",
   },

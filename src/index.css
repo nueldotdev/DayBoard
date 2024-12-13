@@ -2,6 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --bg-color-light: #fdfdfd; /* Light mode background */
+  --line-color-light: rgba(0, 0, 0, 0.1); /* Light mode grid lines */
+  
+  --bg-color-dark: #1a1a1a; /* Dark mode background */
+  --line-color-dark: rgba(255, 255, 255, 0.1); /* Dark mode grid lines */
+}
+
+[data-theme="light"] {
+  --bg-color: var(--bg-color-light);
+  --line-color: var(--line-color-light);
+}
+
+[data-theme="dark"] {
+  --bg-color: var(--bg-color-dark);
+  --line-color: var(--line-color-dark);
+}
+[data-theme="solarized"] {
+  --bg-color: #fdf6e3; /* Solarized base color */
+  --line-color: rgba(101, 123, 131, 0.2);
+  background: var(--bg-color), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 10 10'%3E%3Crect width='10' height='10' fill='%23eee8d5'/%3E%3Ccircle cx='5' cy='5' r='1.5' fill='%23b58900'/%3E%3C/svg%3E");
+}
+
+[data-theme="dracula"] {
+  --bg-color: #282a36;
+  --line-color: rgba(248, 248, 242, 0.1);
+  background: var(--bg-color), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 10 10'%3E%3Crect width='10' height='10' fill='%23344458'/%3E%3Cpath d='M0 0L10 10ZM10 0L0 10Z' stroke='%23bd93f9' stroke-width='0.5'/%3E%3C/svg%3E");
+}
+
+[data-theme="nord"] {
+  --bg-color: #2e3440;
+  --line-color: rgba(216, 222, 233, 0.1);
+  background: var(--bg-color), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 10 10'%3E%3Crect width='10' height='10' fill='%233b4252'/%3E%3Ccircle cx='5' cy='5' r='1.5' fill='%238fbcbb'/%3E%3C/svg%3E");
+}
+
+[data-theme="gruvbox"] {
+  --bg-color: #282828; /* Gruvbox dark background */
+  --line-color: rgba(235, 219, 178, 0.1);
+  background: var(--bg-color), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 10 10'%3E%3Crect width='10' height='10' fill='%23323232'/%3E%3Ccircle cx='5' cy='5' r='1.5' fill='%23fabd2f'/%3E%3C/svg%3E");
+}
+
+
 
 @layer base {
   .greeting-message {
@@ -97,7 +139,20 @@
     animation: gradient-shift 6s ease infinite;
   }
 
-
+  .graph-paper-bg {
+    background-color: var(--bg-color);
+    background-image: 
+      linear-gradient(to right, var(--line-color) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--line-color) 1px, transparent 1px);
+    background-size: 20px 20px; /* Adjust as needed */
+    /* background: ; */
+  }
+  
+  .bg-boards {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
 
   /* kanban container scrolling */
   .kanban-container {

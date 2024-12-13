@@ -14,6 +14,8 @@ const PopContent: React.FC = () => {
   const { themeName, setTheme } = useThemeStore();
   const currentTheme = themes[themeName];
 
+  document.documentElement.setAttribute("data-theme", themeName);
+
   return (
     <ul className={`p-1 ${currentTheme.global.bg} border ${currentTheme.global.border} rounded-md w-48`}>
       {Object.keys(themes).map((theme) => (

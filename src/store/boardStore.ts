@@ -22,7 +22,8 @@ const useBoardStore = create<{
     description: string,
     tasks?: Cards[],
     dueDate?: Date,
-    priority?: "low" | "medium" | "high"
+    priority?: "low" | "medium" | "high",
+    image?: string
   ) => void;
   updateColumnOrder: (boardId: number, columnOrder: string[]) => void;
   updateBoard: (id: number, updatedBoard: Partial<Board>) => void;

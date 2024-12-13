@@ -10,9 +10,10 @@ import TasksPage from '../pages/app/TasksPage'
 import ProjectDetail from '../pages/app/project/ProjectDetail'
 import ProjectsPage from '../pages/app/project/ProjectsPage'
 // import ProjectSection from '../pages/app/project/ProjectSection'
-import { SchedulePage } from '../pages/app/SchedulePage'
+// import { SchedulePage } from '../pages/app/SchedulePage'
 import LandingPage from '../pages/index/LandingPage'
 import { getTheme } from '../utils/getTheme'
+import { BlockPage } from '../pages/app/focus/BlockPage'
 
 
 const AppRouter: React.FC = () => {
@@ -27,7 +28,7 @@ const AppRouter: React.FC = () => {
           <Route path='notes' element={<NotesPage />} />
           <Route path='tasks' element={<TasksPage />} />
           <Route path='settings' element={<SettingsPage />} />
-          <Route path='schedule' element={<SchedulePage />} />
+          <Route path='blocks' element={<BlockPage />} />
           <Route path='b' element={<ProjectsPage />} />
           <Route path='b/:boardId' element={<ProjectDetail />} />
           {/* <Route path='p/:projectId/s/:sectionId' element={<ProjectSection />} /> */}
