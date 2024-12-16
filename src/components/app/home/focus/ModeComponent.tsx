@@ -20,9 +20,9 @@ export const ModeComponent: React.FC<TimeComponentsProps> = ({ theme }) => {
   const PopoverContent = () => {
 
     return (
-      <div className={`${theme.sidenav.bg} rounded-xl border ${theme.glass.border} w-64 gap-y-4 flex flex-col`}>
+      <div className={`${theme.sidenav.bg} p-2 rounded-xl border ${theme.glass.border} w-fit gap-y-2 flex flex-col`}>
         {modes.map((active) => (
-          <button className={`${mode === active ? `${theme.glass.border}` : ""}`} onClick={() => setMode(active)}>
+          <button className={`${mode === active ? `${theme.hoverEffects.textBg} ${theme.glass.highlight}` : ``} p-2 rounded-lg ${theme.glass.highlight} w-36`} onClick={() => setMode(active)}>
             Focus {active}
           </button>
         ))}
@@ -36,7 +36,7 @@ export const ModeComponent: React.FC<TimeComponentsProps> = ({ theme }) => {
         className={`tc-cards shadow  ${theme.glass.bg} ${theme.glass.border} ${theme.glass.shadow} ${theme.glass.highlight} glassmorphism col-sapn-2 flex flex-col items-center`}
       >
         <Popover position="bottom" content={<PopoverContent />} >
-          <button className={`flex justify-center ${theme.global.textPrimary} text-base ${theme.glass.border} border ${theme.hoverEffects.btnHover} p-2 rounded-xl`}>
+          <button className={`flex justify-center ${theme.global.textPrimary} text-base ${theme.glass.border} border ${theme.hoverEffects.btnHover} p-2 rounded-xl transition-all`}>
             <h2>Focus {mode}</h2>
           </button>
         </Popover>

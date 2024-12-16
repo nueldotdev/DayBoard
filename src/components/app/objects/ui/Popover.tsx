@@ -27,8 +27,6 @@ const Popover: React.FC<PopoverProps> = ({ children, content, position = "bottom
     setIsVisible(!isVisible);
   };
 
-
-
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (

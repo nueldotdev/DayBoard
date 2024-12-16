@@ -13,7 +13,8 @@ import ProjectsPage from '../pages/app/project/ProjectsPage'
 // import { SchedulePage } from '../pages/app/SchedulePage'
 import LandingPage from '../pages/index/LandingPage'
 import { getTheme } from '../utils/getTheme'
-import { BlockPage } from '../pages/app/focus/BlockPage'
+import { StatsPage } from '../pages/app/focus/StatsPage'
+import Landing from '../pages/index/final-concepts/Landing'
 
 
 const AppRouter: React.FC = () => {
@@ -28,12 +29,13 @@ const AppRouter: React.FC = () => {
           <Route path='notes' element={<NotesPage />} />
           <Route path='tasks' element={<TasksPage />} />
           <Route path='settings' element={<SettingsPage />} />
-          <Route path='blocks' element={<BlockPage />} />
+          <Route path='stats' element={<StatsPage />} />
           <Route path='b' element={<ProjectsPage />} />
           <Route path='b/:boardId' element={<ProjectDetail />} />
           {/* <Route path='p/:projectId/s/:sectionId' element={<ProjectSection />} /> */}
         </Route>
         <Route path='/pomodoro' element={<PomodoroTimer theme={currentTheme} />} />
+        <Route path='/test' element={<Landing />}></Route>
       </Routes>
     </Router>
   );

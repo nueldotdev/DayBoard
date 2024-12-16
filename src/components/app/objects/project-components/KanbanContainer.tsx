@@ -76,7 +76,7 @@ const KanbanContainer: React.FC<ContainerProps> = ({theme, board}) => {
       return (
         <div className="flex space-x-4 w-fit pb-20 pr-4">
           <button 
-            className={`min-w-[300px] max-w-[300px] flex items-center justify-center rounded-lg p-4 h-min max-h-fit opacity-60 hover:opacity-70 transition ${theme.hoverEffects.btnHover} border ${theme.global.border}`} 
+            className={`min-w-[300px] max-w-[300px] flex items-center justify-center rounded-lg p-4 h-min max-h-fit bg-opacity-40 hover:bg-opacity-70 transition ${theme.hoverEffects.btnHover} border ${theme.global.border}`} 
             onClick={() => setListModal(true)}
           >
             New List

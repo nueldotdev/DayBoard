@@ -11,6 +11,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import useThemeStore from "../../../store/themeStore";
 import { themes } from "../../../themeConfig";
 import Tooltip from "../objects/ui/Tooltip";
+import { HiTrendingUp } from "react-icons/hi";
 
 const routes = [
   { 
@@ -30,12 +31,12 @@ const routes = [
   // {
   //   path: "/app/notes",
   //   element: <HiOutlineDocumentText size={24} />,
-  //   name: "Notes",
+  //   name: "Notes",element: <HiOutlineRectangleStack  size={24} />,
   // },
   {
-    path: "/app/blocks",
-    element: <HiOutlineRectangleStack  size={24} />,
-    name: "Blocks",
+    path: "/app/stats",
+    element: <HiTrendingUp size={24} />,
+    name: "Stats",
   },
   {
     path: "/app/settings",
