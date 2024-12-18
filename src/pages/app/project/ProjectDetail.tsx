@@ -13,25 +13,39 @@ import { motion } from "framer-motion";
 const BackgroundSelector: React.FC<{
   handleBackgroundChange: (url: string) => void;
   currentImg: string;
-}> = ({ handleBackgroundChange, currentImg }) => {
+  saveBoardDetails: () => void;
+}> = ({ handleBackgroundChange, currentImg, saveBoardDetails }) => {
+
+  const { currentTheme } = getTheme();
   const API_KEY = import.meta.env.VITE_UNSPLASH_API_KEY;
   const [unsplashImgs, setUnsplashImgs] = useState<any[]>([]);
   const [query, setQuery] = useState(""); // Empty query for random images initially
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const observerRef = useRef<HTMLDivElement | null>(null);
+  const fetchedImageIds = useRef(new Set<string>());
 
-  // Fetch images from Unsplash API
   const fetchImages = async (pageNum: number, searchQuery: string) => {
     setLoading(true);
     try {
       const endpoint = searchQuery
         ? `https://api.unsplash.com/search/photos?page=${pageNum}&query=${searchQuery}&client_id=${API_KEY}`
-        : `https://api.unsplash.com/photos?page=${pageNum}&client_id=${API_KEY}`; // Fetch random photos if query is empty
+        : `https://api.unsplash.com/photos?page=${pageNum}&client_id=${API_KEY}`;
+
       const response = await fetch(endpoint);
       const data = await response.json();
-      const newImages = searchQuery ? data.results : data; // Handle both search and random API response
-      setUnsplashImgs((prevImgs) => [...prevImgs, ...newImages]); // Append new images
+      const newImages = searchQuery ? data.results : data;
+
+      // Filter out duplicates before appending
+      const filteredImages = newImages.filter((img: any) => {
+        if (fetchedImageIds.current.has(img.id)) {
+          return false;
+        }
+        fetchedImageIds.current.add(img.id);
+        return true;
+      });
+
+      setUnsplashImgs((prevImgs) => [...prevImgs, ...filteredImages]);
     } catch (error) {
       console.error("Error fetching Unsplash images:", error);
     } finally {
@@ -44,31 +58,34 @@ const BackgroundSelector: React.FC<{
     fetchImages(page, query);
   }, [page, query]);
 
-  // Infinite scrolling observer
   useEffect(() => {
+    let skipObserver = false; // Skip first intersection check
+  
     if (loading) return;
-
+  
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
-          setPage((prevPage) => prevPage + 1); // Load the next page
+        if (entries[0].isIntersecting && !skipObserver) {
+          setPage((prevPage) => prevPage + 1);
         }
+        skipObserver = false; // Set to false after first load
       },
       { threshold: 1.0 }
     );
-
+  
     if (observerRef.current) observer.observe(observerRef.current);
-
+  
     return () => {
       if (observerRef.current) observer.unobserve(observerRef.current);
     };
   }, [loading]);
+  
 
   return (
-    <div className=" h-full">
-      <div className="flex fill-all flex-col">
+    <div className="h-full">
+      <div className="flex fill-all flex-col gap-2">
         {/* Search Bar */}
-        <div className="">
+        <div className="h-fit">
           <input
             type="text"
             placeholder="Search photos..."
@@ -83,28 +100,45 @@ const BackgroundSelector: React.FC<{
         </div>
 
         {/* Image Grid */}
-        <div className="grid grid-cols-2 overflow-auto gap-2">
+        <div className="grid grid-cols-2 overflow-auto h-full gap-2">
           {unsplashImgs.map((img) => (
             <button
               key={img.id}
               onClick={() => handleBackgroundChange(img.urls.regular)}
-              className={`h-20 w-full rounded-lg shadow-md bg-cover bg-center ${img.urls.regular === currentImg ? "border-2 border-[#4AFD3A]" : ""}`}
+              className={`h-20 w-full rounded-lg shadow-md bg-cover bg-center ${
+                img.urls.regular === currentImg
+                  ? "border-2 border-[#4AFD3A]"
+                  : ""
+              }`}
               style={{ backgroundImage: `url(${img.urls.thumb})` }}
             />
           ))}
           {/* Loading Spinner */}
-          {loading && <div className="text-center mt-4">Loading...</div>}        
+          {loading && (
+            <div className="text-center animate-pulse mt-4">Loading...</div>
+          )}
           {/* Infinite Scroll Trigger */}
           <div ref={observerRef} className="h-4 mt-4" />
         </div>
 
         {/* Default Background Button */}
-        <button
-          onClick={() => handleBackgroundChange("")}
-          className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 px-4 rounded-md"
-        >
-          Default Background
-        </button>
+        <div className="h-fit flex items-center space-x-2 justify-evenly">
+          <button
+            onClick={() => saveBoardDetails()}
+            className={`${currentTheme.hoverEffects.textBg} py-2 px-4 rounded-lg w-full`}
+          >
+            Save
+          </button>
+          <button
+            onClick={() => {
+              handleBackgroundChange("")
+              saveBoardDetails()
+            }}
+            className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 w-full px-4 rounded-lg"
+          >
+            Default
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -167,6 +201,8 @@ const ProjectDetail: React.FC = () => {
   const { boardId } = useParams<{ boardId: string }>();
   const board = boards.find((p) => p.id === Number(boardId));
 
+
+
   const [imageUrl, setImageUrl] = useState("");
   const [withImg, setWithImg] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -175,10 +211,19 @@ const ProjectDetail: React.FC = () => {
     board?.description || ""
   );
   const [sidebarPage, setSidebarPage] = useState("Menu");
-  const [sideContent, setSideContent] = useState(false)
+  const [sideContent, setSideContent] = useState(false);
 
   // Set page title
   usePageTitle("Boards - " + board?.name);
+
+
+  // Upon load, check if board has image 
+  useEffect(() => {
+    if (board?.image && board?.image != "") {
+      setWithImg(true)
+      setImageUrl(board.image)
+    }
+  }, [])
 
   // Handle background selection
   const handleBackgroundChange = (newImageUrl: string) => {
@@ -198,8 +243,8 @@ const ProjectDetail: React.FC = () => {
 
   // Save edited details
   const saveBoardDetails = () => {
-    if (board) {
-      updateBoard(board.id, { name: editName, description: editDescription });
+    if (board) {      
+      updateBoard(board.id, { name: editName, description: editDescription, image: imageUrl });
       setSidebarOpen(false);
     }
   };
@@ -221,10 +266,11 @@ const ProjectDetail: React.FC = () => {
       name: "Edit Background",
       content: (
         <div className="h-full">
-          <p className="text-sm text-gray-700">
-            Choose a new background for your board:
-          </p>
-          <BackgroundSelector handleBackgroundChange={handleBackgroundChange} currentImg={imageUrl} />
+          <BackgroundSelector
+            handleBackgroundChange={handleBackgroundChange}
+            currentImg={imageUrl}
+            saveBoardDetails={saveBoardDetails}
+          />
         </div>
       ),
     },
@@ -270,35 +316,29 @@ const ProjectDetail: React.FC = () => {
       <SideBar
         open={sidebarOpen}
         onClose={() => {
-          setSidebarOpen(false)
-          setSideContent(false)
+          setSidebarOpen(false);
+          setSideContent(false);
         }}
         theme={currentTheme}
         exitButton={true}
         title={sidebarPage} // Show current sidebar page title
       >
         {/* Sidebar Buttons */}
-        <div className="flex flex-col gap-4">
-          {sideContent ? 
-            sidebarPages.find((p) => p.name === sidebarPage)?.content
-          : sidebarPages.map((page) => (
-            <button
-              key={page.name}
-              onClick={() => {
-                setSidebarPage(page.name)
-                setSideContent(true)
-              }}
-              className={`p-2 rounded-md ${currentTheme.global.text} ${currentTheme.hoverEffects.textHover} transition-colors`}
-            >
-              {page.name}
-            </button>
-            ))
-          }
-        </div>
-
-        {/* Sidebar Page Content */}
-        <div className="flex flex-col gap-1 max-h-full overflow-auto">
-          
+        <div className="flex flex-col gap-4 fill-all">
+          {sideContent
+            ? sidebarPages.find((p) => p.name === sidebarPage)?.content
+            : sidebarPages.map((page) => (
+                <button
+                  key={page.name}
+                  onClick={() => {
+                    setSidebarPage(page.name);
+                    setSideContent(true);
+                  }}
+                  className={`p-2 rounded-md ${currentTheme.global.text} ${currentTheme.hoverEffects.textHover} transition-colors`}
+                >
+                  {page.name}
+                </button>
+              ))}
         </div>
       </SideBar>
     </div>
@@ -306,19 +346,3 @@ const ProjectDetail: React.FC = () => {
 };
 
 export default ProjectDetail;
-// {/* <div
-//   className={`fixed top-0 right-0 h-full overflow-auto w-96 ${currentTheme.sidenav.bg} shadow-lg z-50 transform ${
-//     sidebarOpen ? "translate-x-0" : "translate-x-full"
-//   } transition-transform duration-300`}
-// >
-//   <div className="p-4 flex flex-col gap-4">
-//     {/* Header
-//     <div className="flex justify-between items-center">
-//       <h2 className="text-xl font-bold">Menu</h2>
-//       <button
-//         onClick={() => setSidebarOpen(false)}
-//         className={`${currentTheme.hoverEffects.btnHover}`}
-//       >
-//         <HiX className="w-4 h-4"/>
-//       </button>
-//     </div> */}

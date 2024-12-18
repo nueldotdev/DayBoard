@@ -54,7 +54,7 @@ export const SideBar: React.FC<SidebarProps> = ({
         >
           {/* Sidebar container */}
           <motion.div
-            className={`p-4 flex flex-col gap-4 h-full w-96 ${theme.sidenav.bg} shadow-lg`}
+            className={`p-4 flex flex-col gap-2 pb-10 h-full w-96 ${theme.sidenav.bg} shadow-lg`}
             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the sidebar
             initial="hidden"
             animate="visible"
@@ -63,7 +63,7 @@ export const SideBar: React.FC<SidebarProps> = ({
             transition={{ duration: 0.3, ease: "easeInOut" }} // Smooth transition
           >
             {/* Header */}
-            <div className="flex justify-between items-center">
+            <div className="h-fit flex justify-between items-center">
               <h2 className="text-xl font-bold">{title}</h2>
               {exitButton && (
                 <button

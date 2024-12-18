@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { HiOutlineClock, HiOutlineSparkles, HiOutlineUserGroup } from "react-icons/hi2";
-import { useNavigate } from "react-router-dom";
-import { getTheme } from "../../../utils/getTheme";
+// import { useNavigate } from "react-router-dom";
+// import { getTheme } from "../../../utils/getTheme";
 
 const Landing: React.FC = () => {
-  const {currentTheme} = getTheme();
-  const navigate = useNavigate();
-  const [forModal, setForModal] = useState(false);
-  const [name, setName] = useState("");
+  // const {currentTheme} = getTheme();
+  // const navigate = useNavigate();
+  // const [forModal, setForModal] = useState(false);
+  // const [name, setName] = useState("");
 
 
   return (

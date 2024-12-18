@@ -1,25 +1,6 @@
 import axios from 'axios';
 
 
-// Get user's latitude and longitude
-export const getCoordinates = (): Promise<{ lat: number; lon: number }> => {
-  return new Promise((resolve, reject) => {
-    if (!navigator.geolocation) {
-      reject(new Error('Geolocation is not supported by your browser.'));
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        resolve({ lat: latitude, lon: longitude });
-      },
-      (error) => {
-        reject(new Error(`Geolocation error: ${error.message}`));
-      }
-    );
-  });
-};
-
 
 // Reverse geocode to get city and country name using OpenCage
 export const getCityName = async (lat: number, lon: number): Promise<string> => {

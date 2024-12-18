@@ -11,6 +11,7 @@ export interface Board {
   columns?: {
     [column: string]: Cards[];
   };
+  image?: string;
 }
 
 // Zustand store definition

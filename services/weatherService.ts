@@ -28,3 +28,65 @@ export const fetchWeather = async (city: string): Promise<WeatherData> => {
   });
   return response.data;
 };
+
+
+// {
+//   "latitude": 6.5,
+//   "longitude": 3.375,
+//   "generationtime_ms": 0.028967857360839844,
+//   "utc_offset_seconds": 0,
+//   "timezone": "GMT",
+//   "timezone_abbreviation": "GMT",
+//   "elevation": 0,
+//   "current_weather_units": {
+//       "time": "iso8601",
+//       "interval": "seconds",
+//       "temperature": "°C",
+//       "windspeed": "km/h",
+//       "winddirection": "°",
+//       "is_day": "",
+//       "weathercode": "wmo code"
+//   },
+//   "current_weather": {
+//       "time": "2024-12-18T08:45",
+//       "interval": 900,
+//       "temperature": 29.1,
+//       "windspeed": 6.6,
+//       "winddirection": 347,
+//       "is_day": 1,
+//       "weathercode": 1
+//   }
+// }
+
+export const fetchWeatherByCoordinates = async (
+  lat: number,
+  lon: number
+): Promise<{
+  temperature: number;
+  windSpeed: number;
+  windDirection: number;
+  isDay: boolean;
+  weatherCode: number;
+  temp_unit: string;
+}> => {
+  const API_URL = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
+  try {
+    const response = await fetch(API_URL);
+    if (!response.ok) {
+      throw new Error("Failed to fetch weather data");
+    }
+    const data = await response.json();
+
+    return {
+      temperature: data.current_weather.temperature,
+      windSpeed: data.current_weather.windspeed,
+      windDirection: data.current_weather.winddirection,
+      isDay: data.current_weather.is_day === 1,
+      weatherCode: data.current_weather.weathercode,
+      temp_unit: data.current_weather_units.temperature
+    };
+  } catch (error) {
+    console.error("Error fetching weather data:", error);
+    throw error;
+  }
+};
