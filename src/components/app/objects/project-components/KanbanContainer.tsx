@@ -1,111 +1,178 @@
-import { DragDropContext, DropResult } from '@hello-pangea/dnd';
+import { DragDropContext, Draggable, Droppable, DropResult } from '@hello-pangea/dnd';
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import useBoardStore from '../../../../store/boardStore';
-import { getTheme } from '../../../../utils/getTheme';
+import useBoardStore, { Board } from '../../../../store/boardStore';
+import { mainTheme } from '../../../../utils/interfaces';
 import { Modal } from '../ui/Modal';
 import KanbanBoard from './KanbanBoard';
 
-const KanbanContainer: React.FC = () => {
-  const { boardId } = useParams<{ boardId: string }>(); // Get the current board ID from the route
-  const { boards, moveTask, addTask, addList } = useBoardStore(); // Zustand store
-  const { currentTheme } = getTheme();
+interface ContainerProps {
+  board: Board;
+  theme: mainTheme;
+
+}
+
+
+const KanbanContainer: React.FC<ContainerProps> = ({theme, board}) => {
+  const { moveTask, addTask, addList, updateColumnOrder } = useBoardStore();
 
   const [listModal, setListModal] = useState<boolean>(false);
   const [newListTitle, setNewListTitle] = useState<string>('');
+  const [isDraggingDisabled, setIsDraggingDisabled] = useState<boolean>(false);
 
-  // Find the current board using its ID
-  const currentBoard = boards.find((board) => board.id === Number(boardId));
+  const currentBoard: Board = board;
 
   const handleDragEnd = (result: DropResult) => {
-    const { source, destination, draggableId } = result;
-  
-    // Exit if there's no destination
+    // Only proceed if dragging is not disabled
+    if (isDraggingDisabled) return;
+
+    const { source, destination, type } = result;
+
+    // If no destination, exit
     if (!destination) return;
-  
-    const sourceColumn = source.droppableId;
-    const targetColumn = destination.droppableId;
-  
-    // Exit if the task wasn't moved
-    if (sourceColumn === targetColumn && source.index === destination.index) {
+
+    // If dragging columns
+    if (type === 'COLUMN') {
+      if (source.index === destination.index) return;
+
+      const columnIds = Object.keys(currentBoard?.columns || {});
+      
+      const [reorderedColumn] = columnIds.splice(source.index, 1);
+      columnIds.splice(destination.index, 0, reorderedColumn);
+
+      updateColumnOrder(currentBoard.id, columnIds);
       return;
     }
-  
+
+    // If dragging tasks within a column
+    const { source: taskSource, destination: taskDestination } = result;
+    const sourceColumn = taskSource.droppableId;
+    const targetColumn = taskDestination!.droppableId;
+
+    // Exit if the task wasn't moved
+    if (sourceColumn === targetColumn && taskSource.index === taskDestination!.index) {
+      return;
+    }
+
     moveTask(
-      Number(boardId)!, // The ID of the current board from the URL
-      sourceColumn, // The column the task is moved from
-      targetColumn, // The column the task is moved to
-      Number(draggableId) // The ID of the task being moved
+      currentBoard.id, 
+      sourceColumn, 
+      targetColumn, 
+      Number(result.draggableId)
     );
   };
-  
-
-
 
   const handleNewList = () => {
-    console.log(`handleNewList: ${boardId}: boardId, ${newListTitle}: newListTitle`);
-    addList(Number(boardId), newListTitle);
-
+    addList(currentBoard.id, newListTitle);
     setListModal(false);
-  }
+    setNewListTitle('');
+  };
 
+  const handleCardOpenChange = (isOpen: boolean) => {
+    setIsDraggingDisabled(isOpen);
+  };
 
-
-
-  // Handle case where the board isn't found
   const content = () => {
     if (!currentBoard) {
       return (
         <div className="flex space-x-4 w-fit pb-20 pr-4">
-          <button className={`min-w-[300px] max-w-[300px] flex items-center justify-center rounded-lg p-4 h-min max-h-fit opacity-60 hover:opacity-70 transition ${currentTheme.hoverEffects.btnHover} border ${currentTheme.global.border}`} onClick={() => setListModal(true)}>
+          <button 
+            className={`min-w-[300px] max-w-[300px] flex items-center justify-center rounded-lg p-4 h-min max-h-fit bg-opacity-40 hover:bg-opacity-70 transition ${theme.hoverEffects.btnHover} border ${theme.global.border}`} 
+            onClick={() => setListModal(true)}
+          >
             New List
           </button>
         </div>
       );
     }
 
+    const columnIds = Object.keys(currentBoard.columns || {});
+
     return (
       <DragDropContext onDragEnd={handleDragEnd}>
-        <div className="flex space-x-4 w-fit pb-20 pr-4">
-          {Object.entries(currentBoard.columns ?? {}).map(([columnId, tasks]) => (
-            <KanbanBoard
-              key={columnId}
-              title={columnId}
-              tasks={tasks}
-              className="min-w-[300px] max-w-[300px] rounded-lg pb-2 h-min max-h-fit"
-              theme={currentTheme}
-              onAddTask={(columnTitle, taskTitle) => {
-                const newTask = {
-                  id: Date.now(), // Use timestamp as a unique ID for simplicity
-                  title: taskTitle,
-                  description: "", // Optional: Add description handling later
-                };
-            
-                addTask(Number(boardId), columnTitle, newTask); // Call Zustand's addTask method
-              }}
-            />       
-          ))}
-          <button className={`min-w-[300px] max-w-[300px] flex items-center justify-center rounded-lg p-4 h-min max-h-fit opacity-60 hover:opacity-70 transition ${currentTheme.hoverEffects.btnHover} border ${currentTheme.global.border}`} onClick={() => setListModal(true)}>
-              New List
-          </button>
-        </div>
+        <Droppable 
+          droppableId="board" 
+          type="COLUMN" 
+          direction="horizontal"
+          isDropDisabled={isDraggingDisabled}
+        >
+          {(provided) => (
+            <div 
+              {...provided.droppableProps} 
+              ref={provided.innerRef} 
+              className="flex space-x-4 w-fit pb-20 pr-4"
+            >
+              {columnIds.map((columnId, index) => (
+                <Draggable 
+                  key={columnId} 
+                  draggableId={columnId} 
+                  index={index}
+                  isDragDisabled={isDraggingDisabled}
+                >
+                  {(provided) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                    >
+                      <KanbanBoard
+                        key={columnId}
+                        title={columnId}
+                        cards={currentBoard.columns?.[columnId] || []}
+                        className="min-w-[300px] max-w-[300px] rounded-lg pb-2 h-min max-h-fit"
+                        theme={theme}
+                        onAddCard={(columnTitle, cardTitle) => {
+                          const newTask = {
+                            id: Date.now(),
+                            title: cardTitle,
+                            description: "",
+                          };
+                      
+                          addTask(currentBoard.id, columnTitle, newTask);
+                        }}
+                        onCardOpenChange={handleCardOpenChange}
+                      />
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+
+              <button 
+                className={`min-w-[300px] max-w-[300px] flex items-center justify-center rounded-lg p-4 h-min max-h-fit opacity-60 hover:opacity-70 transition ${theme.hoverEffects.btnHover} border ${theme.global.border}`} 
+                onClick={() => setListModal(true)}
+              >
+                New List
+              </button>
+            </div>
+          )}
+        </Droppable>
       </DragDropContext>
-    )
-  }
+    );
+  };
 
   return (
     <div className="fill-all p-4 kanban-container">
       {content()}
 
-
-      <Modal theme={currentTheme} open={listModal} onClose={() => setListModal(false)}>
+      <Modal theme={theme} open={listModal} onClose={() => setListModal(false)}>
         <div className="flex flex-col gap-4">
           <h1 className="text-2xl font-bold">Create a new list</h1>
           <div className="flex flex-col gap-2">
             <label htmlFor="listName">List Name</label>
-            <input type="text" value={newListTitle} onChange={(e) => setNewListTitle(e.target.value)} id="listName" className='border-none rounded-md p-2 focus:outline-none' />
+            <input 
+              type="text" 
+              value={newListTitle} 
+              onChange={(e) => setNewListTitle(e.target.value)} 
+              id="listName" 
+              className='border-none rounded-md p-2 focus:outline-none' 
+            />
           </div>
-          <button className={`${currentTheme.hoverEffects.btnHover} ${currentTheme.global.textPrimary} ${currentTheme.global.border} transition border py-2 px-4 rounded-md focus:outline-none focus:shadow-outline`} onClick={handleNewList}>Create List</button>
+          <button 
+            className={`${theme.hoverEffects.btnHover} ${theme.global.textPrimary} ${theme.global.border} transition border py-2 px-4 rounded-md focus:outline-none focus:shadow-outline`} 
+            onClick={handleNewList}
+          >
+            Create List
+          </button>
         </div>
       </Modal>
     </div>

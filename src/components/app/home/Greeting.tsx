@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatFullDate, formatTime } from "../../../utils/timeFormat";
-import { HiOutlineDocumentText,
-  HiOutlineCheckCircle
-} from "react-icons/hi2";
-import { FaRegUserCircle } from "react-icons/fa";
-import Popover from "../objects/ui/Popover";
-import useThemeStore from "../../../store/themeStore";
-import { themes } from "../../../themeConfig";
+// import useThemeStore from "../../../store/themeStore";
+import { WeatherComponent } from "./Weather";
 
 
 
@@ -32,8 +27,6 @@ const Greeting: React.FC<GreetingProps> = ({ userName }) => {
   const [isVisible, setIsVisible] = useState(true);
   const [time, setTime] = useState(formatTime(new Date()));
   const [fullDate, setFullDate] = useState(formatFullDate(new Date()));
-  const { themeName } = useThemeStore();
-  const currentTheme = themes[themeName];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -49,21 +42,6 @@ const Greeting: React.FC<GreetingProps> = ({ userName }) => {
     const timer = setTimeout(() => setIsVisible(false), 7000);
     return () => clearTimeout(timer);
   }, []);
-
-  const PopContent: React.FC = () => {
-    return (
-      <div className={`w-full break-normal p-1 border rounded-md flex flex-col space-y-2 ${currentTheme.global.border} ${currentTheme.global.bg}`}>
-        <button className={`flex w-full items-center gap-x-2 text-base ${currentTheme.hoverEffects.btnHover} p-2 px-4 rounded-md`}>
-          <HiOutlineDocumentText />
-          New Note
-        </button>
-        <button className={`flex w-full items-center gap-x-2 text-base ${currentTheme.hoverEffects.btnHover} p-2 px-4 rounded-md`}>
-          <HiOutlineCheckCircle />
-          New Task
-        </button>
-      </div>
-    )
-  }
    
 
   return (
@@ -96,11 +74,7 @@ const Greeting: React.FC<GreetingProps> = ({ userName }) => {
       </AnimatePresence>
 
       <div>
-        <Popover content={<PopContent />}>
-          <button className={`p-2 rounded-md ${currentTheme.hoverEffects.btnHover} ${currentTheme.global.text} cursor-pointer transition-colors`}>
-            <FaRegUserCircle size={24} />
-          </button>
-        </Popover>
+        <WeatherComponent />
       </div>
     </div>
   );

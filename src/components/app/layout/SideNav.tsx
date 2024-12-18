@@ -1,17 +1,17 @@
-import React, { } from "react";
+import React from "react";
 import {
-  HiOutlineSquares2X2,
-  HiOutlineDocumentText,
-  HiOutlineCog6Tooth,
   HiEllipsisHorizontal,
+  HiOutlineCog6Tooth,
   HiOutlineFolderPlus as HiOutlineFolderPlusIcon,
   HiOutlineHome,
-  HiCalendarDays 
+  HiOutlineRectangleStack,
+  HiOutlineSquares2X2
 } from "react-icons/hi2";
 import { NavLink, useNavigate } from "react-router-dom";
 import useThemeStore from "../../../store/themeStore";
 import { themes } from "../../../themeConfig";
 import Tooltip from "../objects/ui/Tooltip";
+import { HiTrendingUp } from "react-icons/hi";
 
 const routes = [
   { 
@@ -23,21 +23,21 @@ const routes = [
     element: <HiOutlineSquares2X2 size={24} />,
     name: "Boards",
   },
-  {
-    path: "/app/schedule",
-    element: <HiCalendarDays size={24} />,
-    name: "Schedule",
-  },
-  {
-    path: "/app/notes",
-    element: <HiOutlineDocumentText size={24} />,
-    name: "Notes",
-  },
   // {
-  //   path: "/tasks",
-  //   element: <HiOutlineCheckCircle size={24} />,
-  //   name: "Tasks",
+  //   path: "/app/schedule",
+  //   element: <HiCalendarDays size={24} />,
+  //   name: "Schedule",
   // },
+  // {
+  //   path: "/app/notes",
+  //   element: <HiOutlineDocumentText size={24} />,
+  //   name: "Notes",element: <HiOutlineRectangleStack  size={24} />,
+  // },
+  {
+    path: "/app/stats",
+    element: <HiTrendingUp size={24} />,
+    name: "Stats",
+  },
   {
     path: "/app/settings",
     element: <HiOutlineCog6Tooth size={24} />,

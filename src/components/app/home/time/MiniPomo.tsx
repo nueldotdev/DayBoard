@@ -4,6 +4,21 @@ import { useTimerStore } from '../../../../store/timerStore';
 import { HiOutlinePlay, HiOutlinePause, HiArrowPath, HiXMark } from "react-icons/hi2";
 import { getTheme } from '../../../../utils/getTheme';
 
+export function openPomodoroPopup() {
+  const timerUrl = '/pomodoro'; // Adjust this to the route or page for the timer
+  const windowFeatures = 'width=400,height=300,resizable=no,scrollbars=no';
+
+  const popup = window.open(timerUrl, 'PomodoroTimer', windowFeatures);
+
+  // Ensure popup gets focus if already open
+  if (popup) {
+    popup.focus();
+  } else {
+    alert('Popup blocked! Please enable popups for this site.');
+  }
+}
+
+
 const MiniPomo: React.FC = () => {
   const { pathname } = useLocation();
   const {
@@ -25,6 +40,13 @@ const MiniPomo: React.FC = () => {
     initializeTimer(); // Restore state on component mount
   }, [initializeTimer]);
 
+  const popWin = () => {
+    openPomodoroPopup();
+    setVisible(false)
+  }
+
+
+
   // Avoid rendering on the homepage
   if (pathname === '/app') return null;
   if (!visible) return null;
@@ -32,7 +54,7 @@ const MiniPomo: React.FC = () => {
   return (
     <div className={`fixed flex flex-col gap-y-2 bottom-0 right-0 p-2 rounded-lg hover:border ${currentTheme.global.border} hover:${currentTheme.hoverEffects.btnHover}`}>
       <h3 className="text-sm text-center font-semibold">{isWorkSession ? 'Work Session' : 'Break'}</h3>
-      <button onClick={() => setVisible(false)}><HiXMark /></button>
+      <button onClick={popWin}><HiXMark /></button>
       <div className="text-xl font-bold text-center">
         {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
       </div>
@@ -54,4 +76,7 @@ const MiniPomo: React.FC = () => {
   );
 };
 
+
 export default MiniPomo;
+
+

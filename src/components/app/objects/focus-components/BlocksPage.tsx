@@ -9,7 +9,7 @@ interface ComponentProps {
   // boards: Boards[];
 }
 
-const BoardList: React.FC<ComponentProps> = ({ theme }) => {
+const BlocksPage: React.FC<ComponentProps> = ({ theme }) => {
   const { createBoard, boards } = useBoardStore();
 
   // console.log("Boards Length: ", boards.length)
@@ -165,4 +165,4 @@ const BoardList: React.FC<ComponentProps> = ({ theme }) => {
   );
 };
 
-export default BoardList;
+export default BlocksPage;

@@ -12,20 +12,28 @@ const FocusStreaks: React.FC<TimeComponentsProps> = ({theme}) => {
 
 
   return (
-    <div className={`tc-cards ${theme.hoverEffects.textBg} ${theme.sidenav.border}`}>
-      <HiOutlineFire className="text-2xl mb-2 text-red-500" />
-      <h2 className="text-lg font-bold">Focus Streaks</h2>
-      <p className="mt-2 text-sm">
-        Keep up the good work! Here's how you're doing:
-      </p>
-      <div className="mt-4 space-y-2">
-        <div className="flex justify-between">
-          <span>Current Streak:</span>
-          <span className="font-bold">{streaks.currentStreak} days</span>
+    <div className={`tc-cards ${theme.glass.bg} ${theme.glass.highlight} ${theme.glass.border} glassmorphism`}>
+      <div className='space-x-1 flex items-center'>
+        <HiOutlineFire className="text-2xl text-red-500" />
+        <h2 className="text-base font-bold">Streak</h2>
+      </div>
+      <div className="fill-all flex justify-between items-center">
+        <div className="flex flex-col justify-center w-full items-center">
+          <p className="font-bold text-4xl">{streaks.currentStreak}</p>
+          <p className="text-xs">{streaks.currentStreak > 1 ? "Days" : "Day"}</p>
         </div>
-        <div className="flex justify-between">
-          <span>Longest Streak:</span>
-          <span className="font-bold">{streaks.longestStreak} days</span>
+        <div className={`w-[7px] h-[80%] rounded-lg border ${theme.glass.border}`} />
+        <div className="flex flex-col justify-center w-full items-center">
+          <p className="font-bold text-4xl opacity-55">{streaks.longestStreak}</p>
+          <p className="text-xs">{streaks.longestStreak > 1 ? "Days" : "Day"}</p>
+        </div>
+      </div>
+      <div className="flex justify-between items-center w-full">
+        <div className="flex flex-col justify-center w-full items-center">
+          <p className="text-xs">Current</p>
+        </div>
+        <div className="flex flex-col justify-center w-full items-center">
+          <p className="text-xs">Longest</p>
         </div>
       </div>
     </div>

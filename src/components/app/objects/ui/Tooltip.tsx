@@ -23,7 +23,7 @@ const Tooltip: React.FC<TooltipProps> = ({ text, theme, children, position = "to
 
       {/* Tooltip */}
       <div
-        className={`absolute ${positionClasses[position]} ${theme?.sidenav.bg} ${theme?.global.text} text-xs rounded px-4 py-2 shadow opacity-0 group-hover:opacity-100 transition pointer-events-none`}
+        className={`absolute ${positionClasses[position]} ${theme?.sidenav.bg} ${theme?.global.text} text-xs rounded px-4 py-2 shadow opacity-0 group-hover:opacity-100 transition pointer-events-none z-[100000]`}
       >
         {text}
       </div>

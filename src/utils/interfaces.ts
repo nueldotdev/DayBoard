@@ -21,6 +21,7 @@ interface Boards {
   description: string;
   dueDate?: Date;
   priority?: "low" | "medium" | "high";
+  image?: string;
 }
 
 interface Task {
@@ -33,6 +34,42 @@ interface Task {
   estimatedTime?: number;
 }
 
+interface MainTask {
+  id: number;
+  title: string;
+  description?: string;
+  completed?: boolean;
+  dueDate?: Date;
+  priority?: "low" | "medium" | "high";
+}
+
+interface CardComments {
+  id: number;
+  text: string;
+  time: Date;
+}
+
+
+interface Cards {
+  id: number;
+  title: string;
+  description?: string;
+  priority?: "low" | "medium" | "high";
+  due_date?: Date;
+  created_at?: Date;
+  tasks?: MainTask[];
+  comments?: CardComments[];
+}
+
+
+export const positionClasses = {
+  center: "flex items-center justify-center",
+  right: "flex items-center justify-end",
+  left: "flex items-center justify-start",
+};
+
+
+
 interface TaskListProps {
   tasks: Task[];
   onToggleTask: (id: number) => void;
@@ -43,4 +80,4 @@ interface TimeComponentsProps {
   theme: mainTheme; // Use the mainTheme type here
 }
 
-export type { Task, TaskListProps, TimeComponentsProps, Themes, mainTheme, Boards, GeneralProps };
+export type { Task, TaskListProps, TimeComponentsProps, Themes, mainTheme, Boards, GeneralProps, Cards };

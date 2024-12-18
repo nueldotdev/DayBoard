@@ -1,7 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { getTheme } from '../../../utils/getTheme';
-import MiniPomo from '../home/time/MiniPomo';
 import Header from './Header';
 import SideNav from './SideNav';
 
@@ -17,8 +16,7 @@ const Layout: React.FC = () => {
           <SideNav />
         </div>
         <div className='w-full overflow-auto'>
-          <Outlet />   
-          <MiniPomo />
+          <Outlet /> 
         </div>
       </div>
     </div>

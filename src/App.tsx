@@ -24,6 +24,7 @@ const App: React.FC = () => {
     // Update the theme in the store if it differs from the current state
     if (savedTheme && themes[savedTheme]) {
       setTheme(savedTheme);
+      document.documentElement.setAttribute("data-theme", savedTheme);
     }
   }, [setTheme]);
 
