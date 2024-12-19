@@ -13,7 +13,7 @@ const useThemeStore = create<ThemeState>((set) => ({
   isDarkMode: false,
   themeName: "light",
   toggleTheme: () => set((state) => {
-    const newTheme = state.isDarkMode ? "light" : "solarized";
+    const newTheme = state.isDarkMode ? "light" : "dark";
     return { isDarkMode: !state.isDarkMode, themeName: newTheme };
   }),
   setTheme: (name) => set(() => ({ themeName: name, isDarkMode: name === "dark" })),
