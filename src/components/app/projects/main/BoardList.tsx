@@ -52,7 +52,7 @@ const BoardList: React.FC<ComponentProps> = ({ theme }) => {
       <div className="max-h-screen fill-all flex flex-col">
         {/* Header */}
         <div className="p-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Boards</h1>
+          <h1 className="text-2xl font-bold">My Boards</h1>
           <button
             className={`${currentTheme.global.textPrimary} ${currentTheme.hoverEffects.btnHover} border ${currentTheme.global.border} transition-colors px-4 py-2 rounded-lg`}
             onClick={() => {

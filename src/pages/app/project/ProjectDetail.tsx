@@ -201,8 +201,6 @@ const ProjectDetail: React.FC = () => {
   const { boardId } = useParams<{ boardId: string }>();
   const board = boards.find((p) => p.id === Number(boardId));
 
-
-
   const [imageUrl, setImageUrl] = useState("");
   const [withImg, setWithImg] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);

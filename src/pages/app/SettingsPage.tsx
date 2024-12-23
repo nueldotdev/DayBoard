@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import usePageTitle from "../../hooks/usePageTitle";
-// import { Dropdown } from 'primereact/dropdown';
 import ThemeToggle from "../../components/app/ThemeToggle";
 import { getTheme } from "../../utils/getTheme";
-import { HiPencil, HiUserCircle } from "react-icons/hi2";
+// import { HiPencil, HiUserCircle, HiCog, HiCheckCircle } from "react-icons/hi2";
+import { FocusTimerSettings } from "../../components/app/settings/FocusTimerSettings";
+import { ProfileCard } from "../../components/app/settings/ProfileCard";
+import { SubscriptionSection } from "../../components/app/settings/SubscriptionSection";
+
 
 const SettingsPage: React.FC = () => {
   // Set page title
@@ -11,57 +14,53 @@ const SettingsPage: React.FC = () => {
   const image = localStorage.getItem("image");
   usePageTitle("Settings");
 
+  const [focusTime, setFocusTime] = useState<number>(25); // Default 25 minutes
+  const [loading, setLoading] = useState<boolean>(false); // Loading state for async actions
+
+  useEffect(() => {
+    // Load focus time from localStorage if available
+    const savedFocusTime = localStorage.getItem("focusTime");
+    if (savedFocusTime) setFocusTime(Number(savedFocusTime));
+  }, []);
+
+  const handleSaveFocusTime = () => {
+    setLoading(true);
+    // Simulate API call or localStorage update
+    setTimeout(() => {
+      localStorage.setItem("focusTime", String(focusTime));
+      setLoading(false);
+      alert("Focus time saved successfully!"); // Real implementation should use a notification system
+    }, 1000);
+  };
+
   return (
     <div
-      className={`p-6 space-y-6 flex flex-col items-center ${currentTheme.global.text} `}
+      className={`p-6 space-y-6 flex flex-col items-center ${currentTheme.global.text} transition-all`}
     >
-      <div className="w-[50%]">
-        {/* // <!-- Profile Section --> */}
-        <div className={`${currentTheme.global.bg}  rounded p-4  w-full`}>
-          <h2 className={`text-xl font-semibold`}>Profile</h2>
-          <div className={`flex flex-col items-center space-y-4 mt-4 `}>
-            {image ? (
-              <img
-                src={image}
-                alt="Profile"
-                className={`w-40 h-40 rounded-full`}
-              />
-            ) : (
-              <HiUserCircle className={`w-40 h-40 rounded-full`} />
-            )}
-            <div className="flex items-center justify-between  space-x-10">
-              <div>
-                <p className={`text-lg font-medium`}>John Doe</p>
-                <p className={`${currentTheme.global.textSecondary}`}>
-                  john.doe@email.com
-                </p>
-              </div>
-              <button
-                className={`ml-auto ${currentTheme.hoverEffects.btnHover} transition-all p-2 rounded`}
-              >
-                <HiPencil />
-              </button>
-            </div>
-          </div>
-        </div>
+      <div className="w-full md:w-[50%]">
+        {/* Profile Section */}
+        <ProfileCard image={image} name="John Doe" email="john.doe@email.com" theme={currentTheme} />
 
-        {/* // <!-- Theme Settings --> */}
-        <div className={` rounded p-4 w-full`}>
+        {/* Theme Settings */}
+        <div className={`rounded p-4 w-full ${currentTheme.global.bg}`}>
           <h2 className="text-xl font-semibold">Appearance</h2>
           <div className="mt-4 flex items-center justify-between">
-            <p className={`${currentTheme.global.textSecondary}`}>
-              Current Theme:{" "}
-            </p>
+            <p className={`${currentTheme.global.textSecondary}`}>Current Theme:</p>
             <ThemeToggle border={true} theme={currentTheme} />
           </div>
         </div>
 
-        {/* // <!-- Payment/Billing --> 
-      <div className={`  rounded p-4 border w-full`}>
-        <h2 className={`text-xl font-semibold`}>Billing</h2>
-        <p className={`${currentTheme.global.textSecondary}`}>Current Plan: <strong>Premium</strong></p>
-        <button className={`mt-4 ${currentTheme.hoverEffects.btnHover} ${currentTheme.global.border} border px-4 py-2 rounded`}>Manage Billing</button>
-      </div>*/}
+        {/* Focus Timer Settings */}
+        <FocusTimerSettings
+          focusTime={focusTime}
+          setFocusTime={setFocusTime}
+          onSave={handleSaveFocusTime}
+          loading={loading}
+        />
+
+        {/* Subscription Section */}
+        <SubscriptionSection />
+
       </div>
     </div>
   );
