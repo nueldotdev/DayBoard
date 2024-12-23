@@ -10,7 +10,7 @@ interface ProfileCardProps {
   theme: mainTheme
 }
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ image, name, email, theme }) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({ image, name, email }) => {
   return (
     <div className={`rounded p-4 w-full shadow-lg`}>
       <h2 className="text-xl font-semibold">Profile</h2>
