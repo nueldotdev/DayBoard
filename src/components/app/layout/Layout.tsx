@@ -1,26 +1,83 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import { getTheme } from '../../../utils/getTheme';
-import Header from './Header';
-import SideNav from './SideNav';
+import React, { useEffect } from "react";
+import { Outlet } from "react-router-dom";
+import { getTheme } from "../../../utils/getTheme";
+import Header from "./Header";
+import SideNav from "./SideNav";
+import useThemeStore from "../../../store/themeStore";
 
 const Layout: React.FC = () => {
   const { currentTheme } = getTheme();
+  const [bgImg, setBgImg] = React.useState<string>("");
+  const { themeName } = useThemeStore();
+
+  const interests = [
+    "space",
+    "nature",
+    "mountains",
+    "coding",
+    "work",
+    "fitness",
+    "music",
+    "food",
+    "travel",
+    "art",
+  ]; // Add more interests here
+
+  const API_KEY = import.meta.env.VITE_UNSPLASH_API_KEY;
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        // const response = await fetch(`https://api.unsplash.com/photos/random?client_id=${API_KEY}`);
+        const randomInterest =
+          interests[Math.floor(Math.random() * interests.length)];
+        const response = await fetch(
+          `https://api.unsplash.com/photos/random?query=${randomInterest},day,light&client_id=${API_KEY}`
+        );
+        const data = await response.json();
+        const image = data.urls.regular;
+        setBgImg(image);
+        localStorage.setItem("bgImg", image);
+      } catch (error) {
+        console.error("Error fetching image from Unsplash:", error);
+      }
+    };
+
+    if (!localStorage.getItem("bgImg")) {
+      fetchImage();
+    } else {
+      setBgImg(localStorage.getItem("bgImg")!);
+    }
+  }, []);
+
 
   return (
-    <div className={`fixed max-h-screen min-h-screen h-screen w-full ${currentTheme.global.text} ${currentTheme.global.bg}`}>
+    <div
+      className={`fixed max-h-screen min-h-screen h-screen w-full ${currentTheme.global.text} ${currentTheme.global.bg}`}
+    >
       {/* <Header /> */}
-      <div className={`flex ${currentTheme.global.bg} max-h-full min-h-full h-full`}>
-        <div className={`h-full border-r ${currentTheme.global.border} ${currentTheme.sidenav.bg}`}>
+      <div
+        className={`flex ${currentTheme.global.bg} max-h-full min-h-full h-full`}
+      >
+        <div
+          className={`h-full w-12 border-r ${currentTheme.global.border} ${currentTheme.sidenav.bg}`}
+        >
           <Header />
           <SideNav />
         </div>
-        <div className='w-full overflow-auto'>
-          <Outlet /> 
+        <div
+          className="w-full overflow-auto"
+          style={{
+            backgroundImage: `${themeName === "dark" ? "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))" : "linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1))"}, url(${bgImg})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <Outlet />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Layout;

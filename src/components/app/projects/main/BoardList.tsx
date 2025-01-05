@@ -14,7 +14,6 @@ const BoardList: React.FC<ComponentProps> = ({ theme }) => {
 
   // console.log("Boards Length: ", boards.length)
 
-  const currentTheme = theme;
   const [allBoards, setAllBoards] = useState<Boards[]>([]);
 
   const [newBoards, setNewBoards] = useState({
@@ -49,12 +48,12 @@ const BoardList: React.FC<ComponentProps> = ({ theme }) => {
 
   return (
     <>
-      <div className="max-h-screen fill-all flex flex-col">
+      <div className={`max-h-screen fill-all flex flex-col ${theme.glass.bg}`}>
         {/* Header */}
         <div className="p-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold">My Boards</h1>
           <button
-            className={`${currentTheme.global.textPrimary} ${currentTheme.hoverEffects.btnHover} border ${currentTheme.global.border} transition-colors px-4 py-2 rounded-lg`}
+            className={`${theme.global.textPrimary} ${theme.hoverEffects.btnHover} border ${theme.global.border} transition-colors px-4 py-2 rounded-lg`}
             onClick={() => {
               setModal(!modal);
             }}
@@ -66,7 +65,7 @@ const BoardList: React.FC<ComponentProps> = ({ theme }) => {
         {/* Project Grid */}
         <div className="flex px-4 pb-4 h-full overflow-auto">
           <div
-            className={`fill-all flex items-center rounded-lg justify-center border border-dashed ${currentTheme.global.border}`}
+            className={`fill-all flex items-center justify-center border-t ${theme.global.border} `}
           >
             {boards.length > 0 ? (
               <div className="fill-all p-2">
@@ -79,7 +78,7 @@ const BoardList: React.FC<ComponentProps> = ({ theme }) => {
                   <Link
                     to={`/app/b/${board.id}`}
                     key={board.id}
-                    className={`flex flex-col justify-between rounded-lg shadow hover:shadow-xl transition p-4 ${currentTheme.global.textPrimary} border ${currentTheme.global.border} ${currentTheme.sidenav.bg} hover:scale-105`}
+                    className={`flex flex-col justify-between rounded-lg shadow hover:shadow-xl transition p-4 ${theme.global.textPrimary} border ${theme.global.border} ${theme.sidenav.bg}`}
                   >
                     <div>
                       <div className="flex justify-between items-center mb-4">
@@ -91,7 +90,7 @@ const BoardList: React.FC<ComponentProps> = ({ theme }) => {
                 )} */}
                       </div>
                       <p
-                        className={`w-full text-left text-sm mb-4 ${currentTheme.global.textSecondary}`}
+                        className={`w-full text-left text-sm mb-4 ${theme.global.textSecondary}`}
                       >
                         {board.description}
                       </p>
@@ -101,7 +100,7 @@ const BoardList: React.FC<ComponentProps> = ({ theme }) => {
               </div>
               </div>
             ) : (
-              <div className={`text-center ${currentTheme.sidenav.bg} p-8 rounded-lg`}>
+              <div className={`text-center ${theme.sidenav.bg} p-8 rounded-lg`}>
                 <p>No Boards Found</p>
                 <p>Click Add Board to create a new board.</p>
                 <p>Boards are used to track projects and tasks.</p>
@@ -117,20 +116,20 @@ const BoardList: React.FC<ComponentProps> = ({ theme }) => {
           setModal(!modal);
         }}
         position="center"
-        theme={currentTheme}
+        theme={theme}
       >
         <div className="p-4">
           <h2 className="text-xl font-semibold mb-4">Add New Board</h2>
           <form>
             <div className="mb-4">
               <label
-                className={`block ${currentTheme.global.textSecondary} text-sm mb-2`}
+                className={`block ${theme.global.textSecondary} text-sm mb-2`}
               >
                 Board Name
               </label>
               <input
                 type="text"
-                className={`${currentTheme.sidenav.bg} input-field`}
+                className={`${theme.sidenav.bg} input-field`}
                 // use this for newProjectName
                 onChange={(e) => handleInputChange(e)}
                 name="name"
@@ -139,19 +138,19 @@ const BoardList: React.FC<ComponentProps> = ({ theme }) => {
             </div>
             <div className="mb-4">
               <label
-                className={`block ${currentTheme.global.textSecondary} text-sm mb-2`}
+                className={`block ${theme.global.textSecondary} text-sm mb-2`}
               >
                 Board Description
               </label>
               <textarea
-                className={`${currentTheme.sidenav.bg} input-field resize-none h-[150px]`}
+                className={`${theme.sidenav.bg} input-field resize-none h-[150px]`}
                 onChange={(e) => handleInputChange(e)}
                 name="description"
               ></textarea>
             </div>
             <div className="flex items-center justify-between">
               <button
-                className={`${currentTheme.hoverEffects.btnHover} ${currentTheme.global.textPrimary} ${currentTheme.global.border} transition border py-2 px-4 rounded-md focus:outline-none focus:shadow-outline`}
+                className={`${theme.hoverEffects.btnHover} ${theme.global.textPrimary} ${theme.global.border} transition border py-2 px-4 rounded-md focus:outline-none focus:shadow-outline`}
                 type="button"
                 onClick={() => addBoards()}
               >

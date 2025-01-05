@@ -11,10 +11,12 @@ import ProjectDetail from '../pages/app/project/ProjectDetail'
 import ProjectsPage from '../pages/app/project/ProjectsPage'
 // import ProjectSection from '../pages/app/project/ProjectSection'
 // import { SchedulePage } from '../pages/app/SchedulePage'
-import {LandingPage} from '../pages/index/LandingPage'
+import LandingPage from '../pages/index/LandingPage'
 import { getTheme } from '../utils/getTheme'
 import { StatsPage } from '../pages/app/focus/StatsPage'
 import Landing from '../pages/index/final-concepts/Landing'
+import NotFound from '../pages/index/NotFound'
+import WaitlistPage from '../pages/index/WaitlistPage'
 
 
 const AppRouter: React.FC = () => {
@@ -35,7 +37,9 @@ const AppRouter: React.FC = () => {
           {/* <Route path='p/:projectId/s/:sectionId' element={<ProjectSection />} /> */}
         </Route>
         <Route path='/pomodoro' element={<PomodoroTimer theme={currentTheme} />} />
-        <Route path='/test' element={<Landing />}></Route>
+        <Route path='/test' element={<Landing />} />
+        <Route path='/waitlist' element={<WaitlistPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );

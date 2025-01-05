@@ -96,7 +96,7 @@
   }
 
   .mini-timer-btn {
-    @apply p-1 rounded-full transition-all border-transparent border flex justify-center items-center
+    @apply p-1 rounded-lg transition-all border-transparent border flex justify-center items-center
   }
 
   .fill-all {
@@ -117,6 +117,24 @@
 
   .input-field {
     @apply rounded w-full py-2 px-3 leading-tight focus:outline-none
+  }
+
+
+  /* Time Wheel Styles */
+  .time-section {
+    @apply flex flex-col items-center justify-center
+  }
+
+  .time-section button {
+    @apply p-1 rounded-lg m-1 hover:bg-zinc-300 hover:bg-opacity-5 transition-all
+  }
+
+  .time-section p {
+    @apply text-sm
+  }
+
+  .editable-time-section {
+    @apply focus:outline-none
   }
 
   /* Gradient Shifting Animation */
@@ -169,9 +187,23 @@
   }
   
   .kanban-container::-webkit-scrollbar-track {
-    background: transparent; /* No background color for the track */
+    background: rgba(160, 160, 160, 0.342); /* No background color for the track */
   }
-  
+
+  /* Style for landing page buttons */
+  .landing-btn {
+    /* transform: translate(-5px, -4px); */
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.836);
+    border: 1px solid transparent;
+    transition: .3s ;
+    transform-origin: left;
+  }
+
+  .landing-btn:hover {
+    transform: translate(-5px, -4px);
+    box-shadow: 4px 5px 0 0 rgb(12, 95, 43);
+    @apply bg-white text-green-600 border-green-600
+  }
 
   .custom-dashed-border {
     border-width: 2px;
@@ -186,6 +218,15 @@
     border-radius: 1rem;
     /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 1rem; */
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
   }
 
 }

@@ -8,9 +8,6 @@ import useThemeStore from './store/themeStore';
 import { themes } from './themeConfig';
 
 
-import "primereact/resources/themes/saga-blue/theme.css";  // Or any other theme
-import "primereact/resources/primereact.min.css"; 
-
 
 const App: React.FC = () => {
   useApplyTheme();

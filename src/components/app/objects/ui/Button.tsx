@@ -9,7 +9,7 @@ const Button: React.FC<ButtonProps> = ({ children, loading, ...props }) => {
   return (
     <button
       {...props}
-      className={`p-2 rounded transition-all ${loading ? "bg-gray-500" : "bg-blue-500 hover:bg-blue-600"} text-white`}
+      className={`p-2 rounded transition-all ${loading ? "bg-gray-500" : ""} ${props.className}`}
       disabled={loading}
     >
       {loading ? "Loading..." : children}

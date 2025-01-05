@@ -41,7 +41,7 @@ const ThemeToggle: React.FC<ToggleProps> = ({ className, border, theme}) => {
   const currentTheme = theme;
 
   return (
-    <Popover content={<PopContent />} position="bottomRight">
+    <Popover content={<PopContent />} position="bottom">
       <button
         className={`p-2 rounded-md ${currentTheme.hoverEffects.btnHover} ${currentTheme.global.text} ${currentTheme.global.border} cursor-pointer transition-colors ${border ? `border ` : ''}` + className}
       >

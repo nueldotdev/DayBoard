@@ -22,7 +22,6 @@ const BackgroundSelector: React.FC<{
   const [query, setQuery] = useState(""); // Empty query for random images initially
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const observerRef = useRef<HTMLDivElement | null>(null);
   const fetchedImageIds = useRef(new Set<string>());
 
   const fetchImages = async (pageNum: number, searchQuery: string) => {
@@ -58,27 +57,9 @@ const BackgroundSelector: React.FC<{
     fetchImages(page, query);
   }, [page, query]);
 
-  useEffect(() => {
-    let skipObserver = false; // Skip first intersection check
-  
-    if (loading) return;
-  
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !skipObserver) {
-          setPage((prevPage) => prevPage + 1);
-        }
-        skipObserver = false; // Set to false after first load
-      },
-      { threshold: 1.0 }
-    );
-  
-    if (observerRef.current) observer.observe(observerRef.current);
-  
-    return () => {
-      if (observerRef.current) observer.unobserve(observerRef.current);
-    };
-  }, [loading]);
+  const handleSeeMore = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
   
 
   return (
@@ -118,7 +99,9 @@ const BackgroundSelector: React.FC<{
             <div className="text-center animate-pulse mt-4">Loading...</div>
           )}
           {/* Infinite Scroll Trigger */}
-          <div ref={observerRef} className="h-4 mt-4" />
+          <button onClick={handleSeeMore} className="w-full p-2 bg-green-800 text-white rounded-lg" >
+            <p>Load More...</p>
+          </button>
         </div>
 
         {/* Default Background Button */}
@@ -276,11 +259,11 @@ const ProjectDetail: React.FC = () => {
 
   return (
     <div
-      className={`flex flex-col fill-all graph-paper-bg`}
+      className={`flex flex-col fill-all ${currentTheme.sidenav.bg}`}
       style={handleImgUrlStyle()}
     >
       <div
-        className={`flex justify-between items-center p-2 hover:shadow-lg ${currentTheme.sidenav.bg} transition-all`}
+        className={`flex justify-between items-center p-2 hover:shadow-lg transition-all`}
       >
         <div>
           <div

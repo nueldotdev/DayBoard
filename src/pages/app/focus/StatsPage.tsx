@@ -19,7 +19,7 @@ export const StatsPage: React.FC = () => {
   usePageTitle("My Stats");
 
   return (
-    <div className="fill-all">
+    <div className={`fill-all ${currentTheme.glass.bg}`}>
       <div className="flex flex-col gap-4 p-4 fill-all">
         {/* <!-- Overview Cards --> */}
         <div className="flex gap-4 h-1/5">

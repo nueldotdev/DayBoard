@@ -10,7 +10,7 @@ export const themes = {
       secondary: "text-gray-500",
     },
     hoverEffects: {
-      btnHover: "hover:bg-zinc-200",
+      btnHover: "hover:bg-zinc-300",
       textHover: "hover:bg-[#35aa7931]",
       textBg: "bg-[#4AFD3A] bg-opacity-50",
     },
@@ -59,9 +59,9 @@ export const themes = {
       secondary: "text-zinc-500",
     },
     hoverEffects: {
-      btnHover: "hover:bg-zinc-900",
+      btnHover: "hover:bg-zinc-800",
       textHover: "hover:bg-[#2a805f31]",
-      textBg: "bg-[#4AFD3A] bg-opacity-30",
+      textBg: "bg-[#4AFD3A] bg-opacity-50",
     },
     priority: {
       low: "bg-blue-500/20 text-blue-400",

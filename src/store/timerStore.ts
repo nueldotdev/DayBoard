@@ -1,3 +1,4 @@
+import { m } from 'framer-motion';
 import { create } from 'zustand';
 
 interface TimerState {
@@ -12,7 +13,9 @@ interface TimerState {
   switchSession: () => void;
   decrementTime: () => void;
   initializeTimer: () => void; // Restore from `localStorage`
-  continueSession: () => void; // Resume after reload
+  // continueSession: () => void; // Resume after reload
+  setMinutes: (minutes: number) => void;
+  setSeconds: (seconds: number) => void; 
 }
 
 export const useTimerStore = create<TimerState>((set, get) => {
@@ -44,31 +47,77 @@ export const useTimerStore = create<TimerState>((set, get) => {
     }
   };
 
-  const playSound = () => {
-    // const audio = new Audio('/sounds/a_bell.wav');
-    // audio.play();
-    // audio.
-  }
 
-  const getNotif = () => {
+  let audioInstance: HTMLAudioElement | null = null; // Global audio instance
+
+  const playSound = (file?: string) => {
+    const root = file || 'default.mp3';
+  
+    if (!audioInstance) {
+      // Create the global audio instance if it doesn't already exist
+      audioInstance = new Audio(`/sounds/timer_sounds/${root}`);
+    } else {
+      // Update the audio source if needed
+      audioInstance.src = `/sounds/timer_sounds/${root}`;
+      audioInstance.load();
+    }
+  
+    const stopAll = () => {
+      if (audioInstance) {
+        audioInstance.pause();
+        audioInstance.currentTime = 0;
+        audioInstance.loop = false;
+      }
+    };
+  
+    const stop = () => {
+      if (audioInstance) {
+        audioInstance.pause();
+      }
+    };
+  
+    const play = () => {
+      stopAll();
+      if (audioInstance) {
+        audioInstance.play();
+      }
+    };
+  
+    const playInLoop = () => {
+      stopAll();
+      if (audioInstance) {
+        audioInstance.loop = true;
+        audioInstance.play();
+      }
+    };
+  
+    return {
+      play,
+      stop,
+      stopAll,
+      playInLoop,
+    };
+  };
+  
+  const getNotif = (type: string) => {
     if (Notification.permission === 'granted') {
       new Notification('DayBoard', {
-        body: get().isWorkSession ? 'Time for a break!' : 'Back to work!',
-        icon: '/favicon.ico',
+        body: type,
+        icon: '/dayboard-dark.svg',
       });
     } else if (Notification.permission === 'default') {
       Notification.requestPermission();
     }
-  }
-
+  };
+  
   const startTimer = () => {
-    playSound()
-    getNotif()
-
+    playSound('default.mp3').playInLoop(); // Plays ticking sound in a loop
+    getNotif('Time to work!');
+  
     if (get().isActive) return; // Prevent multiple intervals
     set({ isActive: true, hasPreviousSession: false });
     saveStateToLocalStorage();
-
+  
     interval = window.setInterval(() => {
       const { minutes, seconds, decrementTime, switchSession } = get();
       if (minutes === 0 && seconds === 0) {
@@ -78,30 +127,26 @@ export const useTimerStore = create<TimerState>((set, get) => {
       }
     }, 1000);
   };
-
-  const continueSession = () => {
-    set({ isActive: true, hasPreviousSession: false });
-    startTimer(); // Resume the timer
-  };
-
+  
   const pauseTimer = () => {
-    playSound()
-    getNotif()
-
+    playSound().stopAll(); // Stops all audio
+    playSound('ending_sound.mp3').play(); // Plays pause sound
+    getNotif('Timer has been paused');
+  
     clearInterval(interval);
     set({ isActive: false, hasPreviousSession: true });
     saveStateToLocalStorage();
   };
-
+  
   const resetTimer = () => {
-    playSound()
-    getNotif()
-
+    playSound().stopAll(); // Stops all audio
+    getNotif('Timer has been reset');
+  
     clearInterval(interval);
     set({ minutes: 1, seconds: 0, isActive: false, hasPreviousSession: false });
     localStorage.removeItem('timerState'); // Clear saved state
   };
-
+  
   const switchSession = () => {
     clearInterval(interval);
     set((state) => ({
@@ -111,16 +156,14 @@ export const useTimerStore = create<TimerState>((set, get) => {
       isActive: false,
       hasPreviousSession: false,
     }));
-
-    // const audio = new Audio(soundFile);
-    // audio.play();
-    playSound()
-    getNotif()
-
-
+  
+    playSound().stopAll(); // Stops ticking sound
+    playSound('ending_sound.mp3').play(); // Plays ending sound
+    getNotif('Time for a break!');
+  
     saveStateToLocalStorage();
   };
-
+  
 
   const decrementTime = () => {
     const { minutes, seconds } = get();
@@ -144,6 +187,8 @@ export const useTimerStore = create<TimerState>((set, get) => {
     switchSession,
     decrementTime,
     initializeTimer,
-    continueSession,
+    // continueSession,
+    setMinutes: (minutes: number) => set({ minutes }),
+    setSeconds: (seconds: number) => set({ seconds }),
   };
 });

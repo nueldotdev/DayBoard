@@ -3,8 +3,8 @@ import { HiArrowPath, HiOutlinePause, HiOutlinePlay } from "react-icons/hi2";
 
 const FocusTimer: React.FC<{ theme: any }> = ({ theme }) => {
   const [hours, setHours] = useState(0);
-  const [minutes, setMinutes] = useState(25); // Default focus session: 25 minutes
-  const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(0); // Default focus session: 25 minutes
+  const [seconds, setSeconds] = useState(10);
   const [isActive, setIsActive] = useState(false);
   const [note, setNote] = useState("");
   const intervalRef = useRef<any>(null);
@@ -17,25 +17,23 @@ const FocusTimer: React.FC<{ theme: any }> = ({ theme }) => {
           if (prev === 0) {
             if (minutes === 0 && hours === 0) {
               // Timer ends
-              if (intervalRef.current) {
                 clearInterval(intervalRef.current!);
                 setIsActive(false);
-              return 0;
+                return 0;
               }
-            }
-            if (minutes === 0 && hours > 0) {
-              setMinutes(59);
-              setHours((prev) => prev - 1);
-            } else if (minutes > 0) {
-              setMinutes((prev) => prev - 1);
-            }
-            return 59;
+              if (minutes === 0 && hours > 0) {
+                setMinutes(59);
+                setHours((prev) => prev - 1);
+              } else if (minutes > 0) {
+                setMinutes((prev) => prev - 1);
+              }
+              return 59;
+              }
+              return prev - 1;
+            });
+            }, 1000);
           }
-          return prev - 1;
-        });
-      }, 1000);
-    }
-  };
+          };
 
   // Function to pause the timer
   const pauseTimer = () => {

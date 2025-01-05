@@ -33,7 +33,7 @@ export const ModeComponent: React.FC<TimeComponentsProps> = ({ theme }) => {
   return (
     <>
       <div
-        className={`tc-cards shadow  ${theme.glass.bg} ${theme.glass.border} ${theme.glass.shadow} ${theme.glass.highlight} glassmorphism col-sapn-2 flex flex-col items-center`}
+        className={`fill-all flex flex-col items-center`}
       >
         <Popover position="bottom" content={<PopoverContent />} >
           <button className={`flex justify-center ${theme.global.textPrimary} text-base ${theme.sidenav.border} border ${theme.hoverEffects.btnHover} p-2 rounded-xl transition-all`}>

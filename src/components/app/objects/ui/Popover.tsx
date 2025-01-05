@@ -1,4 +1,5 @@
 
+import { motion } from 'framer-motion';
 import React, { useState, useRef, useEffect, ReactNode } from 'react';
 // import './Popover.css';
 
@@ -8,7 +9,7 @@ interface PopoverProps {
   position?: "top" | "bottom" | "left" | "right" | "bottomRight" | "bottomLeft";
 }
 
-const Popover: React.FC<PopoverProps> = ({ children, content, position = "bottomLeft" }) => {
+const Popover: React.FC<PopoverProps> = ({ children, content, position = "bottom" }) => {
 
   const positionClasses = {
     top: "bottom-full left-1/2 -translate-x-1/2 mb-2",
@@ -57,12 +58,16 @@ const Popover: React.FC<PopoverProps> = ({ children, content, position = "bottom
         {children}
       </button>
       {isVisible && (
-        <div
+        <motion.div
           ref={popoverRef}
           className={`absolute ${positionClasses[position]} rounded z-10 w-fit`}
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.1 }}
+          exit={{ opacity: 0, scale: 0.5 }}
         >
           {content}
-        </div>
+        </motion.div>
       )}
     </div>
   );

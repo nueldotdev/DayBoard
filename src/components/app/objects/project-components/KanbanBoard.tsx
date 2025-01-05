@@ -41,9 +41,9 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({
   };
 
   return (
-    <div className={`px-1 ${className}`}>
+    <div className={`px-1 ${className} ${theme.sidenav.bg} bg-opacity-60 border ${theme.sidenav.border}`}>
       <h2
-        className={`text-base font-bold ${theme.sidenav.bg} border-b-2 ${theme.sidenav.border} p-2 rounded-t-lg`}
+        className={`text-base font-bold p-2 rounded-t-lg`}
       >
         {title}
       </h2>
@@ -53,7 +53,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className={`space-y-2 min-h-[40px] p-2 ${theme.sidenav.bg} rounded-b-lg`}
+            className={`space-y-2 min-h-[40px] p-2 rounded-b-lg`}
           >
             {cards.map((card, index) => (
               <Draggable

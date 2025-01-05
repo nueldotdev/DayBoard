@@ -9,17 +9,25 @@ export const Reminder: React.FC<TimeComponentsProps> = ({theme}) => {
 
 
   return (
-    <div className={`tc-cards glassmorphism ${theme.global.bg} ${theme.global.border}`}>
-      <div className="flex flex-col gap-y-2">
-        <HiOutlineBell className="text-2xl mb-2" />
-        <h2 className="text-lg font-bold">Reminders</h2>
-        <p>Upcoming tasks and notifications.</p>
+    <>
+      <button className={`rounded-xl glassmorphism ${theme.glass.highlight} ${theme.glass.border} absolute bottom-4 right-2 flex justify-center items-center border`} onClick={() => setForModal(true)}>
+      <div className="flex flex-col gap-y-2 p-2">
+        <HiOutlineBell className="text-xl" />
       </div>
-      <button className={`tc-btns ${theme.hoverEffects.textBg}`} onClick={() => setForModal(true)}>Add Reminder</button>
+      {/* <button className={`tc-btns ${theme.hoverEffects.textBg}`} >Add Reminder</button>
 
       <Modal open={forModal} onClose={() => setForModal(false)} theme={theme}>
         <ComingSoon />
-      </Modal>
-    </div>
+      </Modal> */}
+    </button>
+    <Modal open={forModal} onClose={() => setForModal(false)} theme={theme}>
+      <ComingSoon />
+    </Modal>
+    </>
   );
 };
+
+
+
+{/* <h2 className="text-lg font-bold">Reminders</h2>
+<p>Upcoming tasks and notifications.</p> */}

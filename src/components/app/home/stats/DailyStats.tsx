@@ -1,15 +1,14 @@
 import { HiTrendingUp } from "react-icons/hi";
 import { TimeComponentsProps } from "../../../../utils/interfaces";
 
-export const DailyStats:  React.FC<TimeComponentsProps> = ({theme}) => {
-  
+export const DailyStats: React.FC<TimeComponentsProps> = ({ theme }) => {
   return (
-    <div className={`tc-cards glassmorphism ${theme.global.bg} ${theme.global.border}`}>
-      <div className="space-y-3">
-        <HiTrendingUp className="text-2xl mb-2" />
-        <h2 className="text-lg font-bold">Daily Stats</h2>
-        <p>Track your productivity for today.</p>
+    <div className="space-x-1 flex flex-col items-start">
+      <div className="space-x-1 flex items-center justify-center">
+        <HiTrendingUp className="text-base" />
+        <h2 className="text-base">25m</h2>
       </div>
+      <p className="text-sm">Focus Today</p>
     </div>
   );
-}
+};

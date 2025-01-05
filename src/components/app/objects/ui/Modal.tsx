@@ -38,7 +38,7 @@ export const Modal: React.FC<ModalProps> = ({
 
   return (
     <div
-      className={`fixed inset-0 bg-zinc-950/50 z-[10000] ${
+      className={`fixed inset-0 bg-zinc-950/50 backdrop-blur z-[10000] ${
         positionClasses[position]
       }`}
       aria-hidden={!open}
