@@ -87,7 +87,7 @@ export function Pricing() {
           ))}
         </div>
 
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -97,7 +97,7 @@ export function Pricing() {
           <p className="text-gray-400">
             All plans come with a 14-day free trial. No credit card required.
           </p>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   )
