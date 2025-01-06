@@ -118,24 +118,6 @@ export default function WaitlistPage() {
             </motion.div>
           )}
 
-          <div className="mt-12 flex items-center justify-center gap-8">
-            <a
-              href="https://twitter.com/dayboard"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/60 hover:text-green-500 transition-colors"
-            >
-              Twitter
-            </a>
-            <a
-              href="https://medium.com/dayboard"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/60 hover:text-green-500 transition-colors"
-            >
-              Medium
-            </a>
-          </div>
         </motion.div>
         <Toaster
           position="bottom-center"
