@@ -72,7 +72,7 @@ export function Pricing() {
                     </li>
                   ))}
                 </ul>
-                <Button className="mt-8">
+                <Button className="mt-8" onClick={() => {window.location.href = '/waitlist'}}>
                   Get Started
                 </Button>
                 {index === 1 && (
