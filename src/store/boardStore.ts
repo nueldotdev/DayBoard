@@ -36,7 +36,8 @@ const useBoardStore = create<{
     boardId: number,
     sourceColumn: string,
     targetColumn: string,
-    taskId: number
+    taskId: number,
+    destinationIndex: number
   ) => void;
   editTask: (
     boardId: number,
@@ -119,20 +120,48 @@ const useBoardStore = create<{
     }));
   },
 
-  moveTask: (boardId, sourceColumn, targetColumn, taskId) => {
+  // moveTask: (boardId, sourceColumn, targetColumn, taskId) => {
+  //   set((state) => ({
+  //     boards: state.boards.map((board) => {
+  //       if (board.id !== boardId) return board;
+
+  //       const sourceTasks = board.columns?.[sourceColumn] || [];
+  //       const targetTasks = board.columns?.[targetColumn] || [];
+
+  //       const taskIndex = sourceTasks.findIndex((task) => task.id === taskId);
+  //       if (taskIndex === -1) return board; // Task not found
+
+  //       const [movedTask] = sourceTasks.splice(taskIndex, 1);
+  //       targetTasks.push(movedTask);
+
+  //       return {
+  //         ...board,
+  //         columns: {
+  //           ...board.columns,
+  //           [sourceColumn]: sourceTasks,
+  //           [targetColumn]: targetTasks,
+  //         },
+  //       };
+  //     }),
+  //   }));
+  // },
+
+  moveTask: (boardId, sourceColumn, targetColumn, taskId, destinationIndex) => {
     set((state) => ({
       boards: state.boards.map((board) => {
         if (board.id !== boardId) return board;
-
+  
         const sourceTasks = board.columns?.[sourceColumn] || [];
         const targetTasks = board.columns?.[targetColumn] || [];
-
+  
         const taskIndex = sourceTasks.findIndex((task) => task.id === taskId);
         if (taskIndex === -1) return board; // Task not found
-
+  
         const [movedTask] = sourceTasks.splice(taskIndex, 1);
-        targetTasks.push(movedTask);
-
+  
+        // Insert the task at the specified index in the target column
+        targetTasks.splice(destinationIndex, 0, movedTask);
+  
         return {
           ...board,
           columns: {

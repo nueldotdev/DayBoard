@@ -36,11 +36,11 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-full max-h-full h-full">
-      <div className=''>
-      <Greeting userName={name} />
+      <div className='w-full px-2 pt-1'>
+        <Greeting />
       </div>
       <div className="h-full">
-        <TimeComponents />
+        <TimeComponents name={name} />
       </div>
     </div>
   );

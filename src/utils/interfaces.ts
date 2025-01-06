@@ -59,6 +59,7 @@ interface Cards {
   created_at?: Date;
   tasks?: MainTask[];
   comments?: CardComments[];
+  labels?: string[];
 }
 
 

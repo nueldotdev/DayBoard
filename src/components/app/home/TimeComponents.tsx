@@ -1,24 +1,16 @@
 import React from 'react';
-import { getTheme } from '../../../utils/getTheme';
-import { ModeComponent } from './focus/ModeComponent';
-import FocusStreaks from './FocusStreaks';
-import { Reminder } from './reminder/Reminder';
-import { DailyStats } from './stats/DailyStats';
+// import { getTheme } from '../../../utils/getTheme';
+// import { Reminder } from './reminder/Reminder';
+import TimeAndTimer from './TimeAndTimer';
 
-const TimeComponents: React.FC = () => {
-  const theme = getTheme();
-  const { currentTheme } = theme;
+const TimeComponents: React.FC<{name: string}> = ({name}) => {
+  // const theme = getTheme();
+  // const { currentTheme } = theme;
 
   return (
-  <div className="grid gap-2 md:grid-cols-4 md:grid-rows-2 p-4 h-full">
-    <div className='col-span-2 row-span-2'>
-      <ModeComponent theme={currentTheme} />
-    </div>
-    <div className='col-span-2'>
-      <Reminder theme={currentTheme} />
-    </div>
-    <DailyStats theme={currentTheme} />
-    <FocusStreaks theme={currentTheme} />
+  <div className="fill-all">
+    <TimeAndTimer userName={name} />
+    {/* <Reminder theme={currentTheme} /> */}
   </div>
 )};
 

@@ -15,31 +15,31 @@ import { HiTrendingUp } from "react-icons/hi";
 const routes = [
   { 
     path: "/app", 
-    element: <HiOutlineHome size={24} />, 
+    element: <HiOutlineHome size={20} />, 
     name: "Home" },
   {
     path: "/app/b",
-    element: <HiOutlineSquares2X2 size={24} />,
+    element: <HiOutlineSquares2X2 size={20} />,
     name: "Boards",
   },
   // {
   //   path: "/app/schedule",
-  //   element: <HiCalendarDays size={24} />,
+  //   element: <HiCalendarDays size={20} />,
   //   name: "Schedule",
   // },
   // {
   //   path: "/app/notes",
-  //   element: <HiOutlineDocumentText size={24} />,
-  //   name: "Notes",element: <HiOutlineRectangleStack  size={24} />,
+  //   element: <HiOutlineDocumentText size={20} />,
+  //   name: "Notes",element: <HiOutlineRectangleStack  size={20} />,
   // },
   {
     path: "/app/stats",
-    element: <HiTrendingUp size={24} />,
+    element: <HiTrendingUp size={20} />,
     name: "Stats",
   },
   {
     path: "/app/settings",
-    element: <HiOutlineCog6Tooth size={24} />,
+    element: <HiOutlineCog6Tooth size={20} />,
     name: "Settings",
   },
   
@@ -74,9 +74,9 @@ const SideNav: React.FC = () => {
     >
       <div className="w-full">
         {/* Sidebar content */}
-        <div className="w-full">
+        <ul className="w-full flex flex-col gap-y-2">
           {routes.map((route) => (
-            <li key={route.path} className="text-dark list-none">
+            <li key={route.path} className="list-none">
               <NavLink
                 to={route.path}
                 end={route.path === "/app"}
@@ -84,10 +84,10 @@ const SideNav: React.FC = () => {
                   isActive
                     ? `${
                         currentTheme.hoverEffects.textBg
-                      } p-2 mb-2 transition flex flex-col items-center gap-x-2 rounded-lg`
+                      } p-1 transition flex flex-col items-center gap-x-2 rounded-md`
                     : `${
                         currentTheme.hoverEffects.textHover
-                      } p-2 mb-2 transition flex flex-col items-center gap-x-2 rounded-lg`
+                      } p-1 transition flex flex-col items-center gap-x-2 rounded-md`
                 }
               >
                 <Tooltip text={route.name} position="right" theme={currentTheme}>
@@ -96,7 +96,7 @@ const SideNav: React.FC = () => {
               </NavLink>
             </li>
           ))}
-        </div>
+        </ul>
       </div>
       <hr className="w-full border border-[#acacac31] dark:border-[#acacac31] no-display" />
       <div className="w-full no-display">

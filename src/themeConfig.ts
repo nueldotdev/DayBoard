@@ -10,7 +10,7 @@ export const themes = {
       secondary: "text-gray-500",
     },
     hoverEffects: {
-      btnHover: "hover:bg-zinc-200",
+      btnHover: "hover:bg-zinc-300",
       textHover: "hover:bg-[#35aa7931]",
       textBg: "bg-[#4AFD3A] bg-opacity-50",
     },
@@ -40,8 +40,12 @@ export const themes = {
       border: "border-gray-200/50",         // Subtle border for light mode
       text: "text-gray-800",                // Dark text for visibility
       shadow: "shadow-lg",                  // Shadow to add depth
-      highlight: "bg-gradient-to-br from-white/40 to-white/20", // Noticeable light
+      highlight: "bg-gradient-to-br from-zinc-200 to-zinc-100", // Noticeable light
     },
+    chart: {
+      tooltip: 'rgba(244, 244, 244, 1)',
+      cursorFill: 'rgba(60, 60, 60, 0.03)'
+    }
   },
 
   dark: {
@@ -55,9 +59,9 @@ export const themes = {
       secondary: "text-zinc-500",
     },
     hoverEffects: {
-      btnHover: "hover:bg-zinc-900",
+      btnHover: "hover:bg-zinc-800",
       textHover: "hover:bg-[#2a805f31]",
-      textBg: "bg-[#4AFD3A] bg-opacity-30",
+      textBg: "bg-[#4AFD3A] bg-opacity-50",
     },
     priority: {
       low: "bg-blue-500/20 text-blue-400",
@@ -87,6 +91,10 @@ export const themes = {
       shadow: "shadow-md",                  // Softer shadow in dark mode
       highlight: "bg-gradient-to-br from-zinc-500/15 to-transparent", // Subtle glow
     },
+    chart: {
+      tooltip: 'rgba(60, 60, 60, 0.9)',
+      cursorFill: 'rgba(255, 255, 255, 0.02)'
+    }
   },
   // solarized: {
   //   global: {

@@ -22,7 +22,6 @@ const BackgroundSelector: React.FC<{
   const [query, setQuery] = useState(""); // Empty query for random images initially
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const observerRef = useRef<HTMLDivElement | null>(null);
   const fetchedImageIds = useRef(new Set<string>());
 
   const fetchImages = async (pageNum: number, searchQuery: string) => {
@@ -58,27 +57,9 @@ const BackgroundSelector: React.FC<{
     fetchImages(page, query);
   }, [page, query]);
 
-  useEffect(() => {
-    let skipObserver = false; // Skip first intersection check
-  
-    if (loading) return;
-  
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !skipObserver) {
-          setPage((prevPage) => prevPage + 1);
-        }
-        skipObserver = false; // Set to false after first load
-      },
-      { threshold: 1.0 }
-    );
-  
-    if (observerRef.current) observer.observe(observerRef.current);
-  
-    return () => {
-      if (observerRef.current) observer.unobserve(observerRef.current);
-    };
-  }, [loading]);
+  const handleSeeMore = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
   
 
   return (
@@ -118,7 +99,9 @@ const BackgroundSelector: React.FC<{
             <div className="text-center animate-pulse mt-4">Loading...</div>
           )}
           {/* Infinite Scroll Trigger */}
-          <div ref={observerRef} className="h-4 mt-4" />
+          <button onClick={handleSeeMore} className="w-full p-2 bg-green-800 text-white rounded-lg" >
+            <p>Load More...</p>
+          </button>
         </div>
 
         {/* Default Background Button */}
@@ -201,8 +184,6 @@ const ProjectDetail: React.FC = () => {
   const { boardId } = useParams<{ boardId: string }>();
   const board = boards.find((p) => p.id === Number(boardId));
 
-
-
   const [imageUrl, setImageUrl] = useState("");
   const [withImg, setWithImg] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -278,24 +259,23 @@ const ProjectDetail: React.FC = () => {
 
   return (
     <div
-      className={`flex flex-col fill-all graph-paper-bg`}
+      className={`flex flex-col fill-all ${currentTheme.sidenav.bg}`}
       style={handleImgUrlStyle()}
     >
       <div
-        className={`flex justify-between items-center p-2 hover:shadow-lg ${currentTheme.sidenav.bg} transition-all`}
+        className={`flex justify-between items-center p-2 transition-all`}
       >
         <div>
           <div
-            className={`${currentTheme.global.textSecondary} flex gap-x-2 items-baseline text-2xl`}
+            className={`${currentTheme.global.textSecondary} flex flex-col gap-y-1 items-baseline`}
           >
-            <Link to="/app/b">Boards</Link> /
-            <h1 className={`font-bold ${currentTheme.global.textPrimary}`}>
-              {board?.name}
-            </h1>
+            <Link to="/app/b">Boards /</Link>
+            <div>
+              <h1 className={`font-bold text-2xl ${currentTheme.global.textPrimary}`}>
+                {board?.name}
+              </h1>
+            </div>
           </div>
-          <p className={`${currentTheme.global.textSecondary}`}>
-            {board?.description}
-          </p>
         </div>
         <button
           onClick={() => {
@@ -308,7 +288,27 @@ const ProjectDetail: React.FC = () => {
         </button>
       </div>
 
-      <div className="h-full w-full overflow-auto">
+      <div className="h-full w-full overflow-auto" style={{ cursor: "grab" }} onMouseDown={(e) => {
+        const target = e.currentTarget;
+        let startX = e.pageX - target.offsetLeft;
+        let scrollLeft = target.scrollLeft;
+
+        const onMouseMove = (e: MouseEvent) => {
+          const x = e.pageX - target.offsetLeft;
+          const walk = (x - startX) * 2; // Scroll-fast
+          target.scrollLeft = scrollLeft - walk;
+        };
+
+        const onMouseUp = () => {
+          target.style.cursor = "grab";
+          window.removeEventListener("mousemove", onMouseMove);
+          window.removeEventListener("mouseup", onMouseUp);
+        };
+
+        target.style.cursor = "grabbing";
+        window.addEventListener("mousemove", onMouseMove);
+        window.addEventListener("mouseup", onMouseUp);
+      }}>
         <KanbanContainer theme={currentTheme} board={board!} />
       </div>
 

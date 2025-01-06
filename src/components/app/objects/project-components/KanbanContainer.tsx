@@ -24,40 +24,40 @@ const KanbanContainer: React.FC<ContainerProps> = ({theme, board}) => {
   const handleDragEnd = (result: DropResult) => {
     // Only proceed if dragging is not disabled
     if (isDraggingDisabled) return;
-
+  
     const { source, destination, type } = result;
-
+  
     // If no destination, exit
     if (!destination) return;
-
+  
     // If dragging columns
     if (type === 'COLUMN') {
       if (source.index === destination.index) return;
-
+  
       const columnIds = Object.keys(currentBoard?.columns || {});
       
       const [reorderedColumn] = columnIds.splice(source.index, 1);
       columnIds.splice(destination.index, 0, reorderedColumn);
-
+  
       updateColumnOrder(currentBoard.id, columnIds);
       return;
     }
-
+  
     // If dragging tasks within a column
-    const { source: taskSource, destination: taskDestination } = result;
-    const sourceColumn = taskSource.droppableId;
-    const targetColumn = taskDestination!.droppableId;
-
+    const sourceColumn = source.droppableId;
+    const targetColumn = destination.droppableId;
+  
     // Exit if the task wasn't moved
-    if (sourceColumn === targetColumn && taskSource.index === taskDestination!.index) {
+    if (sourceColumn === targetColumn && source.index === destination.index) {
       return;
     }
-
+  
     moveTask(
       currentBoard.id, 
       sourceColumn, 
       targetColumn, 
-      Number(result.draggableId)
+      Number(result.draggableId),
+      destination.index
     );
   };
 
@@ -113,6 +113,7 @@ const KanbanContainer: React.FC<ContainerProps> = ({theme, board}) => {
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
+                      className='h-min max-h-fit'
                     >
                       <KanbanBoard
                         key={columnId}

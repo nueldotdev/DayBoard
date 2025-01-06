@@ -1,7 +1,7 @@
 export const formatTime = (date: Date): string => {
   let hours = date.getHours();
   const minutes = date.getMinutes();
-  const ampm = hours >= 12 ? "PM" : "AM";
+  // const ampm = hours >= 12 ? "PM" : "AM";
 
   // Convert 24-hour time to 12-hour format and pad with leading zero if needed
   hours = hours % 12;
@@ -9,7 +9,7 @@ export const formatTime = (date: Date): string => {
   const hoursStr = hours < 10 ? `0${hours}` : hours.toString();
   const minutesStr = minutes < 10 ? `0${minutes}` : minutes.toString();
 
-  return `${hoursStr}:${minutesStr} ${ampm}`;
+  return `${hoursStr}:${minutesStr}`;
 };
 
 
@@ -28,7 +28,7 @@ export const formatFullDate = (fullDate: Date) => {
   
   // 
 
-  return `${day}${getDaySuffix(day)} of ${month}, ${year}`;
+  return `${day}${getDaySuffix(day)} ${month}, ${year}`;
 };
 
 export const getDaySuffix = (day: number) => {

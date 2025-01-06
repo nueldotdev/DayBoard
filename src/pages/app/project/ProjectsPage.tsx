@@ -7,7 +7,7 @@ const BoardsPage: React.FC = () => {
   const { currentTheme } = getTheme();
 
   // Set page title
-  usePageTitle("Projects");
+  usePageTitle("My Boards");
 
   return (
     <>
