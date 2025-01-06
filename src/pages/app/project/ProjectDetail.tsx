@@ -288,27 +288,7 @@ const ProjectDetail: React.FC = () => {
         </button>
       </div>
 
-      <div className="h-full w-full overflow-auto" style={{ cursor: "grab" }} onMouseDown={(e) => {
-        const target = e.currentTarget;
-        let startX = e.pageX - target.offsetLeft;
-        let scrollLeft = target.scrollLeft;
-
-        const onMouseMove = (e: MouseEvent) => {
-          const x = e.pageX - target.offsetLeft;
-          const walk = (x - startX) * 2; // Scroll-fast
-          target.scrollLeft = scrollLeft - walk;
-        };
-
-        const onMouseUp = () => {
-          target.style.cursor = "grab";
-          window.removeEventListener("mousemove", onMouseMove);
-          window.removeEventListener("mouseup", onMouseUp);
-        };
-
-        target.style.cursor = "grabbing";
-        window.addEventListener("mousemove", onMouseMove);
-        window.addEventListener("mouseup", onMouseUp);
-      }}>
+      <div className="h-full w-full overflow-auto">
         <KanbanContainer theme={currentTheme} board={board!} />
       </div>
 
