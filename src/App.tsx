@@ -19,7 +19,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     // Retrieve the theme name from localStorage
-    const savedTheme = (localStorage.getItem('theme') as keyof typeof themes) || 'light';
+    const savedTheme = (localStorage.getItem('theme') as keyof typeof themes) || 'dark';
 
     // Update the theme in the store if it differs from the current state
     if (savedTheme && themes[savedTheme]) {
