@@ -39,7 +39,12 @@ export const Header: React.FC<{onClick: () => void}> = ({onClick}) => {
                 <a href="#pricing">Pricing</a>
               </li>
             </ul>
-            <button className='py-1 px-6 rounded-md bg-green-500 text-white font-normal landing-btn' onClick={onClick}>Try it out</button>
+            <motion.button
+              onClick={onClick}
+              className="bg-green-500 text-black font-medium px-4 py-3 rounded-lg flex items-center justify-center space-x-2 hover:bg-green-400 transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >Try it out</motion.button>
           </div>
 
           <div className='md:hidden'>
