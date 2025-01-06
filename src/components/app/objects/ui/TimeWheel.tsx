@@ -3,7 +3,7 @@ import { HiOutlineChevronUp, HiOutlineChevronDown } from 'react-icons/hi';
 import { useTimerStore } from '../../../../store/timerStore';
 import { mainTheme } from '../../../../utils/interfaces';
 
-const TimeWheel: React.FC<{ theme: mainTheme}> = ({theme}) => {
+const TimeWheel: React.FC<{ theme: mainTheme}> = () => {
   const { minutes, seconds, setMinutes, setSeconds } = useTimerStore();
 
 

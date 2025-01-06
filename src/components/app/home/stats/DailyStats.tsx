@@ -1,7 +1,9 @@
 import { HiTrendingUp } from "react-icons/hi";
 import { TimeComponentsProps } from "../../../../utils/interfaces";
 
-export const DailyStats: React.FC<TimeComponentsProps> = ({ theme }) => {
+export const DailyStats: React.FC<TimeComponentsProps> = () => {
+
+
   return (
     <div className="space-x-1 flex flex-col items-start">
       <div className="space-x-1 flex items-center justify-center">

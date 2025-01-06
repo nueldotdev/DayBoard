@@ -2,7 +2,7 @@ import React from "react";
 import { HiOutlineFire } from "react-icons/hi2";
 import { TimeComponentsProps } from "../../../utils/interfaces";
 
-const FocusStreaks: React.FC<TimeComponentsProps> = ({ theme }) => {
+const FocusStreaks: React.FC<TimeComponentsProps> = () => {
   // Mock data for streaks
   const streaks = {
     currentStreak: 7,
