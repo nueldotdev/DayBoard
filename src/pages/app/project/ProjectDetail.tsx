@@ -263,20 +263,19 @@ const ProjectDetail: React.FC = () => {
       style={handleImgUrlStyle()}
     >
       <div
-        className={`flex justify-between items-center p-2 hover:shadow-lg transition-all`}
+        className={`flex justify-between items-center p-2 transition-all`}
       >
         <div>
           <div
-            className={`${currentTheme.global.textSecondary} flex gap-x-2 items-baseline text-2xl`}
+            className={`${currentTheme.global.textSecondary} flex flex-col gap-y-1 items-baseline`}
           >
-            <Link to="/app/b">Boards</Link> /
-            <h1 className={`font-bold ${currentTheme.global.textPrimary}`}>
-              {board?.name}
-            </h1>
+            <Link to="/app/b">Boards /</Link>
+            <div>
+              <h1 className={`font-bold text-2xl ${currentTheme.global.textPrimary}`}>
+                {board?.name}
+              </h1>
+            </div>
           </div>
-          <p className={`${currentTheme.global.textSecondary}`}>
-            {board?.description}
-          </p>
         </div>
         <button
           onClick={() => {
@@ -289,7 +288,27 @@ const ProjectDetail: React.FC = () => {
         </button>
       </div>
 
-      <div className="h-full w-full overflow-auto">
+      <div className="h-full w-full overflow-auto" style={{ cursor: "grab" }} onMouseDown={(e) => {
+        const target = e.currentTarget;
+        let startX = e.pageX - target.offsetLeft;
+        let scrollLeft = target.scrollLeft;
+
+        const onMouseMove = (e: MouseEvent) => {
+          const x = e.pageX - target.offsetLeft;
+          const walk = (x - startX) * 2; // Scroll-fast
+          target.scrollLeft = scrollLeft - walk;
+        };
+
+        const onMouseUp = () => {
+          target.style.cursor = "grab";
+          window.removeEventListener("mousemove", onMouseMove);
+          window.removeEventListener("mouseup", onMouseUp);
+        };
+
+        target.style.cursor = "grabbing";
+        window.addEventListener("mousemove", onMouseMove);
+        window.addEventListener("mouseup", onMouseUp);
+      }}>
         <KanbanContainer theme={currentTheme} board={board!} />
       </div>
 

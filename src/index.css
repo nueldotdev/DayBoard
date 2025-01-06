@@ -178,16 +178,16 @@
   }
   
   .kanban-container::-webkit-scrollbar {
-    width: 8px; /* Adjust scrollbar width */
+    width: 4px; /* Adjust scrollbar width */
   }
   
   .kanban-container::-webkit-scrollbar-thumb {
-    background-color: #2725254f; /* Emerald green thumb */
+    background-color: #4c494953; /* Emerald green thumb */
     border-radius: 4px; /* Rounded corners for the thumb */
   }
   
   .kanban-container::-webkit-scrollbar-track {
-    background: rgba(160, 160, 160, 0.342); /* No background color for the track */
+    background: rgba(160, 160, 160, 0); /* No background color for the track */
   }
 
   /* Style for landing page buttons */
@@ -227,6 +227,10 @@
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
+  }
+
+  .info-edit {
+    @apply focus:outline-1 focus:outline-zinc-700 dark:focus:outline-zinc-200 dark:text-gray-300 p-2 focus:bg-zinc-200 rounded-md dark:focus:bg-zinc-900
   }
 
 }

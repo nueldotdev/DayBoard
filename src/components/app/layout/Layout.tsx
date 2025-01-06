@@ -9,6 +9,7 @@ const Layout: React.FC = () => {
   const { currentTheme } = getTheme();
   const [bgImg, setBgImg] = React.useState<string>("");
   const { themeName } = useThemeStore();
+  const [loading, setLoading] = React.useState<boolean>(true);
 
   const interests = [
     "space",
@@ -24,6 +25,12 @@ const Layout: React.FC = () => {
   ]; // Add more interests here
 
   const API_KEY = import.meta.env.VITE_UNSPLASH_API_KEY;
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 7000);
+  }, []);
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -50,12 +57,25 @@ const Layout: React.FC = () => {
     }
   }, []);
 
-
   return (
     <div
       className={`fixed max-h-screen min-h-screen h-screen w-full ${currentTheme.global.text} ${currentTheme.global.bg}`}
     >
-      {/* <Header /> */}
+      {loading && (
+        <div
+          className={`absolute z-[10000] h-screen w-full flex items-center justify-center ${currentTheme.sidenav.bg} transition-opacity duration-1000 ease-in-out`}
+        >
+          <div
+            className={`animate-bounce rounded-full h-32 w-32 flex items-center justify-center`}
+          >
+            <img
+              src="/dayboard-dark.svg"
+              alt="Dayboard Logo"
+              className="w-20"
+            />
+          </div>
+        </div>
+      )}
       <div
         className={`flex ${currentTheme.global.bg} max-h-full min-h-full h-full`}
       >
@@ -68,7 +88,11 @@ const Layout: React.FC = () => {
         <div
           className="w-full overflow-auto"
           style={{
-            backgroundImage: `${themeName === "dark" ? "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))" : "linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1))"}, url(${bgImg})`,
+            backgroundImage: `${
+              themeName === "dark"
+                ? "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))"
+                : "linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1))"
+            }, url(${bgImg})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}

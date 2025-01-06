@@ -113,6 +113,7 @@ const KanbanContainer: React.FC<ContainerProps> = ({theme, board}) => {
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
+                      className='h-min max-h-fit'
                     >
                       <KanbanBoard
                         key={columnId}

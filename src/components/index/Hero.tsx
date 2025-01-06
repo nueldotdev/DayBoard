@@ -4,7 +4,7 @@ import { HiExternalLink } from "react-icons/hi";
 
 export const Hero: React.FC<{ onClick: () => void }> = ({ onClick }) => {
   return (
-    <div className="relative bg-black text-white py-20 overflow-hidden px-5 min-h-screen flex items-center justify-center">
+    <div className="relative text-white py-20 overflow-hidden px-5 min-h-screen flex items-center justify-center">
       <div className="relative z-10 max-w-7xl mx-auto flex flex-col items-center text-center">
         <motion.div
           className="space-y-8"
@@ -53,7 +53,7 @@ export const Hero: React.FC<{ onClick: () => void }> = ({ onClick }) => {
       </div>
 
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-green-500/10 to-transparent" />
+      {/* <div className="absolute inset-0 bg-gradient-to-b from-green-500/10 to-transparent" /> */}
     </div>
   );
 };
