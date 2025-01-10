@@ -1,6 +1,5 @@
 import React from 'react'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
-import PomodoroTimer from '../components/app/home/time/Pomodoro'
 import Layout from '../components/app/layout/Layout'
 // import KanbanContainer from '../components/app/objects/project-components/KanbanContainer'
 import HomePage from '../pages/app/HomePage'
@@ -12,15 +11,15 @@ import ProjectsPage from '../pages/app/project/ProjectsPage'
 // import ProjectSection from '../pages/app/project/ProjectSection'
 // import { SchedulePage } from '../pages/app/SchedulePage'
 import LandingPage from '../pages/index/LandingPage'
-import { getTheme } from '../utils/getTheme'
+// import { getTheme } from '../utils/getTheme'
 import { StatsPage } from '../pages/app/focus/StatsPage'
-import Landing from '../pages/index/final-concepts/Landing'
 import NotFound from '../pages/index/NotFound'
 import WaitlistPage from '../pages/index/WaitlistPage'
+import AuthPage from '../pages/auth/AuthPage'
 
 
 const AppRouter: React.FC = () => {
-  const {currentTheme} = getTheme();
+  // const {currentTheme} = getTheme();
 
   return (
     <Router>
@@ -36,8 +35,7 @@ const AppRouter: React.FC = () => {
           <Route path='b/:boardId' element={<ProjectDetail />} />
           {/* <Route path='p/:projectId/s/:sectionId' element={<ProjectSection />} /> */}
         </Route>
-        <Route path='/pomodoro' element={<PomodoroTimer theme={currentTheme} />} />
-        <Route path='/test' element={<Landing />} />
+        <Route path='/auth' element={<AuthPage />} />
         <Route path='/waitlist' element={<WaitlistPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

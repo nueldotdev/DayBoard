@@ -4,8 +4,10 @@ import TimeComponents from "../../components/app/home/TimeComponents";
 import usePageTitle from "../../hooks/usePageTitle";
 import axios from "axios";
 import { fetchWeatherByCoordinates } from "../../../services/weatherService";
+import { useUserStore } from "../../store/userStore";
 
 const HomePage: React.FC = () => {
+  const { user } = useUserStore();
 
   useEffect(() => {
     const fetchCoordinates = async () => {
@@ -32,7 +34,6 @@ const HomePage: React.FC = () => {
 
   // Set page title
   usePageTitle("Home");
-  const name = localStorage.getItem("name") || "User";
 
   return (
     <div className="flex flex-col min-h-full max-h-full h-full">
@@ -40,7 +41,7 @@ const HomePage: React.FC = () => {
         <Greeting />
       </div>
       <div className="h-full">
-        <TimeComponents name={name} />
+        <TimeComponents name={user.first_name} />
       </div>
     </div>
   );

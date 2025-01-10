@@ -224,7 +224,7 @@ const ProjectDetail: React.FC = () => {
 
   // Save edited details
   const saveBoardDetails = () => {
-    if (board) {      
+    if (board) {
       updateBoard(board.id, { name: editName, description: editDescription, image: imageUrl });
       setSidebarOpen(false);
     }
