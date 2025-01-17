@@ -8,12 +8,12 @@ export interface SidebarProps extends GeneralProps {
   open: boolean;
   onClose: () => void;
   closeOnBackdropClick?: boolean; // Optional: Close modal on backdrop click
-  title: string;
+  // title: string;
   exitButton: boolean;
 }
 
 export const SideBar: React.FC<SidebarProps> = ({
-  title,
+  // title,
   exitButton = true,
   theme,
   position = "right",
@@ -63,8 +63,8 @@ export const SideBar: React.FC<SidebarProps> = ({
             transition={{ duration: 0.3, ease: "easeInOut" }} // Smooth transition
           >
             {/* Header */}
-            <div className="h-fit flex justify-between items-center">
-              <h2 className="text-xl font-bold">{title}</h2>
+            {/* <div className="h-fit flex justify-between items-center"> */}
+              {/* <h2 className="text-xl font-bold">{title}</h2> */}
               {exitButton && (
                 <button
                   onClick={onClose}
@@ -74,7 +74,7 @@ export const SideBar: React.FC<SidebarProps> = ({
                   <HiX className="w-4 h-4" />
                 </button>
               )}
-            </div>
+            {/* </div> */}
             <div className="h-full">{children}</div>
           </motion.div>
         </div>

@@ -28,7 +28,7 @@ export function TaskCard({ card, onCardOpen, onCardClose }: TaskCardProps) {
     <>
       <div 
         className={`
-          group w-full p-4 bg-zinc-100 dark:bg-zinc-800 ${theme.global.border} transition-colors
+          group w-full p-4 ${theme.kanban.bg} ${theme.kanban.hover} ${theme.global.border} transition-colors
           border rounded-lg shadow-sm
           flex flex-col gap-2
         `} 

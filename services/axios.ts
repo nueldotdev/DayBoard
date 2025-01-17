@@ -14,7 +14,7 @@ api.interceptors.request.use(
   config => {
     // You can modify the request config before sending it
     // For example, add an authorization token
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('access_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

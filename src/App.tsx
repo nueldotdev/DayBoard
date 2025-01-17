@@ -3,11 +3,10 @@ import './App.css';
 import useApplyTheme from './hooks/useApplyTheme';
 // import ThemeToggle from './components/app/ThemeToggle';
 import AppRouter from './router/Router';
-import { PrimeReactProvider } from 'primereact/api';
 import useThemeStore from './store/themeStore';
 import { themes } from './themeConfig';
 
-
+import { Analytics } from "@vercel/analytics/react"
 
 const App: React.FC = () => {
   useApplyTheme();
@@ -26,11 +25,10 @@ const App: React.FC = () => {
   }, [setTheme]);
 
   return (
-    <PrimeReactProvider  value={{ unstyled: false }}>
-      <div className={`max-h-full min-h-full h-full w-full ${isDarkMode ? 'dark' : ''}`}>
-        <AppRouter />
-      </div>
-    </PrimeReactProvider>
+    <div className={`max-h-full min-h-full h-full w-full ${isDarkMode ? 'dark' : ''}`}>
+      <Analytics />
+      <AppRouter />
+    </div>
   );
 };
 

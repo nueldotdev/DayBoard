@@ -230,7 +230,18 @@
   }
 
   .info-edit {
-    @apply focus:outline-1 focus:outline-zinc-700 dark:focus:outline-zinc-200 dark:text-gray-300 p-2 focus:bg-zinc-200 rounded-md dark:focus:bg-zinc-900
+    @apply focus:outline-1 focus:outline-zinc-700 dark:focus:outline-zinc-800 dark:text-gray-300 p-2 focus:bg-zinc-200 rounded-md dark:focus:bg-zinc-900
   }
 
+  .num-container {
+    @apply relative
+  }
+
+  .num-main {
+    @apply translate-x-6
+  }
+
+  .btn-switch-mode {
+    @apply rounded-full bg-zinc-300 dark:bg-zinc-800/70 opacity-50 hover:opacity-85 ml-4 transition-all right-0 translate-x-[120%]
+  }
 }

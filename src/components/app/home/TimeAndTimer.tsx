@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { HiOutlinePause, HiOutlinePlay } from "react-icons/hi2";
+import { HiEllipsisHorizontal, HiOutlinePause, HiOutlinePlay } from "react-icons/hi2";
 import { getTheme } from "../../../utils/getTheme";
 import { formatFullDate, formatTime } from "../../../utils/timeFormat";
 import { useTimerStore } from "../../../store/timerStore";
@@ -95,9 +95,7 @@ const TimeAndTimer: React.FC<{ userName: string }> = ({ userName }) => {
       
       <div className="flex flex-col items-center justify-center fill-all mb-2">
         {/* <AnimatePresence> */}
-          <button onClick={() => setIsTimerVisible(!isTimerVisible)} className={isActive ? "hidden" : ""}>
-            {isTimerVisible ? "Show Clock" : "Show Timer"}
-          </button>
+          
         {isTimerVisible ? (
           <motion.div
             key="timer"
@@ -106,11 +104,16 @@ const TimeAndTimer: React.FC<{ userName: string }> = ({ userName }) => {
             transition={{ duration: 0.2 }}
             className="space-y-1 flex flex-col items-center justify-center"
           >
-            <div className="text-9xl p-2">
-              {`${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
-                2,
-                "0"
-              )}`}
+            <div className="flex items-center justify-center num-container">
+              <div className="text-[10rem] p-2 num-main">
+                {`${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
+                  2,
+                  "0"
+                )}`}
+              </div>
+              <button onClick={() => setIsTimerVisible(!isTimerVisible)} className="btn-switch-mode">
+                <HiEllipsisHorizontal size={40} />
+              </button>
             </div>
             <div className="flex justify-center gap-x-2 w-full">
               {!isActive ? (
@@ -146,7 +149,12 @@ const TimeAndTimer: React.FC<{ userName: string }> = ({ userName }) => {
               transition={{ duration: 0.3 }}
               className="text-center"
             >
-              <h1 className="text-9xl font-normal">{time}</h1>
+              <div className="flex items-center justify-center num-container">
+                <h1 className="text-[10rem] font-normal num-main">{time}</h1>
+                <button onClick={() => setIsTimerVisible(!isTimerVisible)} className="btn-switch-mode">
+                  <HiEllipsisHorizontal size={40} />
+                </button>
+              </div>
               {showWords ? (
               <motion.p
                 key="greeting"
