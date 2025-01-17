@@ -4,6 +4,8 @@ import { getTheme } from "../../../utils/getTheme";
 import Header from "./Header";
 import SideNav from "./SideNav";
 import useThemeStore from "../../../store/themeStore";
+import { handleTokens } from "../../../../services/handleToken";
+
 
 const Layout: React.FC = () => {
   const { currentTheme } = getTheme();
@@ -25,6 +27,10 @@ const Layout: React.FC = () => {
   ]; // Add more interests here
 
   const API_KEY = import.meta.env.VITE_UNSPLASH_API_KEY;
+
+  useEffect(() => {
+    handleTokens()
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {

@@ -3,7 +3,7 @@ import KanbanContainer from "../../../components/app/objects/project-components/
 import usePageTitle from "../../../hooks/usePageTitle";
 import { getTheme } from "../../../utils/getTheme";
 import React, { useState, useEffect, useRef } from "react";
-import { HiOutlineEllipsisHorizontal } from "react-icons/hi2";
+import { HiArrowLeft, HiOutlineEllipsisHorizontal } from "react-icons/hi2";
 // import { VscPaintcan } from "react-icons/vsc";
 import useBoardStore from "../../../store/boardStore";
 // import { HiX } from "react-icons/hi";
@@ -15,7 +15,6 @@ const BackgroundSelector: React.FC<{
   currentImg: string;
   saveBoardDetails: () => void;
 }> = ({ handleBackgroundChange, currentImg, saveBoardDetails }) => {
-
   const { currentTheme } = getTheme();
   const API_KEY = import.meta.env.VITE_UNSPLASH_API_KEY;
   const [unsplashImgs, setUnsplashImgs] = useState<any[]>([]);
@@ -60,7 +59,6 @@ const BackgroundSelector: React.FC<{
   const handleSeeMore = () => {
     setPage((prevPage) => prevPage + 1);
   };
-  
 
   return (
     <div className="h-full">
@@ -99,7 +97,10 @@ const BackgroundSelector: React.FC<{
             <div className="text-center animate-pulse mt-4">Loading...</div>
           )}
           {/* Infinite Scroll Trigger */}
-          <button onClick={handleSeeMore} className="w-full p-2 bg-green-800 text-white rounded-lg" >
+          <button
+            onClick={handleSeeMore}
+            className="w-full p-2 bg-green-800 text-white rounded-lg"
+          >
             <p>Load More...</p>
           </button>
         </div>
@@ -114,8 +115,8 @@ const BackgroundSelector: React.FC<{
           </button>
           <button
             onClick={() => {
-              handleBackgroundChange("")
-              saveBoardDetails()
+              handleBackgroundChange("");
+              saveBoardDetails();
             }}
             className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 w-full px-4 rounded-lg"
           >
@@ -197,14 +198,13 @@ const ProjectDetail: React.FC = () => {
   // Set page title
   usePageTitle("Boards - " + board?.name);
 
-
-  // Upon load, check if board has image 
+  // Upon load, check if board has image
   useEffect(() => {
     if (board?.image && board?.image != "") {
-      setWithImg(true)
-      setImageUrl(board.image)
+      setWithImg(true);
+      setImageUrl(board.image);
     }
-  }, [])
+  }, []);
 
   // Handle background selection
   const handleBackgroundChange = (newImageUrl: string) => {
@@ -225,7 +225,11 @@ const ProjectDetail: React.FC = () => {
   // Save edited details
   const saveBoardDetails = () => {
     if (board) {
-      updateBoard(board.id, { name: editName, description: editDescription, image: imageUrl });
+      updateBoard(board.id, {
+        name: editName,
+        description: editDescription,
+        image: imageUrl,
+      });
       setSidebarOpen(false);
     }
   };
@@ -262,16 +266,16 @@ const ProjectDetail: React.FC = () => {
       className={`flex flex-col fill-all ${currentTheme.sidenav.bg}`}
       style={handleImgUrlStyle()}
     >
-      <div
-        className={`flex justify-between items-center p-2 transition-all`}
-      >
+      <div className={`flex justify-between items-center p-2 transition-all`}>
         <div>
           <div
             className={`${currentTheme.global.textSecondary} flex flex-col gap-y-1 items-baseline`}
           >
             <Link to="/app/b">Boards /</Link>
             <div>
-              <h1 className={`font-bold text-2xl ${currentTheme.global.textPrimary}`}>
+              <h1
+                className={`font-bold text-2xl ${currentTheme.global.textPrimary}`}
+              >
                 {board?.name}
               </h1>
             </div>
@@ -279,7 +283,6 @@ const ProjectDetail: React.FC = () => {
         </div>
         <button
           onClick={() => {
-            setSidebarPage("Edit");
             setSidebarOpen(true);
           }}
           className={`p-2 rounded-md ${currentTheme.hoverEffects.textHover} ${currentTheme.global.text} cursor-pointer transition-colors`}
@@ -301,24 +304,44 @@ const ProjectDetail: React.FC = () => {
         }}
         theme={currentTheme}
         exitButton={true}
-        title={sidebarPage} // Show current sidebar page title
+        // title={sidebarPage} // Show current sidebar page title
       >
         {/* Sidebar Buttons */}
         <div className="flex flex-col gap-4 fill-all">
-          {sideContent
-            ? sidebarPages.find((p) => p.name === sidebarPage)?.content
-            : sidebarPages.map((page) => (
+          <div className="flex items-center justify-start space-x-2 text-lg">
+            {sidebarPage !== "Menu" ? (
+              <>
                 <button
-                  key={page.name}
                   onClick={() => {
-                    setSidebarPage(page.name);
-                    setSideContent(true);
+                    setSidebarPage("Menu");
+                    setSideContent(false);
                   }}
-                  className={`p-2 rounded-md ${currentTheme.global.text} ${currentTheme.hoverEffects.textHover} transition-colors`}
                 >
-                  {page.name}
+                  <HiArrowLeft />
                 </button>
-              ))}
+                <h1>{sidebarPage}</h1>
+              </>
+            ) : (
+              <h1>{sidebarPage}</h1>
+            )}
+          </div>
+
+          <div className="fill-all flex-col flex space-y-1">
+            {sideContent
+              ? sidebarPages.find((p) => p.name === sidebarPage)?.content
+              : sidebarPages.map((page) => (
+                  <button
+                    key={page.name}
+                    onClick={() => {
+                      setSidebarPage(page.name);
+                      setSideContent(true);
+                    }}
+                    className={`p-2 rounded-md text-left ${currentTheme.global.text} ${currentTheme.hoverEffects.btnHover} transition-colors`}
+                  >
+                    {page.name}
+                  </button>
+                ))}
+          </div>
         </div>
       </SideBar>
     </div>

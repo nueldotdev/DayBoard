@@ -16,10 +16,14 @@ import { StatsPage } from '../pages/app/focus/StatsPage'
 import NotFound from '../pages/index/NotFound'
 import WaitlistPage from '../pages/index/WaitlistPage'
 import AuthPage from '../pages/auth/AuthPage'
+// import { handleTokens } from '../../services/handleToken'
 
 
 const AppRouter: React.FC = () => {
-  // const {currentTheme} = getTheme();
+
+  // const access_token = localStorage.getItem('access_token')
+  // const refresh_token = localStorage.getItem('refresh_token')
+
 
   return (
     <Router>

@@ -37,7 +37,10 @@ export default function AuthPage() {
       let endpoint = authMode === 'login' ? '/auth/login/' : '/auth/signup/'
 
       const response = await api.post(endpoint, formData);
+
       console.log('Response:', response.data)
+      console.log("User in response: ", response.data.user[0])
+      
       /*
         Will receive the following response from the backend:
           - access_token: JWT access token
@@ -64,7 +67,7 @@ export default function AuthPage() {
 
       // Redirect to dashboard page
       setTimeout(() => {
-        navigate('/dashboard')
+        navigate('/app')
       }, 5000)
 
     } catch (error) {

@@ -1,7 +1,7 @@
 import { DragDropContext, Draggable, Droppable, DropResult } from '@hello-pangea/dnd';
 import React, { useState } from 'react';
 import useBoardStore, { Board } from '../../../../store/boardStore';
-import { mainTheme } from '../../../../utils/interfaces';
+import { Cards, mainTheme } from '../../../../utils/interfaces';
 import { Modal } from '../ui/Modal';
 import KanbanBoard from './KanbanBoard';
 
@@ -121,12 +121,8 @@ const KanbanContainer: React.FC<ContainerProps> = ({theme, board}) => {
                         cards={currentBoard.columns?.[columnId] || []}
                         className="min-w-[300px] max-w-[300px] rounded-lg pb-2 h-min max-h-fit"
                         theme={theme}
-                        onAddCard={(columnTitle, cardTitle) => {
-                          const newTask = {
-                            id: Date.now(),
-                            title: cardTitle,
-                            description: "",
-                          };
+                        onAddCard={(columnTitle, cardInfo: Cards) => {
+                          const newTask: Cards = cardInfo
                       
                           addTask(currentBoard.id, columnTitle, newTask);
                         }}

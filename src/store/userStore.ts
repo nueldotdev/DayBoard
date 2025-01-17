@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import api from '../../services/axios';
 
 
 export type User = {
@@ -19,8 +20,9 @@ export type User = {
 
 
 export interface UserState {
-  user: User;
-  setUser: (user: User) => void; 
+  user: any;
+  setUser: (user: any) => void;
+  getUserDetails: () => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -39,5 +41,23 @@ export const useUserStore = create<UserState>((set) => ({
     mins_for_streak: 0,
     user_type: ''
   },
-  setUser: (user) => set({ user })
+
+  setUser: (user) => {
+    console.log("setting new user: ", user);
+    set({ user })
+  },
+  
+  getUserDetails: async () => {
+    // Fetch user details from the backend
+    try {
+      console.log('getting user details')
+      const response = await api.get('/user/');
+      set({ user: response.data.user[0] });
+    } catch (error) {
+      console.error('Error fetching user details:', error);
+    }
+
+    console.log('finished!')
+  }
+
 }));

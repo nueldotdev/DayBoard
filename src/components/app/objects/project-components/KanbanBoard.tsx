@@ -1,14 +1,15 @@
+import { Draggable, Droppable } from "@hello-pangea/dnd";
 import React, { useState } from "react";
-import { Droppable, Draggable } from "@hello-pangea/dnd";
+import { HiMiniXMark, HiPlusSmall } from "react-icons/hi2";
+import { Cards, mainTheme } from "../../../../utils/interfaces";
 import { TaskCard } from "../TaskCard";
-import { mainTheme, Cards } from "../../../../utils/interfaces";
 
 interface KanbanBoardProps {
   title: string;
   theme: mainTheme;
   cards: Cards[];
   className?: string;
-  onAddCard?: (boardTitle: string, cardTitle: string) => void;
+  onAddCard?: (boardTitle: string, cardInfo: Cards) => void;
   onCardOpenChange?: (isOpen: boolean) => void; // New prop to communicate card open state
 }
 
@@ -20,15 +21,48 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({
   onAddCard,
   onCardOpenChange,
 }) => {
-  const [newCardTitle, setNewCardTitle] = useState<string>("");
+  const [newCardInfo, setNewCardInfo] = useState<Cards>({
+    id: Date.now(),
+    title: "",
+    description: "",
+    priority: "low",
+  })
   const [openCardId, setOpenCardId] = useState<number | null>(null);
+  const [entryToggle, setEntryToggle] = useState<boolean>(false);
+
+
+  const toggleAddCard = () => {
+    setEntryToggle(!entryToggle);
+  }
+
 
   const handleAddCard = () => {
-    const trimmedTitle = newCardTitle.trim();
+    const trimmedTitle = newCardInfo.title.trim();
     if (trimmedTitle === "") return;
-    if (onAddCard) onAddCard(title, trimmedTitle);
-    setNewCardTitle("");
+    if (onAddCard) onAddCard(title, newCardInfo);
+    setNewCardInfo({
+      id: Date.now(),
+      title: "",
+      description: "",
+      priority: "low",
+    });
   };
+
+
+
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+
+    // Update the state with the new value.
+    setNewCardInfo((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+
+    console.log(newCardInfo);
+  };
+
+
 
   const handleCardOpen = (cardId: number) => {
     setOpenCardId(cardId);
@@ -91,20 +125,53 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({
             {provided.placeholder}
 
             <div className="flex flex-col gap-2 mt-4">
-              <input
+              {/* <input
                 type="text"
                 value={newCardTitle}
                 onChange={(e) => setNewCardTitle(e.target.value)}
                 placeholder="Enter new card title"
                 className={`border rounded-lg p-2 text-sm ${theme.global.border} bg-transparent ${theme.global.text} placeholder:${theme.global.textSecondary} focus:outline-none`}
-              />
-
-              <button
-                onClick={handleAddCard}
-                className={`text-sm ${theme.global.textPrimary} ${theme.hoverEffects.btnHover} border border-dashed opacity-50 hover:opacity-100 ${theme.global.border} px-4 py-2 rounded-lg transition-all`}
-              >
-                Add New card
-              </button>
+              /> */}
+              {entryToggle ? (
+                <div className={"w-full flex flex-col space-y-1 border rounded-md p-2 " + theme.global.border}>
+                  <div className="fill-all">
+                    <input
+                      type="text"
+                      name="title"
+                      value={newCardInfo.title}
+                      onChange={handleInputChange}
+                      placeholder="Enter new card title"
+                      className={`w-full rounded-lg p-2 text-sm bg-transparent ${theme.global.text} placeholder:${theme.global.textSecondary} focus:outline-none font-semibold`}
+                    />
+                    <textarea
+                      name="description"
+                      placeholder="Add a description..."
+                      onChange={handleInputChange}
+                      className="w-full resize-none bg-transparent  info-edit outline-0 focus:outline-0"
+                      value={newCardInfo.description}
+                    />
+                  </div>
+                  <div className="flex items-stretch justify-between space-x-1">
+                    <button className={`border w-full p-1 ${theme.global.border} rounded-lg bg-green-600 hover:bg-green-700`} onClick={() => {
+                      handleAddCard()
+                      toggleAddCard()
+                    }}>
+                      Add Card
+                    </button>
+                    <button className={`border ${theme.global.border} rounded-lg bg-transparent w-[20%] p-1 ${theme.hoverEffects.btnHover} flex items-center justify-center`} onClick={toggleAddCard}>
+                      <HiMiniXMark size={24} className=""/>
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  onClick={toggleAddCard}
+                  className={`text-sm py-1 rounded-lg transition-all flex items-center justify-start space-x-1 ${theme.global.secondary} hover:text-black dark:hover:text-white`}
+                >
+                  <HiPlusSmall size={24} />
+                  <p>Add New</p>
+                </button>
+              )}
             </div>
           </div>
         )}
