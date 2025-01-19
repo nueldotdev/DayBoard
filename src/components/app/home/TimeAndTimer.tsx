@@ -62,17 +62,17 @@ const TimeAndTimer: React.FC<{ userName: string }> = ({ userName }) => {
   const words = {
     morning: [
       `Good morning, ${userName}!`,
-      "Hope you have a productive day!",
-      "Keep up the great work!",
+      `Hope you have a productive day ${userName}!`,
+      `Keep up the great work ${userName}!`,
     ],
     noon: [
       `How's the day going, ${userName}?`,
-      "Don't forget to take breaks!",
+      `Don't forget to take breaks!`,
       `${userName}, remember to stay hydrated!`,
     ],
     night: [
       `How was the day, ${userName}?`,
-      "Time to relax and unwind!",
+      `Time to relax and unwind !`,
       `Great job today ${userName}!`,
     ],
   };

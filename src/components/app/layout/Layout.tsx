@@ -4,14 +4,17 @@ import { getTheme } from "../../../utils/getTheme";
 import Header from "./Header";
 import SideNav from "./SideNav";
 import useThemeStore from "../../../store/themeStore";
-import { handleTokens } from "../../../../services/handleToken";
+// import { handleTokens } from "../../../../services/handleToken";
+import { useAuthStore } from "../../../store/authStore";
 
 
 const Layout: React.FC = () => {
   const { currentTheme } = getTheme();
   const [bgImg, setBgImg] = React.useState<string>("");
   const { themeName } = useThemeStore();
-  const [loading, setLoading] = React.useState<boolean>(true);
+  // const [loading, setLoading] = React.useState<boolean>(true);
+
+  const {isAuthenticated, loading, checkAuth } = useAuthStore()
 
   const interests = [
     "space",
@@ -29,14 +32,13 @@ const Layout: React.FC = () => {
   const API_KEY = import.meta.env.VITE_UNSPLASH_API_KEY;
 
   useEffect(() => {
-    handleTokens()
-  }, []);
+    if (isAuthenticated != true && loading === true) {
+      checkAuth()
+    } else if (isAuthenticated === false && loading === false) {
+      window.location.href = '/auth?type=login'
+    }
+  }, [loading]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 7000);
-  }, []);
 
   useEffect(() => {
     const fetchImage = async () => {
