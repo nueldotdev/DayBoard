@@ -13,8 +13,6 @@ const getDetails = async () => {
     console.error('Error fetching user details:', error);
   }
 
-  // Check if the user data has been updated
-  // const updatedUser = useUserStore.getState().user;
 }
 
 
@@ -38,16 +36,14 @@ export async function handleTokens () {
   const refresh_token = localStorage.getItem('refresh_token') ?? ''
   const {valid} = await validateToken(access_token)
 
-  if (access_token && valid === true) {
+  if (valid === true) {
     // Access token is still valid
     await getDetails();
     if (window.location.pathname !== '/app') {      
       window.location.href = '/app'; // Redirect to dashboard
     }
     return access_token;
-  }
-
-  if (refresh_token) {
+  } else if (refresh_token) {
     localStorage.removeItem('access_token');
     // Send a request to the backend to refresh the token
     try {
@@ -61,6 +57,8 @@ export async function handleTokens () {
 
     } catch (error) {
       console.error('Error:', error);
+      localStorage.removeItem('refresh_token');
+      // window.location.href = '/auth?type=login'
     }
   } else {
     window.location.href = '/auth?type=login'

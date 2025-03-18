@@ -1,28 +1,72 @@
 import React, { useEffect, useState } from "react";
-import { mainTheme, Boards } from "../../../../utils/interfaces";
+import { mainTheme } from "../../../../utils/interfaces";
 import { Link } from "react-router-dom";
 import { Modal } from "../../objects/ui/Modal";
-import useBoardStore from "../../../../store/boardStore";
+import useBoardStore, { Board } from "../../../../store/boardStore";
+import Select from "../../objects/ui/Select";
+import {
+  HiEllipsisHorizontal,
+  HiOutlinePencilSquare,
+  HiOutlineStar,
+  HiPencil,
+  HiTrash,
+} from "react-icons/hi2";
 
 interface ComponentProps {
   theme: mainTheme;
   // boards: Boards[];
 }
 
+type Option = {
+  icon: React.ReactElement;
+  label: string;
+  value: string;
+  color?: string;
+};
+
+const testOp2: Option[] = [
+  {
+    icon: <HiTrash size={20} />,
+    label: "Delete",
+    value: "Delete this board",
+    color: "#b82316",
+  },
+];
+
+const testOptions: Option[][] = [
+  [
+    {
+      icon: <HiOutlinePencilSquare size={20} />,
+      label: "Edit",
+      value: "Edit this board",
+    },
+    {
+      icon: <HiOutlineStar size={20} />,
+      label: "Favorite",
+      value: "Favorite this board",
+    },
+  ],
+  testOp2,
+];
+
 const BoardList: React.FC<ComponentProps> = ({ theme }) => {
-  const { createBoard, boards } = useBoardStore();
+  const { createBoard, boards, getBoards } = useBoardStore();
 
   // console.log("Boards Length: ", boards.length)
-
-  const [allBoards, setAllBoards] = useState<Boards[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [allBoards, setAllBoards] = useState<Board[]>([]);
 
   const [newBoards, setNewBoards] = useState({
-    id: boards.length + 1,
+    id: `${boards.length + 1}`,
     name: "",
-    description: "",
   });
   const [modal, setModal] = useState(false);
 
+  /**
+   * Handles input changes for the new board form.
+   * Updates the state with the new value.
+   * @param {React.ChangeEvent<HTMLInputElement>} e - The event containing the changed input.
+   */
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
 
@@ -36,11 +80,24 @@ const BoardList: React.FC<ComponentProps> = ({ theme }) => {
   };
 
   const addBoards = () => {
-    createBoard(newBoards.id, newBoards.name, newBoards.description);
+    createBoard(newBoards.id, newBoards.name);
     setModal(false);
   };
 
   useEffect(() => {
+    const fetchBoards = async () => {
+      try {
+        await getBoards();
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBoards();
+  }, []);
+
+  useEffect(() => {
+    // getBoards();
     setAllBoards(boards);
   }, [boards]);
 
@@ -67,37 +124,61 @@ const BoardList: React.FC<ComponentProps> = ({ theme }) => {
           <div
             className={`fill-all flex items-center justify-center border-t ${theme.global.border} `}
           >
-            {boards.length > 0 ? (
+            {isLoading ? (
+              <div className="fill-all flex items-center justify-center">
+                <div
+                  className={`transform animate-ping rounded-full h-16 w-16 border-2`}
+                  style={{ borderColor: theme.global.brand }}
+                ></div>
+              </div>
+            ) : boards.length > 0 ? (
               <div className="fill-all p-2">
                 <div
-                className={
-                  "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-                }
-              >
-                {allBoards.map((board) => (
-                  <Link
-                    to={`/app/b/${board.id}`}
-                    key={board.id}
-                    className={`flex flex-col justify-between rounded-lg shadow hover:shadow-xl transition p-4 ${theme.global.textPrimary} border ${theme.global.border} ${theme.sidenav.bg}`}
-                  >
-                    <div>
-                      <div className="flex justify-between items-center mb-4">
-                        <h2 className="text-lg font-semibold">{board.name}</h2>
-                        {/* {board.daysLeft && (
-                  <span className="text-sm px-2 py-1 rounded-lg">
-                    {board.daysLeft}
-                  </span>
-                )} */}
+                  className={
+                    "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                  }
+                >
+                  {allBoards.map((board) => (
+                    <Link
+                      to={`/app/b/${board.slug}`}
+                      key={board.id}
+                      className={`flex flex-col justify-between rounded-lg shadow hover:shadow-xl transition p-4 ${theme.global.textPrimary} border ${theme.global.border} ${theme.sidenav.bg}`}
+                    >
+                      <div>
+                        <div className="flex justify-between items-center mb-4">
+                          <div className="flex items-center justify-start space-x-2">
+                            {board.color && (
+                              <div
+                                className={`w-3 h-3 rounded-full`}
+                                style={{ backgroundColor: board.color }}
+                              ></div>
+                            )}
+                            <h2 className="text-lg font-semibold">
+                              {board.name}
+                            </h2>
+                          </div>
+                          <Select
+                            options={testOptions}
+                            onSelect={(value) => console.log(value)}
+                            theme={theme}
+                            className="w-fit"
+                            onClick={(e) => {
+                              e.stopPropagation(); // Prevent event propagation
+                              e.preventDefault(); // Prevent default behavior
+                            }}
+                          >
+                            <HiEllipsisHorizontal size={20} />
+                          </Select>
+                        </div>
+                        <p
+                          className={`w-full text-left text-sm mb-4 ${theme.global.textSecondary}`}
+                        >
+                          {board.description}
+                        </p>
                       </div>
-                      <p
-                        className={`w-full text-left text-sm mb-4 ${theme.global.textSecondary}`}
-                      >
-                        {board.description}
-                      </p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+                    </Link>
+                  ))}
+                </div>
               </div>
             ) : (
               <div className={`text-center ${theme.sidenav.bg} p-8 rounded-lg`}>
@@ -136,18 +217,7 @@ const BoardList: React.FC<ComponentProps> = ({ theme }) => {
                 value={newBoards.name}
               />
             </div>
-            <div className="mb-4">
-              <label
-                className={`block ${theme.global.textSecondary} text-sm mb-2`}
-              >
-                Board Description
-              </label>
-              <textarea
-                className={`${theme.sidenav.bg} input-field resize-none h-[150px]`}
-                onChange={(e) => handleInputChange(e)}
-                name="description"
-              ></textarea>
-            </div>
+
             <div className="flex items-center justify-between">
               <button
                 className={`${theme.hoverEffects.btnHover} ${theme.global.textPrimary} ${theme.global.border} transition border py-2 px-4 rounded-md focus:outline-none focus:shadow-outline`}

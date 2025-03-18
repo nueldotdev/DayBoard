@@ -21,6 +21,7 @@ export const SideBar: React.FC<SidebarProps> = ({
   open,
   onClose,
   closeOnBackdropClick = true,
+  className,
 }) => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -54,7 +55,7 @@ export const SideBar: React.FC<SidebarProps> = ({
         >
           {/* Sidebar container */}
           <motion.div
-            className={`p-4 flex flex-col gap-2 pb-10 h-full w-96 ${theme.sidenav.bg} shadow-lg`}
+            className={`p-4 flex flex-col gap-2 pb-10 h-full w-96 ${theme.sidenav.bg} shadow-lg  ${className}`}
             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the sidebar
             initial="hidden"
             animate="visible"

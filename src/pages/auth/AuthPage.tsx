@@ -218,7 +218,7 @@ export default function AuthPage() {
           </button>
         </motion.div>
         <Toaster
-          position="bottom-center"
+          position="bottom-left"
           toastOptions={{
             duration: 5000,
             style: {

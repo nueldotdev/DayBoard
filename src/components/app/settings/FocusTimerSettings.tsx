@@ -27,12 +27,11 @@ const FocusTimerSettings: React.FC<FocusTimerSettingsProps> = ({ theme, focusTim
           />
         </div>
         <Button
-          className={`mt-4 p-2 rounded-md ${theme.global.text} ${theme.global.border} border ${theme.hoverEffects.btnHover} bg-transparent w-fit`}
+          className={`mt-4 p-2 rounded-md ${theme.global.text} ${theme.global.border} border ${theme.hoverEffects.btnHover} w-[150px] flex justify-center`}
           onClick={onSave}
-          disabled={loading}
           loading={loading}
         >
-          {loading ? "Saving..." : "Save Focus Time"}
+          {"Save Focus Time"}
         </Button>
       </div>
     </div>

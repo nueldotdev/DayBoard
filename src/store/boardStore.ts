@@ -1,71 +1,101 @@
 import { create } from "zustand";
 import { Cards } from "../utils/interfaces";
+import api from "../../services/axios";
+
+
+//     # color: ""
+//     # created_at: "2025-03-14T02:04:31.227804+00:00"
+//     # description: ""
+//     # favorite: false
+//     # id: "e12bcf55-883d-42c4-bbdf-39069911ac0d"
+//     # name: "Testing One"
+//     # slug: "testing-one"
 
 // Define the Board interface
 export interface Board {
-  id: number;
+  id: string;
   name: string;
-  description: string;
-  dueDate?: Date;
+  description?: string;
+  created_at?: Date;
   priority?: "low" | "medium" | "high";
   columns?: {
     [column: string]: Cards[];
   };
   image?: string;
+  favorite: boolean;
+  slug?: string;
+  color?: string;
 }
 
 // Zustand store definition
 const useBoardStore = create<{
   boards: Board[];
+  getBoards: () => void;
   createBoard: (
-    id: number,
+    id: string,
     name: string,
-    description: string,
-    tasks?: Cards[],
-    dueDate?: Date,
-    priority?: "low" | "medium" | "high",
+    description?: string,
+    columns?: {
+      [column: string]: Cards[];
+    },
+    created_at?: Date,
     image?: string
   ) => void;
-  updateColumnOrder: (boardId: number, columnOrder: string[]) => void;
-  updateBoard: (id: number, updatedBoard: Partial<Board>) => void;
-  deleteBoard: (id: number) => void;
+  updateColumnOrder: (boardId: string, columnOrder: string[]) => void;
+  updateBoard: (id: string, updatedBoard: Partial<Board>) => void;
+  deleteBoard: (id: string) => void;
 
   // Kanban-specific actions
-  addTask: (boardId: number, column: string, newTask: Cards) => void;
+  addTask: (boardId: string, column: string, newTask: Cards) => void;
   moveTask: (
-    boardId: number,
+    boardId: string,
     sourceColumn: string,
     targetColumn: string,
-    taskId: number,
+    taskId: string,
     destinationIndex: number
   ) => void;
   editTask: (
-    boardId: number,
+    boardId: string,
     column: string,
-    taskId: number,
+    taskId: string,
     updatedTask: Cards
   ) => void;
 
-  addList: (boardId: number, listName: string) => void;
+  addList: (boardId: string, title: string) => void;
 }>((set) => ({
   boards: [],
 
+  // Fetch all boards
+  getBoards: async () => {
+    try {
+      const response = await api.get("/boards/get-boards/");
+      console.log("Response: ", response.data);
+      set({ boards: response.data });
+    } catch (error) {
+      console.error("Error fetching boards:", error);
+    }
+  },
+
   // Core board actions
-  createBoard: (id, name, description, tasks = [], dueDate, priority) => {
-    set((state) => ({
-      boards: [
-        ...state.boards,
-        {
-          id,
-          name,
-          description,
-          tasks,
-          dueDate,
-          priority,
-          columns: {}, // Initialize columns
-        },
-      ],
-    }));
+  createBoard: async (id, name, description) => {
+    try {
+      const response = await api.post("/boards/create-board/", { name });
+      set((state) => ({
+        boards: [
+          ...state.boards,
+          {
+            id: response.data.board.id,
+            name,
+            description,
+            columns: {}, // Initialize columns
+            favorite: false,
+          },
+        ],
+      }));
+    } catch (error) {
+      console.error("Error creating board:", error);
+    }
+    
   },
   updateColumnOrder: (boardId, columnOrder) => {
     set((state) => {
@@ -89,12 +119,20 @@ const useBoardStore = create<{
       return { boards: updatedBoards };
     });
   },
-  updateBoard: (id, updatedBoard) => {
-    set((state) => ({
-      boards: state.boards.map((board) =>
-        board.id === id ? { ...board, ...updatedBoard } : board
-      ),
-    }));
+  updateBoard: async (id, updatedBoard) => {
+    
+    try {
+
+      const response = await api.put('/boards/update-board/', { updatedBoard, boardId: id });
+      set((state) => ({
+        boards: state.boards.map((board) =>
+          board.id === id ? { ...board, ...updatedBoard } : board
+        ),
+      }));
+
+    } catch (error) {
+      console.error("Error updating board:", error);
+    }
   },
   deleteBoard: (id) => {
     set((state) => ({
@@ -119,32 +157,6 @@ const useBoardStore = create<{
       }),
     }));
   },
-
-  // moveTask: (boardId, sourceColumn, targetColumn, taskId) => {
-  //   set((state) => ({
-  //     boards: state.boards.map((board) => {
-  //       if (board.id !== boardId) return board;
-
-  //       const sourceTasks = board.columns?.[sourceColumn] || [];
-  //       const targetTasks = board.columns?.[targetColumn] || [];
-
-  //       const taskIndex = sourceTasks.findIndex((task) => task.id === taskId);
-  //       if (taskIndex === -1) return board; // Task not found
-
-  //       const [movedTask] = sourceTasks.splice(taskIndex, 1);
-  //       targetTasks.push(movedTask);
-
-  //       return {
-  //         ...board,
-  //         columns: {
-  //           ...board.columns,
-  //           [sourceColumn]: sourceTasks,
-  //           [targetColumn]: targetTasks,
-  //         },
-  //       };
-  //     }),
-  //   }));
-  // },
 
   moveTask: (boardId, sourceColumn, targetColumn, taskId, destinationIndex) => {
     set((state) => ({
@@ -198,7 +210,7 @@ const useBoardStore = create<{
     }));
   },
 
-  addList: (boardId, listName) => {
+  addList: (boardId, title) => {
     set((state) => ({
       boards: state.boards.map((board) => {
         if (board.id !== boardId) return board;
@@ -207,7 +219,7 @@ const useBoardStore = create<{
           ...board,
           columns: {
             ...board.columns,
-            [listName]: [], // New list with empty tasks
+            [title]: [], // New list with empty tasks
           },
         };
       }),

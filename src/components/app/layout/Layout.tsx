@@ -14,7 +14,7 @@ const Layout: React.FC = () => {
   const { themeName } = useThemeStore();
   // const [loading, setLoading] = React.useState<boolean>(true);
 
-  const {isAuthenticated, loading, checkAuth } = useAuthStore()
+  const {isAuthenticated, loading, checkAuth} = useAuthStore()
 
   const interests = [
     "space",
@@ -43,7 +43,6 @@ const Layout: React.FC = () => {
   useEffect(() => {
     const fetchImage = async () => {
       try {
-        // const response = await fetch(`https://api.unsplash.com/photos/random?client_id=${API_KEY}`);
         const randomInterest =
           interests[Math.floor(Math.random() * interests.length)];
         const response = await fetch(
