@@ -243,18 +243,14 @@ const ProjectDetail: React.FC = () => {
   // Save edited details
   const saveBoardDetails = async () => {
     if (board) {
-      try {
-        const response = await updateBoard(board.id, {
-          name: editName,
-          description: editDescription,
-          image: imageUrl,
-          color: editColor,
-        });
-        
-        toast.success("Board updated successfully");
-      } catch (e) {
-
-      }
+      const response = await updateBoard(board.id, {
+        name: editName,
+        description: editDescription,
+        image: imageUrl,
+        color: editColor,
+      });
+      
+      toast.success(`${response}`);
     }
   };
 

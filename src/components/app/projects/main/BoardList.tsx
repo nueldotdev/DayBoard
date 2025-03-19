@@ -8,7 +8,6 @@ import {
   HiEllipsisHorizontal,
   HiOutlinePencilSquare,
   HiOutlineStar,
-  HiPencil,
   HiTrash,
 } from "react-icons/hi2";
 

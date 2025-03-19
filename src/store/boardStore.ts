@@ -77,7 +77,7 @@ const useBoardStore = create<{
   },
 
   // Core board actions
-  createBoard: async (id, name, description) => {
+  createBoard: async (name, description) => {
     try {
       const response = await api.post("/boards/create-board/", { name });
       set((state) => ({
@@ -130,8 +130,14 @@ const useBoardStore = create<{
         ),
       }));
 
+      return response.data.message
+
     } catch (error) {
       console.error("Error updating board:", error);
+      if (error instanceof Error) {
+        return error.message;
+      }
+      return String(error);
     }
   },
   deleteBoard: (id) => {
