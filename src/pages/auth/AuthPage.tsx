@@ -7,6 +7,7 @@ import { FcGoogle } from 'react-icons/fc' // Google Icon
 import api from '../../../services/axios'
 import { useUserStore } from '../../store/userStore'
 import { useNavigate } from 'react-router-dom'
+import { Button } from '../../components/app/objects/ui/Button'
 
 type AuthMode = 'login' | 'signup'
 
@@ -83,9 +84,25 @@ export default function AuthPage() {
     setFormData({ first_name: '', last_name: '', email: '', password: '' })
   }
 
-  const handleGoogleLogin = () => {
-    // Redirect to Django backend endpoint for Google login
-    window.location.href = 'https://backend-url.com/auth/google'
+  const handleGoogleLogin = async () => {
+    try {
+      const response = await api.get('/auth/google/')
+      console.log('Google Login Response:', response.data)
+      toast.custom('Response Received', {
+        duration: 5000,
+        style: {
+          background: '#1a1a1a',
+          color: '#fff',
+          border: '1px solid rgba(34, 197, 94, 0.2)',
+        }
+      })
+
+      window.location = response.data.auth_url // Redirect to Google login URL
+
+    } catch (error) {
+      console.error('Google Login Error:', error)
+      toast.error('Google login failed. Please try again.')
+    }
   }
 
   return (
@@ -209,13 +226,13 @@ export default function AuthPage() {
             </button>
           </p>
           {/* Google Login Button */}
-          <button
+          <Button
             onClick={handleGoogleLogin}
             className="w-full bg-white text-black font-medium px-4 py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors mt-4"
           >
             <FcGoogle size={20} />
             Continue with Google
-          </button>
+          </Button>
         </motion.div>
         <Toaster
           position="bottom-left"

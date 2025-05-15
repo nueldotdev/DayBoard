@@ -5,7 +5,7 @@ import { getTheme } from "../../../utils/getTheme";
 import React, { useState, useEffect, useRef } from "react";
 import { HiArrowLeft, HiOutlineEllipsisHorizontal } from "react-icons/hi2";
 // import { VscPaintcan } from "react-icons/vsc";
-import useBoardStore from "../../../store/boardStore";
+import useBoardStore, { Board } from "../../../store/boardStore";
 // import { HiX } from "react-icons/hi";
 import { SideBar } from "../../../components/app/objects/ui/SideBar";
 import { motion } from "framer-motion";
@@ -200,8 +200,7 @@ const ProjectDetail: React.FC = () => {
   const { currentTheme } = getTheme();
   const { boards, updateBoard } = useBoardStore(); // Assume `updateBoard` is a method to update boards
   const { boardSlug } = useParams<{ boardSlug: string }>();
-  const board = boards.find((p) => p.slug === boardSlug);
-
+  const [board, setBoard] = useState<Board>()
   const [imageUrl, setImageUrl] = useState("");
   const [withImg, setWithImg] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -216,13 +215,26 @@ const ProjectDetail: React.FC = () => {
   // Set page title
   usePageTitle("Boards - " + board?.name);
 
+  useEffect(() => {
+    if (boards.length > 0) {
+      const board = boards.find((board) => board.slug === boardSlug);
+      if (board) {
+        setBoard(board);
+        setEditName(board.name);
+        setEditDescription(board.description || "");
+        setEditColor(board.color || "");
+      }
+    }
+  }, [])
+  
+
   // Upon load, check if board has image
   useEffect(() => {
     if (board?.image && board?.image != "") {
       setWithImg(true);
       setImageUrl(board.image);
     }
-  }, []);
+  }, [board]);
 
   // Handle background selection
   const handleBackgroundChange = (newImageUrl: string) => {

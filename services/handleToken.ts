@@ -16,6 +16,15 @@ const getDetails = async () => {
 }
 
 
+export const logout = async () => {
+  try {
+    await api.post('/auth/logout/')
+  } catch (e) {
+
+  }
+}
+
+
 export const validateToken = async (token: any) => {
   var valid: boolean;
 
