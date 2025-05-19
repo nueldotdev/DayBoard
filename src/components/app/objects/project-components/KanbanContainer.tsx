@@ -56,7 +56,7 @@ const KanbanContainer: React.FC<ContainerProps> = ({theme, board}) => {
       currentBoard.id, 
       sourceColumn, 
       targetColumn, 
-      Number(result.draggableId),
+      result.draggableId,
       destination.index
     );
   };

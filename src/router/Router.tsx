@@ -16,14 +16,11 @@ import { StatsPage } from '../pages/app/focus/StatsPage'
 import NotFound from '../pages/index/NotFound'
 import WaitlistPage from '../pages/index/WaitlistPage'
 import AuthPage from '../pages/auth/AuthPage'
+import ColorPicker from '../components/app/objects/project-components/ColorPicker'
 // import { handleTokens } from '../../services/handleToken'
 
 
 const AppRouter: React.FC = () => {
-
-  // const access_token = localStorage.getItem('access_token')
-  // const refresh_token = localStorage.getItem('refresh_token')
-
 
   return (
     <Router>
@@ -36,12 +33,13 @@ const AppRouter: React.FC = () => {
           <Route path='settings' element={<SettingsPage />} />
           <Route path='stats' element={<StatsPage />} />
           <Route path='b' element={<ProjectsPage />} />
-          <Route path='b/:boardId' element={<ProjectDetail />} />
+          <Route path='b/:boardSlug' element={<ProjectDetail />} />
           {/* <Route path='p/:projectId/s/:sectionId' element={<ProjectSection />} /> */}
         </Route>
         <Route path='/auth' element={<AuthPage />} />
         <Route path='/waitlist' element={<WaitlistPage />} />
         <Route path="*" element={<NotFound />} />
+        <Route path='/test' element={<ColorPicker onSelect={() => {}} color='' />} />
       </Routes>
     </Router>
   );

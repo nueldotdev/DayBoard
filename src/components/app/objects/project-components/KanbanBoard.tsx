@@ -22,12 +22,12 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({
   onCardOpenChange,
 }) => {
   const [newCardInfo, setNewCardInfo] = useState<Cards>({
-    id: Date.now(),
+    id: "",
     title: "",
     description: "",
     priority: "low",
   })
-  const [openCardId, setOpenCardId] = useState<number | null>(null);
+  const [openCardId, setOpenCardId] = useState<string | null>(null);
   const [entryToggle, setEntryToggle] = useState<boolean>(false);
 
 
@@ -41,7 +41,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({
     if (trimmedTitle === "") return;
     if (onAddCard) onAddCard(title, newCardInfo);
     setNewCardInfo({
-      id: Date.now(),
+      id: "",
       title: "",
       description: "",
       priority: "low",
@@ -64,7 +64,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({
 
 
 
-  const handleCardOpen = (cardId: number) => {
+  const handleCardOpen = (cardId: string) => {
     setOpenCardId(cardId);
     onCardOpenChange?.(true);
   };

@@ -99,11 +99,19 @@ const SettingsPage: React.FC = () => {
         >
           <div className="w-4/6">
             {selectedTab === "profile" && (
-              <ProfileCard
-                name="John Doe"
-                email="john.doe@email.com"
-                theme={currentTheme}
-              />
+              <div className="flex flex-col items-center justify-center space-y-4">
+                <ProfileCard
+                  name="John Doe"
+                  email="john.doe@email.com"
+                  theme={currentTheme}
+                />
+                <Button
+                  className={`p-2 px-4 rounded-md  ${currentTheme.global.text} ${currentTheme.global.border} border ${currentTheme.hoverEffects.btnHover} bg-red-600`}
+                  onClick={() => setModal(true)}
+                >
+                  Log Out
+                </Button>
+              </div>
             )}
 
             {selectedTab === "preference" && (
@@ -145,7 +153,9 @@ const SettingsPage: React.FC = () => {
                           alt="Current Wallpaper"
                           className="w-full h-32 object-cover rounded-md"
                         />
-                        <div className={`absolute inset-0 flex items-center justify-center ${currentTheme.global.bg} bg-opacity-50 opacity-0 rounded-md group-hover:opacity-100 transition-opacity`}>
+                        <div
+                          className={`absolute inset-0 flex items-center justify-center ${currentTheme.global.bg} bg-opacity-50 opacity-0 rounded-md group-hover:opacity-100 transition-opacity`}
+                        >
                           <Button
                             className={`p-2 fill-all rounded-md ${currentTheme.global.text} bg-transparent`}
                             onClick={() => setModal(true)}

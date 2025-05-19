@@ -12,17 +12,11 @@ export const useAuthStore = create<AuthState>((set) => ({
   loading: true,
 
   checkAuth: async () => {
-    const refresh_token = localStorage.getItem('refresh_token');
-    if (refresh_token) {
-      try {
-        await handleTokens(); // Validate or refresh tokens
-        set({ isAuthenticated: true, loading: false });
-      } catch (err) {
-        console.error('Token check failed:', err);
-        localStorage.removeItem('refresh_token'); // Clear invalid tokens
-        set({ isAuthenticated: false, loading: false });
-      }
-    } else {
+    try {
+      await handleTokens(); // Validate or refresh tokens
+      set({ isAuthenticated: true, loading: false });
+    } catch (err) {
+      console.error('Token check failed:', err);
       set({ isAuthenticated: false, loading: false });
     }
   },
