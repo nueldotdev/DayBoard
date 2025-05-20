@@ -23,11 +23,12 @@ export default function AuthPage() {
     password: '',
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [oAuthLoad, setOAuthLoad] = useState(false)
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const actionParam = (urlParams.get("type") as AuthMode) || "signup";
-    setAuthMode(actionParam);
+    setAuthMode(actionParam) ;
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -85,6 +86,7 @@ export default function AuthPage() {
   }
 
   const handleGoogleLogin = async () => {
+    setOAuthLoad(true)
     try {
       const response = await api.get('/auth/google/')
       console.log('Google Login Response:', response.data)
@@ -100,6 +102,7 @@ export default function AuthPage() {
       window.location = response.data.auth_url // Redirect to Google login URL
 
     } catch (error) {
+      setOAuthLoad(false)
       console.error('Google Login Error:', error)
       toast.error('Google login failed. Please try again.')
     }
@@ -228,6 +231,7 @@ export default function AuthPage() {
           {/* Google Login Button */}
           <Button
             onClick={handleGoogleLogin}
+            loading={oAuthLoad}
             className="w-full bg-white text-black font-medium px-4 py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors mt-4"
           >
             <FcGoogle size={20} />

@@ -2,7 +2,7 @@
 import api from './axios'
 import { useUserStore } from '../src/store/userStore';
 
-const getDetails = async () => {
+export const getDetails = async () => {
   // Call the getUserDetails function
   const setUser = useUserStore.getState().setUser
 
