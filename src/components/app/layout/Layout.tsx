@@ -6,12 +6,14 @@ import SideNav from "./SideNav";
 import useThemeStore from "../../../store/themeStore";
 // import { handleTokens } from "../../../../services/handleToken";
 import { useAuthStore } from "../../../store/authStore";
+import { PiArrowsLeftRight } from "react-icons/pi";
 
 
 const Layout: React.FC = () => {
   const { currentTheme } = getTheme();
   const [bgImg, setBgImg] = React.useState<string>("");
   const { themeName } = useThemeStore();
+  const [showNav, setShowNav] = React.useState<boolean>(true);
   // const [loading, setLoading] = React.useState<boolean>(true);
 
   const {isAuthenticated, loading, checkAuth} = useAuthStore()
@@ -87,13 +89,24 @@ const Layout: React.FC = () => {
         className={`flex ${currentTheme.global.bg} max-h-full min-h-full h-full`}
       >
         <div
-          className={`h-full w-12 border-r ${currentTheme.global.border} ${currentTheme.sidenav.bg}`}
+          className={`absolute h-full py-2 w-12 left-1 z-[1000]`}
         >
-          <Header />
-          <SideNav />
+          <div className={`h-full border ${currentTheme.global.border} ${currentTheme.glass.bg} bg-zinc-900/25 rounded-lg transition-all duration-300 ease-in-out` + (showNav ? " translate-x-0" : " translate-x-[-100%]")}>
+            <div>
+            <Header />
+            <SideNav />
+            </div>
+            <button
+              className={`absolute bottom-2 left-12 z-50 ${currentTheme.hoverEffects.textHover} text-white rounded-lg p-2 transition bg-opacity-90`}
+              onClick={() => setShowNav(!showNav)}
+              aria-label="Toggle Side Panel"
+            >
+              <PiArrowsLeftRight />
+            </button>
+          </div>
         </div>
         <div
-          className="w-full overflow-auto"
+          className={`w-full overflow-auto ${showNav ? "pl-12" : "pl-0"} transition-all duration-300 ease-in-out`}
           style={{
             backgroundImage: `${
               themeName === "dark"

@@ -217,7 +217,7 @@ const ProjectDetail: React.FC = () => {
 
   useEffect(() => {
     if (boards.length > 0) {
-      const board = boards.find((board) => board.slug === boardSlug);
+      const board: Board | undefined = boards.find((board: Board) => board.slug === boardSlug);
       if (board) {
         setBoard(board);
         setEditName(board.name);

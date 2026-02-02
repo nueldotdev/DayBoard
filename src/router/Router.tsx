@@ -17,6 +17,7 @@ import NotFound from '../pages/index/NotFound'
 import WaitlistPage from '../pages/index/WaitlistPage'
 import AuthPage from '../pages/auth/AuthPage'
 import ColorPicker from '../components/app/objects/project-components/ColorPicker'
+import AuthCallback from '../pages/auth/AuthCallback'
 // import { handleTokens } from '../../services/handleToken'
 
 
@@ -37,6 +38,7 @@ const AppRouter: React.FC = () => {
           {/* <Route path='p/:projectId/s/:sectionId' element={<ProjectSection />} /> */}
         </Route>
         <Route path='/auth' element={<AuthPage />} />
+        <Route path='/auth/callback' element={<AuthCallback />} />
         <Route path='/waitlist' element={<WaitlistPage />} />
         <Route path="*" element={<NotFound />} />
         <Route path='/test' element={<ColorPicker onSelect={() => {}} color='' />} />

@@ -79,7 +79,7 @@ const BoardList: React.FC<ComponentProps> = ({ theme }) => {
   };
 
   const addBoards = () => {
-    createBoard(newBoards.id, newBoards.name);
+    createBoard("", newBoards.name);
     setModal(false);
   };
 
@@ -221,7 +221,9 @@ const BoardList: React.FC<ComponentProps> = ({ theme }) => {
               <button
                 className={`${theme.hoverEffects.btnHover} ${theme.global.textPrimary} ${theme.global.border} transition border py-2 px-4 rounded-md focus:outline-none focus:shadow-outline`}
                 type="button"
-                onClick={() => addBoards()}
+                onClick={() => {
+                  console.log(newBoards)
+                  addBoards()}}
               >
                 Add Board
               </button>

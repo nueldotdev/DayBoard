@@ -43,7 +43,7 @@ export const useUserStore = create<UserState>((set) => ({
   },
 
   setUser: (user) => {
-    console.log("setting new user: ", user);
+    // console.log("setting new user: ", user);
     set({ user })
   },
   

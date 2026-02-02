@@ -55,7 +55,7 @@ export const themes = {
       textSecondary: "text-zinc-500",
       textPrimary: "text-zinc-200",
       brand: "#388E3C",
-      border: "border-zinc-800",
+      border: "border-zinc-700",
       secondary: "text-zinc-500",
     },
     hoverEffects: {

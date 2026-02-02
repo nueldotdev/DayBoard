@@ -70,7 +70,7 @@ const SideNav: React.FC = () => {
 
   return (
     <div
-      className={`w-full p-2 relative min-h-screen max-h-screen flex items-start transition-all gap-y-4 ${currentTheme.sidenav.bg}`}
+      className={`w-full p-2 relative flex items-start transition-all gap-y-4`}
     >
       <div className="w-full">
         {/* Sidebar content */}
