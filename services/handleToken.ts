@@ -48,10 +48,8 @@ export async function handleTokens () {
   if (valid === true) {
     // Access token is still valid
     await getDetails();
-    if (window.location.pathname !== '/app') {      
-      window.location.href = '/app'; // Redirect to dashboard
-    }
     return access_token;
+
   } else if (refresh_token) {
     localStorage.removeItem('access_token');
     // Send a request to the backend to refresh the token
@@ -60,14 +58,14 @@ export async function handleTokens () {
       // Save the new access token in local storage
       localStorage.setItem('access_token', response.data.access_token);
       localStorage.setItem('refresh_token', response.data.refresh_token);
-      getDetails();
+      await getDetails();
 
       return response.data.access_token;
 
     } catch (error) {
       console.error('Error:', error);
       localStorage.removeItem('refresh_token');
-      // window.location.href = '/auth?type=login'
+      window.location.href = '/auth?type=login'
     }
   } else {
     window.location.href = '/auth?type=login'
