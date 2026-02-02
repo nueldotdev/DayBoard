@@ -17,7 +17,7 @@ interface ContainerProps {
 }
 
 const KanbanContainer: React.FC<ContainerProps> = ({ theme, board }) => {
-  const { moveTask, addTask, addList, updateListOrder, getBoards } = useBoardStore();
+  const { moveTask, addTask, addList, updateListOrder } = useBoardStore();
 
   const [listModal, setListModal] = useState<boolean>(false);
   const [newListTitle, setNewListTitle] = useState<string>("");
