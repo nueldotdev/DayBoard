@@ -1,3 +1,53 @@
+## 2026-02-16
+
+## Kanban Board & Task Management Refactor (State Centralization & Backend Integration)
+
+This update significantly refactors how Kanban board and list data are managed and passed through components, moving towards a more centralized state management approach using `useBoardStore` (Zustand). Crucially, task creation is now integrated with a backend API, with a robust fallback mechanism for a smoother user experience.
+
+### Core Intent & Direction:
+
+The primary intent behind these changes is to:
+1.  **Reduce Prop Drilling:** Instead of passing entire `Board` and `List` objects down multiple levels, components now receive unique IDs and fetch their specific data directly from the central `boardStore`.
+2.  **Centralize State Logic:** Promote `boardStore` as the single source of truth for Kanban data, making components "smarter" and less reliant on parent components for data.
+3.  **Integrate with Backend:** Lay the groundwork for persistent storage of Kanban tasks by connecting the `addTask` action to a backend API.
+4.  **Enhance Robustness:** Implement a local state fallback for API operations to ensure a continuous user experience even if backend calls fail.
+
+### Key Changes & Modified Components:
+
+#### 1. `src/components/app/objects/project-components/KanbanBoard.tsx`
+*   **Prop Changes:** The component no longer accepts `title: string` and `cards: Cards[]` props. It now receives a `list: string` prop, which represents the `listId`.
+*   **State Integration:** `KanbanBoard` now internally uses `useBoardStore` to find its `activeList` based on the `listId` received.
+*   **Data Source Shift:**
+    *   The board's title (`<h2>`) now renders `activeList.title`.
+    *   The `Droppable` component's `droppableId` is now `activeList.id`.
+    *   The cards displayed (`activeList.cards.map`) are now directly sourced from the `activeList` object fetched from the store.
+*   **`onAddCard` Callback Update:** The `onAddCard` prop now expects a `listId` instead of a `boardTitle`, aligning with the new data flow.
+
+#### 2. `src/components/app/objects/project-components/KanbanContainer.tsx`
+*   **Prop Changes:** The component now accepts `boardId: string` instead of the full `board: Board` object.
+*   **State Integration:** `KanbanContainer` uses `useBoardStore` to fetch its `currentBoard` based on the `boardId` prop.
+*   **`KanbanBoard` Prop Updates:** When rendering individual `KanbanBoard` components, it now passes `list={list.id}` instead of `title={list.title}` and `cards={list.cards}`, reflecting the `KanbanBoard`'s updated prop requirements.
+
+#### 3. `src/pages/app/project/ProjectDetail.tsx`
+*   **Prop Update:** The `KanbanContainer` component is now instantiated with `boardId={board?.id || ""}`, aligning with the new prop requirement.
+
+#### 4. `src/store/boardStore.ts`
+*   **`addTask` Function Overhaul:**
+    *   **Asynchronous Operation:** The `addTask` function is now `async` and returns a `Promise<any>`.
+    *   **Backend Integration:** It attempts to create the new task by making an `api.post` request to the `/boards/add-task/` endpoint.
+    *   **Robust Local Fallback:**
+        *   If the API call is successful, the local state is updated with the `createdTask` data returned from the server.
+        *   If the API call fails (caught in the `catch` block), an error is logged, and the task is *still added to the local state*. This local update includes generating a temporary ID using `crypto.randomUUID()` or `Date.now()` if the task doesn't already have one, ensuring a smooth user experience even without immediate server confirmation.
+
+### Benefits & Impact:
+
+*   **Cleaner Component Interfaces:** Components like `KanbanBoard` and `KanbanContainer` are now less coupled to the exact structure of their parent's data, receiving only necessary IDs.
+*   **Improved Data Flow:** Data for boards and lists is consistently managed through the `boardStore`, reducing complexity and making state changes easier to track.
+*   **Foundation for Persistence:** The `addTask` integration is the first step towards making Kanban tasks persistent across sessions, leveraging a backend.
+*   **Enhanced User Experience:** The local state fallback for `addTask` prevents UI blocks or data loss from being immediately visible to the user during temporary network issues or backend errors.
+
+---
+
 ## 2026-01-22
 
 ### Project Update Summary: Sidebar UI Refactor & Board Creation Enhancements

@@ -3,20 +3,19 @@ import React, { useState } from "react";
 import { HiMiniXMark, HiPlusSmall } from "react-icons/hi2";
 import { Cards, mainTheme } from "../../../../utils/interfaces";
 import { TaskCard } from "../TaskCard";
+import useBoardStore, { Board, List } from "../../../../store/boardStore";
 
 interface KanbanBoardProps {
-  title: string;
+  list: string;
   theme: mainTheme;
-  cards: Cards[];
   className?: string;
-  onAddCard?: (boardTitle: string, cardInfo: Cards) => void;
+  onAddCard?: (listId: string, cardInfo: Cards) => void;
   onCardOpenChange?: (isOpen: boolean) => void; // New prop to communicate card open state
 }
 
 const KanbanBoard: React.FC<KanbanBoardProps> = ({
-  title,
+  list,
   theme,
-  cards,
   className,
   onAddCard,
   onCardOpenChange,
@@ -29,6 +28,11 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({
   })
   const [openCardId, setOpenCardId] = useState<string | null>(null);
   const [entryToggle, setEntryToggle] = useState<boolean>(false);
+  const activeList: List = useBoardStore((state: any) =>
+    state.boards
+      .flatMap((board: Board) => board.lists || [])
+      .find((l: List) => l.id === list)
+  );
 
 
   const toggleAddCard = () => {
@@ -39,7 +43,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({
   const handleAddCard = () => {
     const trimmedTitle = newCardInfo.title.trim();
     if (trimmedTitle === "") return;
-    if (onAddCard) onAddCard(title, newCardInfo);
+    if (onAddCard) onAddCard(activeList.id, newCardInfo);
     setNewCardInfo({
       id: "",
       title: "",
@@ -79,17 +83,17 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({
       <h2
         className={`text-base font-bold p-2 rounded-t-lg`}
       >
-        {title}
+        {activeList.title}
       </h2>
 
-      <Droppable droppableId={title} type="TASK">
+      <Droppable droppableId={activeList.id} type="TASK">
         {(provided) => (
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
             className={`space-y-2 min-h-[40px] p-2 rounded-b-lg`}
           >
-            {cards.map((card, index) => (
+            {activeList.cards.map((card, index) => (
               <Draggable
                 key={card.id}
                 draggableId={card.id.toString()}
