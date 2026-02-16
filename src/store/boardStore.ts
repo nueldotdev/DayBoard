@@ -64,7 +64,7 @@ const useBoardStore: any = create<{
   deleteBoard: (id: string) => void;
 
   // Kanban-specific actions
-  addTask: (boardId: string, list: string, newTask: Cards) => void;
+  addTask: (boardId: string, list: string, newTask: Cards) => Promise<any>;
   moveTask: (
     boardId: string,
     sourceList: string,
@@ -173,23 +173,69 @@ const useBoardStore: any = create<{
   },
 
   // Kanban actions
-  addTask: (boardId, listId, newTask) => {
-    set((state) => ({
-      boards: state.boards.map((board) => {
-        if (board.id !== boardId) return board;
+  addTask: async (boardId, listId, newTask) => {
+    try {
+      // Attempt to create the task on the backend first.
+      const payload = { boardId, listId, ...newTask };
+      const response = await api.post("/boards/add-task/", payload);
 
-        const updatedLists = board.lists?.map((list) =>
-          list.id === listId
-            ? { ...list, cards: [...list.cards, newTask] }
-            : list
-        ) || [];
+      // Try to get the created task from common response shapes
+      const createdTask = response.data.task || response.data.card || response.data;
 
-        return {
-          ...board,
-          lists: updatedLists,
-        };
-      }),
-    }));
+      set((state) => ({
+        boards: state.boards.map((board) => {
+          if (board.id !== boardId) return board;
+
+          const updatedLists = board.lists?.map((list) =>
+            list.id === listId
+              ? { ...list, cards: [...list.cards, createdTask] }
+              : list
+          ) || [];
+
+          return {
+            ...board,
+            lists: updatedLists,
+          };
+        }),
+      }));
+
+      return response.data.message || createdTask;
+    } catch (error) {
+      console.error("Error creating task on server, falling back to local update:", error);
+
+      // Fallback: update local state only (generate id if missing)
+      set((state) => ({
+        boards: state.boards.map((board) => {
+          if (board.id !== boardId) return board;
+
+          // If the board has no lists, don't modify it.
+          if (!board.lists || board.lists.length === 0) return board;
+
+          const updatedLists = board.lists.map((list) => {
+            if (list.id !== listId) return list;
+
+            const taskWithId = {
+              ...newTask,
+              id:
+                newTask.id ||
+                (typeof crypto !== "undefined" && (crypto as any).randomUUID
+                  ? (crypto as any).randomUUID()
+                  : String(Date.now())),
+            };
+
+            return { ...list, cards: [...list.cards, taskWithId] };
+          });
+
+          return {
+            ...board,
+            lists: updatedLists,
+          };
+        }),
+      }));
+
+      if (error instanceof Error) return error.message;
+      return String(error);
+    }
   },
 
   moveTask: (boardId, sourceListId, targetListId, taskId, destinationIndex) => {

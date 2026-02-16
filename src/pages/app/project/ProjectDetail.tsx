@@ -326,7 +326,7 @@ const ProjectDetail: React.FC = () => {
       </div>
 
       <div className="h-full w-full overflow-auto">
-        <KanbanContainer theme={currentTheme} board={board!} />
+        <KanbanContainer theme={currentTheme} boardId={board?.id || ""} />
       </div>
 
       {/* Sidebar */}

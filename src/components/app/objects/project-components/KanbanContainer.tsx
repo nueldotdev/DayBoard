@@ -12,18 +12,20 @@ import KanbanBoard from "./KanbanBoard";
 import toast, { Toaster } from "react-hot-toast";
 
 interface ContainerProps {
-  board: Board;
+  boardId: string;
   theme: mainTheme;
 }
 
-const KanbanContainer: React.FC<ContainerProps> = ({ theme, board }) => {
+const KanbanContainer: React.FC<ContainerProps> = ({ theme, boardId }) => {
   const { moveTask, addTask, addList, updateListOrder } = useBoardStore();
 
   const [listModal, setListModal] = useState<boolean>(false);
   const [newListTitle, setNewListTitle] = useState<string>("");
   const [isDraggingDisabled, setIsDraggingDisabled] = useState<boolean>(false);
 
-  const currentBoard: Board = board;
+  const currentBoard: Board = useBoardStore((state: any) =>
+    state.boards.find((board: Board) => board.id === boardId)
+  );
 
   const handleDragEnd = (result: DropResult) => {
     // Only proceed if dragging is not disabled
@@ -134,8 +136,7 @@ const KanbanContainer: React.FC<ContainerProps> = ({ theme, board }) => {
                     >
                       <KanbanBoard
                         key={list.id}
-                        title={list.title}
-                        cards={list.cards}
+                        list={list.id}                        
                         className="min-w-[300px] max-w-[300px] rounded-lg pb-2 h-min max-h-fit"
                         theme={theme}
                         onAddCard={(listId, cardInfo: Cards) => {
